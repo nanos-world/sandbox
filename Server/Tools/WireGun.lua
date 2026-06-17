@@ -12,8 +12,8 @@ function WireGun:OnWire(player, wire_start, wire_end, configs)
 		(wire_start.LinkEntity and not wire_end.Activate) or
 		(wire_end.LinkEntity and not wire_start.Activate)
 	) then
-		Events.CallRemote("SpawnSound", player, wire_start:GetLocation(), "nanos-world::A_Invalid_Action", false, 1, 1)
-		Events.CallRemote("AddNotification", player, NotificationType.Warning, "INVALID_WIRE_OBJECTS", "those objects are not connectable with a wire", 3, 0, true)
+		Events.CallRemote("SpawnSound", player, Reliability.Reliable, wire_start:GetLocation(), "nanos-world::A_Invalid_Action", false, 1, 1)
+		Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Warning, "INVALID_WIRE_OBJECTS", "those objects are not connectable with a wire", 3, 0, true)
 		return
 	end
 
@@ -63,7 +63,7 @@ end
 
 function WireGun:UnWireAll(player, entity)
 	if (not entity.UnlinkAllEntities) then
-		Events.BroadcastRemote("SpawnSound", entity:GetLocation(), "nanos-world::A_Invalid_Action", false, 1, 1)
+		Events.BroadcastRemote("SpawnSound", Reliability.Reliable, entity:GetLocation(), "nanos-world::A_Invalid_Action", false, 1, 1)
 		return
 	end
 

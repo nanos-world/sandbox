@@ -87,5 +87,5 @@ ThrusterGun.picked_context_menu_items = {
 -- Overrides ToolGunSingleTarget method
 function ThrusterGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
 	-- Call remote event to spawn the thruster
-	self:CallRemoteEvent("SpawnThruster", location, relative_location, relative_rotation, normal, entity, ThrusterGun.configs)
+	self:CallRemoteEvent("SpawnThruster", Reliability.Reliable, location, relative_location, relative_rotation, normal, entity, ThrusterGun.configs)
 end

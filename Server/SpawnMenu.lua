@@ -100,7 +100,7 @@ SpawnMenu.DestroyItem = function(player, item)
 	end
 
 	-- Spawns some sounds and particles
-	Events.BroadcastRemote("SpawnSound", item:GetLocation(), "nanos-world::A_Player_Eject", false, 0.3, 1)
+	Events.BroadcastRemote("SpawnSound", Reliability.Reliable, item:GetLocation(), "nanos-world::A_Player_Eject", false, 0.3, 1)
 	Particle(item:GetLocation() + Vector(0, 0, 30), Rotator(), "nanos-world::P_OmnidirectionalBurst")
 
 	-- Destroy the item

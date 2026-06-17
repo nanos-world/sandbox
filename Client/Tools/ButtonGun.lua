@@ -27,5 +27,5 @@ ButtonGun.debug_trace = {
 -- Overrides ToolGunSingleTarget method
 function ButtonGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
 	-- Call remote event to spawn the Button
-	self:CallRemoteEvent("SpawnButton", location, relative_location, relative_rotation, normal, entity)
+	self:CallRemoteEvent("SpawnButton", Reliability.Reliable, location, relative_location, relative_rotation, normal, entity)
 end

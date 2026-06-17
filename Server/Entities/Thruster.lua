@@ -53,12 +53,12 @@ end
 
 function Thruster:SetSoundAsset(player, sound_asset)
 	self:SetValue("Sound", sound_asset, true)
-	self:BroadcastRemoteEvent("UpdateSoundAsset", sound_asset)
+	self:BroadcastRemoteEvent("UpdateSoundAsset", Reliability.Reliable, sound_asset)
 end
 
 function Thruster:SetParticleAsset(player, particle_asset)
 	self:SetValue("Particle", particle_asset, true)
-	self:BroadcastRemoteEvent("UpdateParticleAsset", particle_asset)
+	self:BroadcastRemoteEvent("UpdateParticleAsset", Reliability.Reliable, particle_asset)
 end
 
 Thruster.SubscribeRemote("SetActive", Thruster.SetActive)

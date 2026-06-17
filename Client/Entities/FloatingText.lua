@@ -14,7 +14,7 @@ FloatingText.selected_context_menu_items = {
 		label = "text",
 		placeholder = "enter text...",
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetText", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetText", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("TextRender"):GetText()
@@ -25,7 +25,7 @@ FloatingText.selected_context_menu_items = {
 		type = "color",
 		label = "color",
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetColor", Color.FromHEX(value))
+			ContextMenu.selected_entity:CallRemoteEvent("SetColor", Reliability.Reliable, Color.FromHEX(value))
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("TextRender"):GetColor():ToHex(false)
@@ -38,7 +38,7 @@ FloatingText.selected_context_menu_items = {
 		min = 1,
 		max = 1000,
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetWordSize", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetWordSize", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("TextRender"):GetWordSize()

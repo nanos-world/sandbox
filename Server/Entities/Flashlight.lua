@@ -30,13 +30,13 @@ function Flashlight:SetLightEnabled(is_on)
 		self:SetMaterialColorParameter("Emissive", self.light:GetColor() * 100)
 		self.light:SetVisibility(true)
 
-		Events.BroadcastRemote("SpawnSound", self:GetLocation(), "nanos-world::A_Switch_Button_03", false, 0.5, 3)
+		Events.BroadcastRemote("SpawnSound", Reliability.Reliable, self:GetLocation(), "nanos-world::A_Switch_Button_03", false, 0.5, 3)
 
 	else
 		self:SetMaterialColorParameter("Emissive", Color.BLACK)
 		self.light:SetVisibility(false)
 
-		Events.BroadcastRemote("SpawnSound", self:GetLocation(), "nanos-world::A_Switch_Button_03", false, 0.5, 2)
+		Events.BroadcastRemote("SpawnSound", Reliability.Reliable, self:GetLocation(), "nanos-world::A_Switch_Button_03", false, 0.5, 2)
 	end
 end
 

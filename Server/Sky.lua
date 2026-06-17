@@ -31,7 +31,7 @@ SandboxSky = {
 Package.Subscribe("Load", function()
 	if (SANDBOX_CUSTOM_SETTINGS.enable_default_sky) then
 		-- Sends default values to all players
-		Events.BroadcastRemote("SpawnSky", SandboxSky.current_weather, SandboxSky.current_time_of_day, SandboxSky.day_length, SandboxSky.night_length)
+		Events.BroadcastRemote("SpawnSky", Reliability.Reliable, SandboxSky.current_weather, SandboxSky.current_time_of_day, SandboxSky.day_length, SandboxSky.night_length)
 
 		if (SANDBOX_CUSTOM_SETTINGS.enable_auto_weather) then
 			Timer.SetInterval(function()
@@ -98,7 +98,7 @@ end, 5000)
 
 function PlayerSpawn(player)
 	if (SANDBOX_CUSTOM_SETTINGS.enable_default_sky) then
-		Events.CallRemote("SpawnSky", player, SandboxSky.current_weather, SandboxSky.current_time_of_day)
+		Events.CallRemote("SpawnSky", player, Reliability.Reliable, SandboxSky.current_weather, SandboxSky.current_time_of_day)
 	end
 end
 
@@ -108,14 +108,14 @@ function SandboxSky.ChangeTime(time_of_day)
 	-- Sets new current values
 	SandboxSky.current_time_of_day = time_of_day
 
-	Events.BroadcastRemote("ChangeTime", time_of_day)
+	Events.BroadcastRemote("ChangeTime", Reliability.Reliable, time_of_day)
 end
 
 function SandboxSky.ChangeWeather(weather, transition_time)
 	-- Sets new current values
 	SandboxSky.current_weather = weather
 
-	Events.BroadcastRemote("ChangeWeather", weather, transition_time)
+	Events.BroadcastRemote("ChangeWeather", Reliability.Reliable, weather, transition_time)
 end
 
 Events.SubscribeRemote("ChangeWeather", function(player, weather)

@@ -151,7 +151,7 @@ Sandbox.HUD:Subscribe("OnTVSetWebsite", function(submitted, text)
 	end
 
 	-- Calls remote to sync the Website with everyone logged
-	CURRENTLY_INTERACTING_TV:CallRemoteEvent("SetWebsite", text)
+	CURRENTLY_INTERACTING_TV:CallRemoteEvent("SetWebsite", Reliability.Reliable, text)
 end)
 
 -- Called by Server when Player interacts with a TV

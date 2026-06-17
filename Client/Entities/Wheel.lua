@@ -8,7 +8,7 @@ Wheel.selected_context_menu_items = {
 		min = 0,
 		max = 10000,
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetCustomAngularForce", value * 1000)
+			ContextMenu.selected_entity:CallRemoteEvent("SetCustomAngularForce", Reliability.Reliable, value * 1000)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("AngularForce") / 1000
@@ -18,7 +18,7 @@ Wheel.selected_context_menu_items = {
 		label = "is active",
 		type = "checkbox",
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetActive", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetActive", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Active")
@@ -28,7 +28,7 @@ Wheel.selected_context_menu_items = {
 		label = "is reversed",
 		type = "checkbox",
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetDirection", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetDirection", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Reversed")
@@ -42,25 +42,25 @@ Wheel.input_bindings = {
 		label = "accelerate",
 		callback_pressed = function(entity)
 			-- Note: if we press the accelerate then reverse, then release accelerate, it will stop moving
-			entity:CallRemoteEvent("SetActive", true)
+			entity:CallRemoteEvent("SetActive", Reliability.Reliable, true)
 		end,
 		callback_released = function(entity)
-			entity:CallRemoteEvent("SetActive", false)
+			entity:CallRemoteEvent("SetActive", Reliability.Reliable, false)
 		end,
 	},
 	{
 		label = "reverse",
 		callback_pressed = function(entity)
-			entity:CallRemoteEvent("SetActive", true, true)
+			entity:CallRemoteEvent("SetActive", Reliability.Reliable, true, true)
 		end,
 		callback_released = function(entity)
-			entity:CallRemoteEvent("SetActive", false)
+			entity:CallRemoteEvent("SetActive", Reliability.Reliable, false)
 		end,
 	},
 	{
 		label = "toggle",
 		callback_pressed = function(entity)
-			entity:CallRemoteEvent("SetActive", not entity:GetValue("Active"))
+			entity:CallRemoteEvent("SetActive", Reliability.Reliable, not entity:GetValue("Active"))
 		end,
 	},
 }

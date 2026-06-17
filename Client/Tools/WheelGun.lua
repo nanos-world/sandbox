@@ -104,5 +104,5 @@ WheelGun.picked_context_menu_items = {
 -- Overrides ToolGunSingleTarget method
 function WheelGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
 	-- Call remote event to spawn the thruster
-	self:CallRemoteEvent("SpawnWheel", location, relative_location, relative_rotation, normal, entity, WheelGun.configs)
+	self:CallRemoteEvent("SpawnWheel", Reliability.Reliable, location, relative_location, relative_rotation, normal, entity, WheelGun.configs)
 end

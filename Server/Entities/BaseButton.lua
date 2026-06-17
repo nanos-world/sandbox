@@ -3,7 +3,7 @@ BaseButton = Prop.Inherit("BaseButton")
 ConfigureSpawnLimits("Button", "Buttons", BaseButton.GetCount, "max_buttons")
 
 function BaseButton:Constructor(location, rotation, tab, id, player, switchable)
-	self.Super:Constructor(location, rotation, "nanos-world::SM_PushButton", CollisionType.Auto, true, GrabMode.Enabled)
+	self.Super:Constructor(location, rotation, "nanos-world::SM_PushButton", CollisionType.Auto, true, GrabMode.Enabled, CCDMode.Auto, true)
 
 	-- Cooldown in milliseconds
 	self.cooldown = 500
@@ -20,7 +20,7 @@ function BaseButton:Constructor(location, rotation, tab, id, player, switchable)
 	self.linked_entities = setmetatable({}, { __mode = "k" })
 
 	if (player) then
-		Events.CallRemote("AddNotification", player, NotificationType.Info, "BUTTON_WIRE_TUTORIAL", "use a Wire Gun to link buttons to other entities", 10, 5)
+		Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Info, "BUTTON_WIRE_TUTORIAL", "use a Wire Gun to link buttons to other entities", 10, 5)
 	end
 end
 

@@ -101,16 +101,16 @@ function PhysicsGun:OnPickUpObject(player, object, is_grabbing, picking_object_r
 	controlled_character:SetCanAim(not is_grabbing)
 	controlled_character:SetCanGrabProps(not is_grabbing)
 
-	self:BroadcastRemoteEvent("PickUpObject", object, is_grabbing)
+	self:BroadcastRemoteEvent("PickUpObject", Reliability.Reliable, object, is_grabbing)
 end
 
 function PhysicsGun:OnToggle(player, enable)
 	-- If the Physics Gun is being enabled
 	if (enable) then
 		self.beam_particle:Activate(true)
-		self:BroadcastRemoteEvent("ToggleTargetParticles", true)
+		self:BroadcastRemoteEvent("ToggleTargetParticles", Reliability.Reliable, true)
 	else
-		Events.BroadcastRemote("SpawnSound", self:GetLocation(), "nanos-world::A_Simulate_End", false, 1, 1)
+		Events.BroadcastRemote("SpawnSound", Reliability.Reliable, self:GetLocation(), "nanos-world::A_Simulate_End", false, 1, 1)
 		self:StopParticles()
 	end
 end
@@ -118,7 +118,7 @@ end
 function PhysicsGun:StopParticles()
 	if (self:IsBeingDestroyed()) then return end
 	self.beam_particle:Deactivate()
-	self:BroadcastRemoteEvent("ToggleTargetParticles", false)
+	self:BroadcastRemoteEvent("ToggleTargetParticles", Reliability.Reliable, false)
 end
 
 -- Restores Object values if Physics Gun is destroyed

@@ -65,7 +65,7 @@ function Balloon:Constructor(location, rotation, tab, id, player, relative_locat
 	self.spawn_z_location = location.Z
 
 	-- Calls the Client to spawn balloons spawning sounds
-	Events.BroadcastRemote("SpawnSound", location, "nanos-world::A_Balloon_Inflate", false, 0.75, 1)
+	Events.BroadcastRemote("SpawnSound", Reliability.Reliable, location, "nanos-world::A_Balloon_Inflate", false, 0.75, 1)
 end
 
 function Balloon:SetCustomForce(player, force)

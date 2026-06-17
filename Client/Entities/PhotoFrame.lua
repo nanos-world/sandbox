@@ -14,7 +14,7 @@ PhotoFrame.selected_context_menu_items = {
 		label = "image",
 		placeholder = "enter image url or base64...",
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetPhoto", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetPhoto", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetMaterialTextureParameter("Texture", 1) or ""

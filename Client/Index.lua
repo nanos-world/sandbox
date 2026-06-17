@@ -282,5 +282,5 @@ end)
 
 -- Client Console Commands
 Console.RegisterCommand("reset", function()
-	Events.CallRemote("ClientCommand", "reset")
+	Events.CallRemote("ClientCommand", Reliability.Reliable, "reset")
 end, "resets the server if you are the only player")

@@ -73,7 +73,7 @@ function RetroCamera:TakePhoto()
 	self.scene_capture:CaptureScene()
 	self.scene_capture:EncodeToBase64Async(ImageFormat.JPEG, function(base64)
 		if (not self or not self:IsValid()) then return end
-		self:CallRemoteEvent("TakePhoto", base64)
+		self:CallRemoteEvent("TakePhoto", Reliability.Reliable, base64)
 	end)
 end
 

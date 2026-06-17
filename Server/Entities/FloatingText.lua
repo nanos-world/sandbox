@@ -15,7 +15,7 @@ function FloatingText:Constructor(location, rotation, tab, id, player)
 	self:SetValue("TextRender", self.text_render, true)
 
 	if (player) then
-		Events.CallRemote("AddNotification", player, NotificationType.Info, "FLOATING_TEXT_TUTORIAL", "you can change the Floating Text text by selecting it in the the Context Menu", 10, 5)
+		Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Info, "FLOATING_TEXT_TUTORIAL", "you can change the Floating Text text by selecting it in the the Context Menu", 10, 5)
 	end
 end
 

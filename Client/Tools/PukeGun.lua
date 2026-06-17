@@ -33,7 +33,7 @@ PukeGun.picked_context_menu_items = {
 		options = PukeGun.options,
 		callback = function(value)
 			local puke_gun = Client.GetLocalPlayer():GetControlledCharacter():GetPicked()
-			puke_gun:CallRemoteEvent("SetOption", value)
+			puke_gun:CallRemoteEvent("SetOption", Reliability.Reliable, value)
 		end,
 		value = function()
 			local puke_gun = Client.GetLocalPlayer():GetControlledCharacter():GetPicked()
@@ -48,7 +48,7 @@ PukeGun.picked_context_menu_items = {
 		step = 100,
 		callback = function(value)
 			local puke_gun = Client.GetLocalPlayer():GetControlledCharacter():GetPicked()
-			puke_gun:CallRemoteEvent("SetCustomForce", value)
+			puke_gun:CallRemoteEvent("SetCustomForce", Reliability.Reliable, value)
 		end,
 		value = function()
 			local puke_gun = Client.GetLocalPlayer():GetControlledCharacter():GetPicked()
@@ -63,7 +63,7 @@ PukeGun.picked_context_menu_items = {
 		step = 0.05,
 		callback = function(value)
 			local puke_gun = Client.GetLocalPlayer():GetControlledCharacter():GetPicked()
-			puke_gun:CallRemoteEvent("SetCadence", value)
+			puke_gun:CallRemoteEvent("SetCadence", Reliability.Reliable, value)
 		end,
 		value = function()
 			local puke_gun = Client.GetLocalPlayer():GetControlledCharacter():GetPicked()

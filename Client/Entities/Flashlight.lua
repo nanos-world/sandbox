@@ -13,7 +13,7 @@ Flashlight.selected_context_menu_items = {
 		type = "color",
 		label = "color",
 		callback = function(color)
-			ContextMenu.selected_entity:CallRemoteEvent("SetColor", Color.FromHEX(color))
+			ContextMenu.selected_entity:CallRemoteEvent("SetColor", Reliability.Reliable, Color.FromHEX(color))
 		end,
 		value = function()
 			return Color.ToHex(ContextMenu.selected_entity:GetValue("Light"):GetColor(), false)
@@ -26,7 +26,7 @@ Flashlight.selected_context_menu_items = {
 		min = 0,
 		max = 1000,
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetIntensity", value / 100)
+			ContextMenu.selected_entity:CallRemoteEvent("SetIntensity", Reliability.Reliable, value / 100)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Light"):GetIntensity() * 100
@@ -37,7 +37,7 @@ Flashlight.selected_context_menu_items = {
 		type = "checkbox",
 		label = "active",
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetActive", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetActive", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Light"):IsVisible()
@@ -50,7 +50,7 @@ Flashlight.input_bindings = {
 	{
 		label = "toggle",
 		callback_pressed = function(entity)
-			entity:CallRemoteEvent("SetActive", not entity:GetValue("Light"):IsVisible())
+			entity:CallRemoteEvent("SetActive", Reliability.Reliable, not entity:GetValue("Light"):IsVisible())
 		end,
 	},
 }

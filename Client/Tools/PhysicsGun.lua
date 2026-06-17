@@ -146,7 +146,7 @@ function TogglePhysicsGunLocal(is_using, freeze)
 	if (not is_using) then
 		if (PhysicsGun.picking_object) then
 			-- Calls remote to "drop" the object
-			PhysicsGun.weapon:CallRemoteEvent("PickUpObject", PhysicsGun.picking_object, false, nil, freeze)
+			PhysicsGun.weapon:CallRemoteEvent("PickUpObject", Reliability.Reliable, PhysicsGun.picking_object, false, nil, freeze)
 
 			-- Disables the highlight on this object
 			PhysicsGun.picking_object:SetOutlineEnabled(false)
@@ -167,7 +167,7 @@ function TogglePhysicsGunLocal(is_using, freeze)
 	PhysicsGun.is_using = is_using
 
 	-- Calls remote to toggle the Physics Gun off/on
-	PhysicsGun.weapon:CallRemoteEvent("Toggle", is_using)
+	PhysicsGun.weapon:CallRemoteEvent("Toggle", Reliability.Reliable, is_using)
 end
 
 -- Function to try to pickup an object
@@ -217,7 +217,7 @@ function TryPickUpObject()
 		PhysicsGun.picking_object_initial_rotation = PhysicsGun.picking_object:GetRotation() - Client.GetLocalPlayer():GetControlledCharacter():GetRotation()
 
 		-- Calls remote to disable gravity of this object (if has)
-		PhysicsGun.weapon:CallRemoteEvent("PickUpObject", PhysicsGun.picking_object, true, PhysicsGun.picking_object_relative_location)
+		PhysicsGun.weapon:CallRemoteEvent("PickUpObject", Reliability.Reliable, PhysicsGun.picking_object, true, PhysicsGun.picking_object_relative_location)
 	else
 		PhysicsGun.picking_object = nil
 	end

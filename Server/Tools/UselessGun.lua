@@ -86,7 +86,7 @@ function UselessGun:OnUselessObject(player, entity, hit_location, direction)
 	-- Picks up a random website
 	local website = UselessGun.useless_websites[math.random(#UselessGun.useless_websites)]
 
-	Events.BroadcastRemote("MakeObjectUseless", entity, website)
+	Events.BroadcastRemote("MakeObjectUseless", Reliability.Reliable, entity, website)
 
 	Particle(hit_location, direction:ToOrientationRotator(), "nanos-world::P_DirectionalBurst")
 end

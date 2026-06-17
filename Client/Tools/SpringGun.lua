@@ -57,5 +57,5 @@ SpringGun.picked_context_menu_items = {
 -- Overrides ToolGunSingleTarget method
 function SpringGun:OnLocalPlayerTarget(targeting_first_to, targeting_first_relative_location, targeting_first_relative_rotation, targeting_second_to, targeting_second_location, targeting_second_rotation)
 	-- Calls remote to attach rope
-	self:CallRemoteEvent("SpringAttach", targeting_first_to, targeting_first_relative_location, targeting_second_to, targeting_second_location, SpringGun.configs)
+	self:CallRemoteEvent("SpringAttach", Reliability.Reliable, targeting_first_to, targeting_first_relative_location, targeting_second_to, targeting_second_location, SpringGun.configs)
 end

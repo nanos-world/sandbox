@@ -47,7 +47,7 @@ function ValidateSpawnLimits(player, ID)
 	end
 
 	-- Can't spawn
-	Events.CallRemote("AddNotification", player, NotificationType.Warning, "SPAWN_LIMIT_" .. ID, "the server have reached the configured limit of " .. limit_data.max_count .. " " .. limit_data.label .. ".", 3, 0, true)
+	Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Warning, "SPAWN_LIMIT_" .. ID, "the server have reached the configured limit of " .. limit_data.max_count .. " " .. limit_data.label .. ".", 3, 0, true)
 
 	return false
 end
@@ -279,7 +279,7 @@ Events.SubscribeRemote("ClientCommand", function(player, command)
 		Console.Log("The Player '%s' has requested to reset the package.", player:GetName())
 
 		if (Player.GetCount() > 1) then
-			Events.CallRemote("AddNotification", player, NotificationType.Error, "CANT_RESET", "you cannot reset the package while other players are connected", 3, 0, true)
+			Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Error, "CANT_RESET", "you cannot reset the package while other players are connected", 3, 0, true)
 			return
 		end
 

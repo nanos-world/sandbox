@@ -157,7 +157,7 @@ Sandbox.HUD:Subscribe("SpawnItem", function(category, asset_id)
 	end
 
 	-- Calls server to spawn it
-	Events.CallRemote("SpawnItem", category, asset_id, spawn_location, spawn_rotation)
+	Events.CallRemote("SpawnItem", Reliability.Reliable, category, asset_id, spawn_location, spawn_rotation)
 
 	-- Spawns a sound for 'spawning an item'
 	SoundSpawnItem:Play()

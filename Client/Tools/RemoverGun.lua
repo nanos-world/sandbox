@@ -24,7 +24,7 @@ function RemoverGun:OnLocalPlayerFire(shooter)
 
 	-- If hit an object, calls the server to destroy it
 	if (trace_result.Success and trace_result.Entity and not trace_result.Entity:HasAuthority()) then
-		Events.CallRemote("DestroyItem", trace_result.Entity)
+		Events.CallRemote("DestroyItem", Reliability.Reliable, trace_result.Entity)
 	else
 		-- If didn't hit anything, plays a negative sound
 		SoundInvalidAction:Play()

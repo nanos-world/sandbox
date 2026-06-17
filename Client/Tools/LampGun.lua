@@ -27,5 +27,5 @@ LampGun.debug_trace = {
 -- Overrides ToolGunSingleTarget method
 function LampGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
 	-- Calls remote to spawn the Lamp
-	self:CallRemoteEvent("SpawnLamp", location, relative_location, relative_rotation, normal, entity)
+	self:CallRemoteEvent("SpawnLamp", Reliability.Reliable, location, relative_location, relative_rotation, normal, entity)
 end

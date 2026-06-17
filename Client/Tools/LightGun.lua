@@ -32,5 +32,5 @@ LightGun.debug_trace = {
 -- Overrides ToolGunSingleTarget method
 function LightGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
 	-- Calls remote to spawn the Light
-	self:CallRemoteEvent("SpawnLight", location, relative_location, relative_rotation, normal, entity)
+	self:CallRemoteEvent("SpawnLight", Reliability.Reliable, location, relative_location, relative_rotation, normal, entity)
 end

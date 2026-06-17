@@ -100,5 +100,5 @@ BalloonGun.picked_context_menu_items = {
 -- Overrides ToolGunSingleTarget method
 function BalloonGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
 	-- Calls remote to spawn the Balloon
-	self:CallRemoteEvent("SpawnBalloon", location, relative_location, relative_rotation, normal, entity, BalloonGun.configs)
+	self:CallRemoteEvent("SpawnBalloon", Reliability.Reliable, location, relative_location, relative_rotation, normal, entity, BalloonGun.configs)
 end

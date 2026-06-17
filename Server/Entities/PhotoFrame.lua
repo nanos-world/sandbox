@@ -6,7 +6,7 @@ function PhotoFrame:Constructor(location, rotation, tab, id, player)
 	self.Super:Constructor(location or Vector(), (rotation or Rotator()) + Rotator(0, 90, 0), "nanos-world::SM_PhotoFrame")
 
 	if (player) then
-		Events.CallRemote("AddNotification", player, NotificationType.Info, "PHOTO_FRAME_TUTORIAL", "you can change the Photo Frame image by selecting it in the Context Menu", 10, 5)
+		Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Info, "PHOTO_FRAME_TUTORIAL", "you can change the Photo Frame image by selecting it in the Context Menu", 10, 5)
 	end
 end
 

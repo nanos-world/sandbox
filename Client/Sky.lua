@@ -40,7 +40,7 @@ end)
 
 -- Context Menu callbacks
 function SandboxSky.SetTimeOfDay(time_of_day)
-	Events.CallRemote("ChangeTime", time_of_day * 100)
+	Events.CallRemote("ChangeTime", Reliability.Reliable, time_of_day * 100)
 end
 
 function SandboxSky.FreezeTime(enabled)
@@ -52,7 +52,7 @@ function SandboxSky.FreezeTime(enabled)
 end
 
 function SandboxSky.ChangeWeather(value)
-	Events.CallRemote("ChangeWeather", tonumber(value))
+	Events.CallRemote("ChangeWeather", Reliability.Reliable, tonumber(value))
 end
 
 -- Context Menu Configuration for Sky & Time

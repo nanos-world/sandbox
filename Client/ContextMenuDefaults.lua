@@ -30,7 +30,7 @@ function ContextMenu.AddSelectedCustomItems(entity)
 				return (ContextMenu.selected_entity:GetMaterialColorParameter("Tint") or Color.WHITE):ToHex(false)
 			end,
 			callback = function(color)
-				Events.CallRemote("ColorObject", ContextMenu.selected_entity, ContextMenu.selected_entity:GetLocation(), Vector(0, 0, 1), Color.FromHEX(color))
+				Events.CallRemote("ColorObject", Reliability.Reliable, ContextMenu.selected_entity, ContextMenu.selected_entity:GetLocation(), Vector(0, 0, 1), Color.FromHEX(color))
 			end
 		})
 
@@ -42,7 +42,7 @@ function ContextMenu.AddSelectedCustomItems(entity)
 				return ContextMenu.selected_entity:IsGravityEnabled()
 			end,
 			callback = function()
-				Events.CallRemote("SetGravityEnabled", ContextMenu.selected_entity)
+				Events.CallRemote("SetGravityEnabled", Reliability.Reliable, ContextMenu.selected_entity)
 			end
 		})
 	end
@@ -57,7 +57,7 @@ function ContextMenu.AddSelectedCustomItems(entity)
 				return entity:GetGrabMode() ~= GrabMode.Disabled
 			end,
 			callback = function(value)
-				Events.CallRemote("SetPropGrabMode", entity, value)
+				Events.CallRemote("SetPropGrabMode", Reliability.Reliable, entity, value)
 			end
 		})
 	end
@@ -73,7 +73,7 @@ function ContextMenu.AddSelectedCustomItems(entity)
 				return ContextMenu.selected_entity:GetValue("PatternTexture") or ""
 			end,
 			callback = function(value)
-				Events.CallRemote("ApplyWeaponPattern", ContextMenu.selected_entity, value)
+				Events.CallRemote("ApplyWeaponPattern", Reliability.Reliable, ContextMenu.selected_entity, value)
 			end
 		})
 	end
@@ -87,7 +87,7 @@ function ContextMenu.AddSelectedCustomItems(entity)
 			type = "button",
 			label = "destroy",
 			callback = function()
-				Events.CallRemote("DestroyItem", ContextMenu.selected_entity)
+				Events.CallRemote("DestroyItem", Reliability.Reliable, ContextMenu.selected_entity)
 				ContextMenu.SelectEntity(nil)
 			end
 		})
@@ -120,7 +120,7 @@ function ContextMenu.AddPickedCustomItems(entity)
 					return entity:GetValue("PatternTexture") or ""
 				end,
 				callback = function(value)
-					Events.CallRemote("ApplyWeaponPattern", entity, value)
+					Events.CallRemote("ApplyWeaponPattern", Reliability.Reliable, entity, value)
 				end
 			},
 		}, ContextMenu.picked_color)
@@ -147,7 +147,7 @@ function ContextMenu.AddPossessedCharacterItems(entity)
 			label = "character",
 			options = character_classes_options,
 			callback = function(value)
-				Events.CallRemote("ChangeCharacter", value)
+				Events.CallRemote("ChangeCharacter", Reliability.Reliable, value)
 			end,
 			value = class:GetName(),
 		},

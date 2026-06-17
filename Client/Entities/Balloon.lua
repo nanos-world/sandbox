@@ -11,7 +11,7 @@ Balloon.selected_context_menu_items = {
 		type = "select_image",
 		options = BALLOON_ASSETS,
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetCustomMesh", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetCustomMesh", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetMesh()
@@ -23,7 +23,7 @@ Balloon.selected_context_menu_items = {
 		min = -100,
 		max = 200,
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetCustomForce", value * 1000)
+			ContextMenu.selected_entity:CallRemoteEvent("SetCustomForce", Reliability.Reliable, value * 1000)
 		end,
 		value = function()
 			return math.ceil(ContextMenu.selected_entity:GetForce().Z / 1000)

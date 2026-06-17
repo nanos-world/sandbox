@@ -96,10 +96,10 @@ function SpawnHistory.DeleteItemFromHistory(player, index)
 end
 
 function SpawnHistory.OnDestroyedItem(player, location, what)
-	Events.CallRemote("AddNotification", player, NotificationType.Info, "UNDO", "undo spawned " .. (what or "item"), 2, 0, true)
+	Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Info, "UNDO", "undo spawned " .. (what or "item"), 2, 0, true)
 
 	if (location) then
-		Events.BroadcastRemote("DestroyedItem", location)
+		Events.BroadcastRemote("DestroyedItem", Reliability.Reliable, location)
 	end
 end
 

@@ -20,7 +20,7 @@ UselessGun.debug_trace = {
 -- Overrides ToolGunSingleTarget method
 function UselessGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
 	-- If hit an object, then get a random Useless and call server to update the Useless for everyone
-	self:CallRemoteEvent("UselessObject", entity, location, normal)
+	self:CallRemoteEvent("UselessObject", Reliability.Reliable, entity, location, normal)
 end
 
 

@@ -24,5 +24,5 @@ SliderGun.debug_trace = {
 -- Overrides ToolGunDoubleTarget method
 function SliderGun:OnLocalPlayerTarget(targeting_first_to, targeting_first_relative_location, targeting_first_relative_rotation, targeting_second_to, targeting_second_location, targeting_second_rotation)
 	-- Calls remote to attach Slider
-	self:CallRemoteEvent("SliderAttach", targeting_first_to, targeting_first_relative_location, targeting_second_to, targeting_second_location)
+	self:CallRemoteEvent("SliderAttach", Reliability.Reliable, targeting_first_to, targeting_first_relative_location, targeting_second_to, targeting_second_location)
 end

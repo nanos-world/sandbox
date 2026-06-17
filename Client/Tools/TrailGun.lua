@@ -27,5 +27,5 @@ TrailGun.debug_trace = {
 -- Overrides ToolGunSingleTarget method
 function TrailGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
 	-- Calls remote to spawn the Trail
-	self:CallRemoteEvent("SpawnTrail", location, relative_location, relative_rotation, normal, entity)
+	self:CallRemoteEvent("SpawnTrail", Reliability.Reliable, location, relative_location, relative_rotation, normal, entity)
 end

@@ -5,16 +5,16 @@ Thruster.input_bindings = {
 	{
 		label = "activate / deactivate",
 		callback_pressed = function(entity)
-			entity:CallRemoteEvent("SetActive", true)
+			entity:CallRemoteEvent("SetActive", Reliability.Reliable, true)
 		end,
 		callback_released = function(entity)
-			entity:CallRemoteEvent("SetActive", false)
+			entity:CallRemoteEvent("SetActive", Reliability.Reliable, false)
 		end,
 	},
 	{
 		label = "toggle",
 		callback_pressed = function(entity)
-			entity:CallRemoteEvent("SetActive", not entity:GetValue("Active"))
+			entity:CallRemoteEvent("SetActive", Reliability.Reliable, not entity:GetValue("Active"))
 		end,
 	},
 }
@@ -26,7 +26,7 @@ Thruster.selected_context_menu_items = {
 		type = "select",
 		options = THRUSTER_ASSETS,
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetParticleAsset", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetParticleAsset", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Particle")
@@ -37,7 +37,7 @@ Thruster.selected_context_menu_items = {
 		label = "sound",
 		options = THRUSTER_SOUNDS,
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetSoundAsset", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetSoundAsset", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Sound")
@@ -49,7 +49,7 @@ Thruster.selected_context_menu_items = {
 		min = 0,
 		max = 1000,
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetCustomForce", value * 1000)
+			ContextMenu.selected_entity:CallRemoteEvent("SetCustomForce", Reliability.Reliable, value * 1000)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Force") / 1000
@@ -59,7 +59,7 @@ Thruster.selected_context_menu_items = {
 		label = "active",
 		type = "checkbox",
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetActive", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetActive", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Active")

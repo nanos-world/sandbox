@@ -57,5 +57,5 @@ function WireGun:OnLocalPlayerTarget(targeting_first_to, targeting_first_relativ
 	-- TODO test if can wire these two entities on client side?
 
 	-- Calls remote to attach wire
-	self:CallRemoteEvent("Wire", targeting_first_to, targeting_second_to, WireGun.configs)
+	self:CallRemoteEvent("Wire", Reliability.Reliable, targeting_first_to, targeting_second_to, WireGun.configs)
 end

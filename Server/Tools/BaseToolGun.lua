@@ -51,7 +51,7 @@ function ToolGun:OnPickUp(character)
 	if (not player) then return end
 
 	-- Triggers the PickUp on the client which picked up it
-	self:CallRemoteEvent("LocalPlayerPickUp", player, character)
+	self:CallRemoteEvent("LocalPlayerPickUp", player, Reliability.Reliable, character)
 end
 
 function ToolGun:OnDrop(character)
@@ -61,7 +61,7 @@ function ToolGun:OnDrop(character)
 	if (player:IsBeingDestroyed()) then return end
 
 	-- Triggers the Drop on the client which dropped up it
-	self:CallRemoteEvent("LocalPlayerDrop", player, character)
+	self:CallRemoteEvent("LocalPlayerDrop", player, Reliability.Reliable, character)
 end
 
 ToolGun.Subscribe("PickUp", ToolGun.OnPickUp)

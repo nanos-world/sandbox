@@ -11,7 +11,7 @@ BaseButton.selected_context_menu_items = {
 		type = "checkbox",
 		label = "switchable",
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetSwitchable", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetSwitchable", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Switchable")
@@ -22,7 +22,7 @@ BaseButton.selected_context_menu_items = {
 		type = "color",
 		label = "activated color",
 		callback = function(color)
-			ContextMenu.selected_entity:CallRemoteEvent("SetActivatedColor", Color.FromHEX(color))
+			ContextMenu.selected_entity:CallRemoteEvent("SetActivatedColor", Reliability.Reliable, Color.FromHEX(color))
 		end,
 		value = function()
 			return Color.ToHex(ContextMenu.selected_entity:GetValue("ActivatedColor") or Color.GREEN, false)
@@ -33,7 +33,7 @@ BaseButton.selected_context_menu_items = {
 		type = "text",
 		label = "activate text",
 		callback = function(text)
-			ContextMenu.selected_entity:CallRemoteEvent("SetActivateLabel", text)
+			ContextMenu.selected_entity:CallRemoteEvent("SetActivateLabel", Reliability.Reliable, text)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("ActivateLabel") or "activate"
@@ -44,7 +44,7 @@ BaseButton.selected_context_menu_items = {
 		type = "color",
 		label = "deactivated color",
 		callback = function(color)
-			ContextMenu.selected_entity:CallRemoteEvent("SetDeactivatedColor", Color.FromHEX(color))
+			ContextMenu.selected_entity:CallRemoteEvent("SetDeactivatedColor", Reliability.Reliable, Color.FromHEX(color))
 		end,
 		value = function()
 			return Color.ToHex(ContextMenu.selected_entity:GetValue("DeactivatedColor") or Color.RED, false)
@@ -55,7 +55,7 @@ BaseButton.selected_context_menu_items = {
 		type = "text",
 		label = "deactivate text",
 		callback = function(text)
-			ContextMenu.selected_entity:CallRemoteEvent("SetDeactivateLabel", text)
+			ContextMenu.selected_entity:CallRemoteEvent("SetDeactivateLabel", Reliability.Reliable, text)
 
 			if (ContextMenu.selected_entity.is_active) then
 				ContextMenu.selected_entity:SetInteractionToolTipText(text)

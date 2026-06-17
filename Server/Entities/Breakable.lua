@@ -61,7 +61,7 @@ function InflameProp(prop)
 		"nanos-world::A_Gas_Leak_Loop_03",
 	}
 
-	Events.BroadcastRemote("SpawnSoundAttached", prop, gas_leak_sounds[math.random(#gas_leak_sounds)], false, false, 0.5, math.random(9, 11) / 10)
+	Events.BroadcastRemote("SpawnSoundAttached", Reliability.Reliable, prop, gas_leak_sounds[math.random(#gas_leak_sounds)], false, false, 0.5, math.random(9, 11) / 10)
 
 	local particle = Particle(prop:GetLocation(), Rotator(), "nanos-world::P_LeadersRing", false, true)
 	particle:AttachTo(prop, AttachmentRule.SnapToTarget, "", 0.05)
@@ -106,7 +106,7 @@ function BreakProp(prop, intensity)
 		end
 
 		-- Spawns the Debris on the client (better performance for server)
-		Events.BroadcastRemote("SpawnDebris",
+		Events.BroadcastRemote("SpawnDebris", Reliability.Reliable,
 			prop,
 			debris_data.offset,
 			debris_data.rotation,

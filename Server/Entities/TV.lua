@@ -76,7 +76,7 @@ end
 
 -- Overrides Interact (to avoid Players picking it up, and instead open a PopUp)
 function TV:OnInteract(character)
-	Events.CallRemote("InteractTV", character:GetPlayer(), self)
+	Events.CallRemote("InteractTV", character:GetPlayer(), Reliability.Reliable, self)
 
 	-- Returns false to prevent picking it up
 	return false

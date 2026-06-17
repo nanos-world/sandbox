@@ -41,5 +41,5 @@ ColorGun.picked_context_menu_items = {
 -- Overrides ToolGunSingleTarget method
 function ColorGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
 	-- Calls remote to spawn the Lamp
-	Events.CallRemote("ColorObject", entity, location, normal, ColorGun.configs.color)
+	Events.CallRemote("ColorObject", Reliability.Reliable, entity, location, normal, ColorGun.configs.color)
 end

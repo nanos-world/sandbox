@@ -13,7 +13,7 @@ Sign.selected_context_menu_items = {
 		label = "text",
 		placeholder = "enter text...",
 		callback = function(value)
-			ContextMenu.selected_entity:CallRemoteEvent("SetText", value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetText", Reliability.Reliable, value)
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("TextRender"):GetText()

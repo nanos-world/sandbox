@@ -33,7 +33,7 @@ function ResizerGun:OnReleaseUse(character)
 	if (ResizerGun.resizing_object) then
 		ResizerGun.resizing_object:SetHighlightEnabled(false)
 		ResizerGun.resizing_object = nil
-		Events.CallRemote("ToggleResizing", false)
+		Events.CallRemote("ToggleResizing", Reliability.Reliable, false)
 	end
 end
 
@@ -42,7 +42,7 @@ function ResizerGun:OnLocalPlayerTarget(location, relative_location, relative_ro
 	ResizerGun.resizing_object = entity
 	ResizerGun.current_scale = ResizerGun.resizing_object:GetScale().X
 	ResizerGun.resizing_object:SetHighlightEnabled(true, 0)
-	Events.CallRemote("ToggleResizing", true)
+	Events.CallRemote("ToggleResizing", Reliability.Reliable, true)
 end
 
 -- Overrides Tool Gun's OnLocalPlayerPickUp
@@ -67,7 +67,7 @@ function ResizerGun:OnLocalPlayerDrop(character)
 	if (ResizerGun.resizing_object) then
 		ResizerGun.resizing_object:SetHighlightEnabled(false)
 		ResizerGun.resizing_object = nil
-		Events.CallRemote("ToggleResizing", false)
+		Events.CallRemote("ToggleResizing", Reliability.Reliable, false)
 	end
 end
 
@@ -75,7 +75,7 @@ function ResizerGunWeaponAimModeChanged(character, old_state, new_state)
 	if (new_state == AimMode.None and ResizerGun.resizing_object) then
 		ResizerGun.resizing_object:SetHighlightEnabled(false)
 		ResizerGun.resizing_object = nil
-		Events.CallRemote("ToggleResizing", false)
+		Events.CallRemote("ToggleResizing", Reliability.Reliable, false)
 	end
 end
 
@@ -88,7 +88,7 @@ function ResizerGunMouseScroll(mouse_x, mouse_y, delta)
 	-- Cannot resize too big or too small
 	ResizerGun.current_scale = NanosMath.Clamp(ResizerGun.current_scale, ResizerGun.min_object_scale, ResizerGun.max_object_scale)
 
-	ResizerGun.weapon:CallRemoteEvent("ResizeObject", ResizerGun.resizing_object, ResizerGun.current_scale, true)
+	ResizerGun.weapon:CallRemoteEvent("ResizeObject", Reliability.Reliable, ResizerGun.resizing_object, ResizerGun.current_scale, true)
 end
 
 function ResizerGunKeyPress(key_name)
@@ -96,6 +96,6 @@ function ResizerGunKeyPress(key_name)
 
 	if (key_name == "R") then
 		ResizerGun.current_scale = 1
-		ResizerGun.weapon:CallRemoteEvent("ResizeObject", ResizerGun.resizing_object, 1, true)
+		ResizerGun.weapon:CallRemoteEvent("ResizeObject", Reliability.Reliable, ResizerGun.resizing_object, 1, true)
 	end
 end
