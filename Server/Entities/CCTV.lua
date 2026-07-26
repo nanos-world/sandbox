@@ -4,10 +4,15 @@ ConfigureSpawnLimits("CCTV", "CCTVs", CCTV.GetCount, "max_cctvs")
 
 function CCTV:Constructor(location, rotation)
 	-- Spawns a TV prop
-	self.Super:Constructor(location, rotation + Rotator(0, 90, 0), "nanos-world::SM_TV")
+	self.Super:Constructor(location, rotation + Rotator(0, 90, 0), "nanos-world::SM_TV", nil, nil, nil, nil, true)
 
 	-- Spawns the Camera Prop
 	self.camera = Prop(location + rotation:RotateVector(Vector(150, 0, 0)), rotation, "nanos-world::SM_Camera")
+
+	-- Sets this so we can access through Client
+	self:SetValue("Camera", self.camera, true)
+
+	self:FinishSpawn()
 
 	-- Spawns a Cable
 	self.cable = Cable(location, true, true)
@@ -19,9 +24,6 @@ function CCTV:Constructor(location, rotation)
 
 	self.cable:AttachStartTo(self.camera, Vector(-85, 0, 0))
 	self.cable:AttachEndTo(self, Vector(0, 0, 10))
-
-	-- Sets this so we can access through Client
-	self:SetValue("Camera", self.camera, true)
 end
 
 function CCTV:OnDestroy()

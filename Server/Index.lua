@@ -294,16 +294,16 @@ end)
 
 Package.Subscribe("Unload", function()
 	-- When Package unloads, stores the characters locations to respawn them at the same position if the package is being reloaded
-	for k, p in pairs(Player.GetAll()) do
-		local cha = p:GetControlledCharacter()
+	for _, player in pairs(Player.GetPairs()) do
+		local cha = player:GetControlledCharacter()
 		if (cha) then
-			p:SetValue("last_position", { location = cha:GetLocation(), rotation = Rotator(0, cha:GetRotation().Yaw, 0) })
+			player:SetValue("last_position", { location = cha:GetLocation(), rotation = Rotator(0, cha:GetRotation().Yaw, 0) })
 		end
 	end
 end)
 
 Package.Subscribe("Load", function()
-	for k, player in pairs(Player.GetAll()) do
+	for _, player in pairs(Player.GetPairs()) do
 		SpawnPlayerCharacter(player)
 	end
 
