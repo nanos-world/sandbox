@@ -10,7 +10,7 @@ function Balloon:Constructor(location, rotation, tab, id, player, relative_locat
 		spawn_location = location + direction * 50
 	end
 
-	self.Super:Constructor(spawn_location, rotation, asset or "nanos-world::SM_Balloon_01", CollisionType.Normal, true, GrabMode.Disabled, CCDMode.Disabled, true)
+	self.Super:Constructor(spawn_location, rotation, asset or "nanos-world::SM_Balloon_01", CollisionType.Normal, true, GrabMode.Disabled, CCDMode.Disabled, SpawnMode.Manual)
 
 	-- Sets Rubber Physical Material
 	self:SetPhysicalMaterial("nanos-world::PM_Rubber")

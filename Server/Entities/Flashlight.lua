@@ -6,7 +6,7 @@ function Flashlight:Constructor(location, rotation)
 	self.Super:Constructor(location, rotation, "nanos-world::SM_Flashlight")
 
 	-- Spawns a Point Light, with the color
-	self.light = Light(Vector(), Rotator(), Color(1, 0.6, 0.4), LightType.Spot, 1, 3000, 25, 0.975, 4000, false, true, true, 2, true)
+	self.light = Light(Vector(), Rotator(), Color(1, 0.6, 0.4), LightType.Spot, 1, 3000, 25, 0.975, 4000, false, true, true, 2, SpawnMode.Manual)
 	self.light:SetTextureLightProfile(LightProfile.Shattered_02)
 
 	-- Sets light to sync

@@ -1,7 +1,7 @@
 Torch = Melee.Inherit("Torch")
 
 function Torch:Constructor(location, rotation)
-	self.Super:Constructor(location or Vector(), rotation or Rotator(), "nanos-world::SM_Torch", CollisionType.Auto, true, HandlingMode.Torch, nil, true, true)
+	self.Super:Constructor(location or Vector(), rotation or Rotator(), "nanos-world::SM_Torch", CollisionType.Auto, true, HandlingMode.Torch, nil, true, SpawnMode.Manual)
 	self:AddAnimationCharacterUse("nanos-world::AM_Mannequin_Torch_Attack")
 	self:SetImpactSound(SurfaceType.Flesh, "nanos-world::A_Punch_Cue")
 	self:SetDamageSettings(0.5, 0.25)

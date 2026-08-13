@@ -4,7 +4,7 @@ ConfigureSpawnLimits("Trail", "Trails", Trail.GetCount, "max_trails")
 
 function Trail:Constructor(hit_location, rotation, relative_location, relative_rotation, direction, entity)
 	-- Spawns a Trail Prop
-	self.Super:Constructor(hit_location, rotation, "nanos-world::SM_Jet_Thruster", CollisionType.NoCollision, true, GrabMode.Disabled, CCDMode.Auto, true)
+	self.Super:Constructor(hit_location, rotation, "nanos-world::SM_Jet_Thruster", CollisionType.NoCollision, true, GrabMode.Disabled, CCDMode.Auto, SpawnMode.Manual)
 
 	self:SetScale(Vector(0.3, 0.6, 0.6))
 
@@ -14,7 +14,7 @@ function Trail:Constructor(hit_location, rotation, relative_location, relative_r
 	self:FinishSpawn()
 
 	-- Spawns a Particle and attaches it to the trail
-	local particle = Particle(hit_location, Rotator(), "nanos-world::P_Ribbon", false, true, true)
+	local particle = Particle(hit_location, Rotator(), "nanos-world::P_Ribbon", false, true, SpawnMode.Manual)
 	particle:SetParameterColor("Color", self.color)
 	particle:SetParameterFloat("LifeTime", 2)
 	particle:SetParameterFloat("SpawnRate", 60)

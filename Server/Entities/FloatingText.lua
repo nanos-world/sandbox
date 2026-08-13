@@ -3,7 +3,7 @@ FloatingText = Prop.Inherit("FloatingText")
 ConfigureSpawnLimits("FloatingText", "Floating Texts", FloatingText.GetCount, "max_floating_texts")
 
 function FloatingText:Constructor(location, rotation, tab, id, player)
-	self.Super:Constructor(location, rotation + Rotator(0, 180, 0), "nanos-world::SM_Cube", CollisionType.StaticOnly, false, GrabMode.Auto, CCDMode.Auto, true)
+	self.Super:Constructor(location, rotation + Rotator(0, 180, 0), "nanos-world::SM_Cube", CollisionType.StaticOnly, false, GrabMode.Auto, CCDMode.Auto, SpawnMode.Manual)
 	self:SetMaterial("nanos-world::M_None")
 	self:FinishSpawn()
 

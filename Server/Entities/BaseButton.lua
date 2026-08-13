@@ -3,7 +3,7 @@ BaseButton = Prop.Inherit("BaseButton")
 ConfigureSpawnLimits("Button", "Buttons", BaseButton.GetCount, "max_buttons")
 
 function BaseButton:Constructor(location, rotation, tab, id, player, switchable)
-	self.Super:Constructor(location, rotation, "nanos-world::SM_PushButton", CollisionType.Auto, true, GrabMode.Enabled, CCDMode.Auto, true)
+	self.Super:Constructor(location, rotation, "nanos-world::SM_PushButton", CollisionType.Auto, true, GrabMode.Enabled, CCDMode.Auto, SpawnMode.AfterConstructor)
 
 	-- Cooldown in milliseconds
 	self.cooldown = 500

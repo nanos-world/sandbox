@@ -7,7 +7,7 @@ function TV:Constructor(location, rotation)
 	location = location or Vector()
 	rotation = (rotation or Rotator()) + Rotator(0, 90, 0)
 
-	self.Super:Constructor(location, rotation, "nanos-world::SM_TV", CollisionType.Auto, true, GrabMode.Enabled, CCDMode.Auto, true)
+	self.Super:Constructor(location, rotation, "nanos-world::SM_TV", CollisionType.Auto, true, GrabMode.Enabled, CCDMode.Auto, SpawnMode.Manual)
 	self:SetScale(Vector(2, 2, 2))
 	self:FinishSpawn()
 
@@ -16,8 +16,8 @@ function TV:Constructor(location, rotation)
 	local soundbox_02 = Prop(location - rotation:RotateVector(Vector(200, 0, 0)), rotation, "nanos-world::SM_HalfStack_Marshall")
 
 	-- Spawns Cables to visually connect both
-	local cable_01 = Cable(location, true, true)
-	local cable_02 = Cable(location, true, true)
+	local cable_01 = Cable(location, true, SpawnMode.Manual)
+	local cable_02 = Cable(location, true, SpawnMode.Manual)
 
 	cable_01:SetLinearLimits(ConstraintMotion.Limited, ConstraintMotion.Limited, ConstraintMotion.Limited, 10000, 0, true, 10000, 100)
 	cable_01:SetRenderingSettings(2, 4, 1)

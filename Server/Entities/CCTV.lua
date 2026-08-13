@@ -4,7 +4,7 @@ ConfigureSpawnLimits("CCTV", "CCTVs", CCTV.GetCount, "max_cctvs")
 
 function CCTV:Constructor(location, rotation)
 	-- Spawns a TV prop
-	self.Super:Constructor(location, rotation + Rotator(0, 90, 0), "nanos-world::SM_TV", nil, nil, nil, nil, true)
+	self.Super:Constructor(location, rotation + Rotator(0, 90, 0), "nanos-world::SM_TV", nil, nil, nil, nil, SpawnMode.Manual)
 
 	-- Spawns the Camera Prop
 	self.camera = Prop(location + rotation:RotateVector(Vector(150, 0, 0)), rotation, "nanos-world::SM_Camera")
@@ -15,7 +15,7 @@ function CCTV:Constructor(location, rotation)
 	self:FinishSpawn()
 
 	-- Spawns a Cable
-	self.cable = Cable(location, true, true)
+	self.cable = Cable(location, true, SpawnMode.Manual)
 	self.cable:SetLinearLimits(ConstraintMotion.Limited, ConstraintMotion.Limited, ConstraintMotion.Limited, 10000, 0, true, 10000, 100)
 	self.cable:SetMaterial("nanos-world::M_Default_Masked_Lit")
 	self.cable:SetMaterialColorParameter("Tint", Color.BLACK)

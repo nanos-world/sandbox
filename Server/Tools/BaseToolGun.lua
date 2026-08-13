@@ -15,7 +15,7 @@ end
 
 
 function ToolGun:Constructor(location, rotation, color)
-	self.Super:Constructor(location, rotation, "nanos-world::SK_Blaster", CollisionType.Auto, true, true)
+	self.Super:Constructor(location, rotation, "nanos-world::SK_Blaster", CollisionType.Auto, true, SpawnMode.Manual)
 
 	self:SetAmmoSettings(10000000, 0)
 	self:SetDamage(0)
