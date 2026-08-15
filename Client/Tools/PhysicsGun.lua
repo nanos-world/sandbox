@@ -43,8 +43,6 @@ PhysicsGun.quaternion_mouse_move_y = Quat(0, 0, 0, 1) -- Cache it for performanc
 
 
 function PhysicsGun:OnSpawn()
-	self.beam_particle = self:GetValue("BeamParticle")
-
 	self.target_particle = Particle(Vector(), Rotator(), "nanos-world::P_Fountain", false, false)
 	self.target_particle:SetParameterColor("Color", Color(0, 0, 50, 0.5))
 	self.target_particle:SetParameterFloat("VelocityConeAngle", 60)
@@ -343,8 +341,8 @@ Client.Subscribe("Tick", function(delta_time)
 
 	-- Every Frame, updates all PhysicsGun's Beam Particles
 	-- This particle has a special Vector parameter 'BeamEnd' which defines where the Beam will end
-	for k, physics_gun in pairs(PhysicsGun.GetAll()) do
-		local beam_particle = physics_gun.beam_particle
+	for k, physics_gun in pairs(PhysicsGun.GetPairs()) do
+		local beam_particle = physics_gun:GetValue("BeamParticle")
 		if (beam_particle and beam_particle:IsValid()) then
 			-- Gets the gravitating object
 			local beam_end_object = beam_particle:GetValue("BeamEndObject")
