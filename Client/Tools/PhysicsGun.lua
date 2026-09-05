@@ -92,8 +92,14 @@ end
 function PhysicsGun:OnToggleTargetParticles(enable)
 	self.target_particle_enabled = enable
 
+	-- Note: due a "Niagara bug", activating then deactivating an unloaded particle makes it to activate anyway when loading the asset internally
+	-- so we do a small timeout for enabling it to mitigate this issue
 	if (enable) then
-		self.target_particle:Activate(true)
+		Timer.Bind(Timer.SetTimeout(function()
+			if (self.target_particle_enabled) then
+				self.target_particle:Activate(true)
+			end
+		end, 100), self.target_particle)
 	else
 		self.target_particle:Deactivate()
 	end
