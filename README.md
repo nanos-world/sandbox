@@ -26,7 +26,7 @@ This game-mode automatically loads:
 - [Default Vehicles](https://github.com/nanos-world/nanos-world-vehicles)
 - [Default Characters](https://github.com/nanos-world/default-characters)
 
-Recommended map: `playground-map`.
+Recommended map: `default-testing-map`.
 
 
 ## Installation
@@ -35,14 +35,14 @@ Add it as your game-mode in the server `Config.toml`:
 
 ```toml
 [game]
-    map =       "playground-map"
+    map =       "default-testing-map"
     game_mode = "sandbox"
 ```
 
 Or start the server from the command line:
 
 ```bash
-./NanosWorldServer.exe --game_mode sandbox --map playground-map
+./NanosWorldServer.exe --game_mode sandbox --map default-testing-map
 ```
 
 
