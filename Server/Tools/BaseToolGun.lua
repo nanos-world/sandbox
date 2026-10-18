@@ -14,14 +14,15 @@ function ToolGun.GetTotalCount()
 end
 
 
-function ToolGun:Constructor(location, rotation, color)
-	self.Super:Constructor(location, rotation, "nanos-world::SK_Blaster", CollisionType.Auto, true, SpawnMode.Manual)
+function ToolGun:Constructor(location, rotation, color, mesh)
+	self.Super:Constructor(location, rotation, mesh or "nanos-world::SK_ToolGun", CollisionType.Auto, true, SpawnMode.Manual)
 
 	self:SetAmmoSettings(10000000, 0)
 	self:SetDamage(0)
 	self:SetSpread(0)
 	self:SetRecoil(0)
-	self:SetSightTransform(Vector(0, 0, -3.2), Rotator(0, 0, 0))
+	-- Sight line passes just over the screen, so it stays in view below the crosshair while aiming
+	self:SetSightTransform(Vector(0, 0, -9.5), Rotator(0, 0, 0))
 	self:SetLeftHandTransform(Vector(-1, 1, -2), Rotator(0, 60, 100))
 	self:SetRightHandOffset(Vector(-25, -5, 0))
 	self:SetHandlingMode(HandlingMode.SingleHandedWeapon)
@@ -38,12 +39,14 @@ function ToolGun:Constructor(location, rotation, color)
 	-- We need to spawn it before attaching
 	self:FinishSpawn()
 
-	-- ToolGun label
-	self.text_render = TextRender(location, Rotator(), self:GetName(), 2, color, TextRenderRenderingType.Unlit, TextRenderHorizontalAlignment.Center, TextRenderVerticalAlignment.Center, "nanos-world::Font_LondrinaSolid_DistanceField")
-	self.text_render:AttachTo(self, AttachmentRule.SnapToTarget, "", 0)
-	self.text_render:SetRelativeLocation(Vector(-2.5, 0, 8.5))
-	self.text_render:SetRelativeRotation(Rotator(0, 180, 0))
-	self.text_render:SetRenderCullDistance(1000)
+	-- ToolGun label, shown on the Tool Gun screen (tools with their own mesh have no screen, so no label)
+	if (not mesh) then
+		self.text_render = TextRender(location, Rotator(), self:GetName(), 1.4, color, TextRenderRenderingType.Unlit, TextRenderHorizontalAlignment.Center, TextRenderVerticalAlignment.Center, "nanos-world::Font_BoldPixels_DistanceField")
+		self.text_render:AttachTo(self, AttachmentRule.SnapToTarget, "screen", 0)
+		-- Faces the player, matching the 20 degrees the screen is tipped up
+		self.text_render:SetRelativeRotation(Rotator(20, 180, 0))
+		self.text_render:SetRenderCullDistance(1000)
+	end
 end
 
 function ToolGun:OnPickUp(character)

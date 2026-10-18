@@ -1,8 +1,14 @@
 PhysicsGun = ToolGun.Inherit("PhysicsGun")
 
 function PhysicsGun:Constructor(location, rotation)
-	-- Calls parent ToolGun constructor
-	ToolGun.Constructor(self, location, rotation, Color.BLUE)
+	-- Calls parent ToolGun constructor, with the Gravity Gun mesh instead of the default Tool Gun
+	ToolGun.Constructor(self, location, rotation, Color.BLUE, "nanos-world::SK_GravityGun")
+
+	-- The Gravity Gun is a two-handed rifle: left hand on the handguard under the coils, stock against the shoulder
+	self:SetSightTransform(Vector(0, 0, -5), Rotator(0, 0, 0))
+	self:SetLeftHandTransform(Vector(14, 0, 0), Rotator(0, 60, 90))
+	self:SetRightHandOffset(Vector(-5, -7, -5))
+	self:SetHandlingMode(HandlingMode.DoubleHandedWeapon)
 
 	-- Spawns a Beam Particle and attaches it to the weapon
 	self.beam_particle = Particle(Vector(), Rotator(), "nanos-world::P_Beam", false, false)
@@ -15,6 +21,16 @@ function PhysicsGun:Constructor(location, rotation)
 
 	-- Syncs the Particle with Clients
 	self:SetValue("BeamParticle", self.beam_particle, true)
+end
+
+-- Opens the pincers and charges the coils glow while the gun is on (together with the beam), closes and dims them when off
+function PhysicsGun:SetActiveVisuals(active)
+	if (self:IsBeingDestroyed()) then return end
+	if (self.visuals_active == active) then return end
+	self.visuals_active = active
+
+	self:PlayAnimation(active and "nanos-world::A_GravityGun_Open" or "nanos-world::A_GravityGun_Close")
+	self:SetMaterialScalarParameter("Charge", active and 1 or 0)
 end
 
 function PhysicsGun:OnPickUpObject(player, object, is_grabbing, picking_object_relative_location, freeze)
@@ -108,6 +124,7 @@ function PhysicsGun:OnToggle(player, enable)
 	-- If the Physics Gun is being enabled
 	if (enable) then
 		self.beam_particle:Activate(true)
+		self:SetActiveVisuals(true)
 		self:BroadcastRemoteEvent("ToggleTargetParticles", Reliability.Reliable, true)
 	else
 		Events.BroadcastRemote("SpawnSound", Reliability.Reliable, self:GetLocation(), "nanos-world::A_Simulate_End", false, 1, 1)
@@ -118,6 +135,7 @@ end
 function PhysicsGun:StopParticles()
 	if (self:IsBeingDestroyed()) then return end
 	self.beam_particle:Deactivate()
+	self:SetActiveVisuals(false)
 	self:BroadcastRemoteEvent("ToggleTargetParticles", Reliability.Reliable, false)
 end
 
