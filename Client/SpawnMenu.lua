@@ -147,8 +147,9 @@ Sandbox.HUD:Subscribe("SpawnItem", function(category, asset_id)
 	-- Gets the rotation looking at the player, only rotated by Yaw
 	local spawn_rotation = Rotator(0, viewport_3D.Direction:ToOrientationRotator().Yaw, 0)
 
+	-- Pushed out of the hit surface so items fall into place
 	if (trace_result.Success) then
-		spawn_location = trace_result.Location - viewport_3D.Direction * 100
+		spawn_location = trace_result.Location + trace_result.Normal * 50
 	end
 
 	-- Triggers client side
