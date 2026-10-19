@@ -30,8 +30,9 @@ function ConfigureSpawnLimits(ID, label, func_check, setting_override)
 	SANDBOX_LIMITS[ID] = { max_count = max_count, label = label, func_check = func_check }
 end
 
--- Validates if a player can spawn an item
-function ValidateSpawnLimits(player, ID)
+-- Whether one more item with this limit ID fits under the server's configured limit (an item without a limit always does)
+-- Exported in Sandbox, so other packages spawning sandbox entities themselves can keep to the same limits
+function Sandbox.IsUnderSpawnLimit(ID)
 	local limit_data = SANDBOX_LIMITS[ID]
 
 	-- No limits for this item
@@ -39,12 +40,16 @@ function ValidateSpawnLimits(player, ID)
 		return true
 	end
 
-	local current_count = limit_data.func_check()
+	return limit_data.func_check() < limit_data.max_count
+end
 
-	-- Under limits
-	if (current_count < limit_data.max_count) then
+-- Validates if a player can spawn an item
+function ValidateSpawnLimits(player, ID)
+	if (Sandbox.IsUnderSpawnLimit(ID)) then
 		return true
 	end
+
+	local limit_data = SANDBOX_LIMITS[ID]
 
 	-- Can't spawn
 	Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Warning, "SPAWN_LIMIT_" .. ID, "the server have reached the configured limit of " .. limit_data.max_count .. " " .. limit_data.label .. ".", 3, 0, true)

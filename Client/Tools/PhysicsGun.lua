@@ -191,7 +191,7 @@ function TryPickUpObject()
 	-- Do the Trace
 	local trace_result = Trace.LineSingle(start_location, end_location, collision_trace, TraceMode.ReturnEntity | TraceMode.TraceOnlyVisibility)
 
-	local trace_result_entity = trace_result.Entity
+	local trace_result_entity = GetOwnerEntity(trace_result.Entity)
 
 	-- If hit something and hit an Entity
 	if (trace_result.Success and trace_result_entity and not trace_result_entity:HasAuthority()) then

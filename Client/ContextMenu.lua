@@ -165,6 +165,7 @@ function ContextMenu.OnTick(delta_time)
 
 	-- Do the Trace
 	local trace_result = Trace.LineSingle(start_location, end_location, collision_trace, trace_mode, ignored_actors)
+	trace_result.Entity = GetOwnerEntity(trace_result.Entity)
 
 	if (trace_result.Success and trace_result.Entity) then
 		if (ContextMenu.hovering_entity ~= trace_result.Entity) then

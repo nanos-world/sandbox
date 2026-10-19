@@ -88,7 +88,10 @@ function TraceFor(trace_max_distance, collision_channel)
 
 	local ignored_actors = { Client.GetLocalPlayer():GetControlledCharacter() }
 
-	return Trace.LineSingle(start_location, end_location, collision_channel, trace_mode, ignored_actors)
+	local trace_result = Trace.LineSingle(start_location, end_location, collision_channel, trace_mode, ignored_actors)
+	trace_result.Entity = GetOwnerEntity(trace_result.Entity)
+
+	return trace_result
 end
 
 function ToolGun.ToggleDrawDebugPreviewMesh(enable, default_location, default_rotation)

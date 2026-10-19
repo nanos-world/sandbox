@@ -104,7 +104,7 @@ function PhysicsGun:OnPickUpObject(player, object, is_grabbing, picking_object_r
 	object:SetGravityEnabled(not freeze and not is_grabbing)
 
 	-- Disables/Enables the ability to players to grab it
-	if (object:IsA(Prop) and not object:IsA(BaseButton)) then
+	if (object:IsA(Prop) and not object:IsA(LogicButton)) then
 		object:SetGrabMode(freeze and GrabMode.Disabled or GrabMode.Auto)
 	end
 
