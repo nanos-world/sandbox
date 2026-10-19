@@ -1,11 +1,23 @@
-BaseButton = Prop.Inherit("BaseButton")
+LogicButton = Prop.Inherit("LogicButton")
 
-BaseButton.name = "Button"
-BaseButton.image = "assets://nanos-world/Thumbnails/SM_PushButton.jpg"
-BaseButton.category = "logic"
+LogicButton.name = "Button"
+LogicButton.image = "package://sandbox/Client/Media/Entities/ButtonClassic.webp"
+LogicButton.category = "logic"
 
 -- Context Menu Items when selecting this Entity
-BaseButton.selected_context_menu_items = {
+LogicButton.selected_context_menu_items = {
+	{
+		id = "button_style",
+		type = "select_image",
+		label = "style",
+		options = BUTTON_STYLES,
+		callback = function(value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetStyle", Reliability.Reliable, value)
+		end,
+		value = function()
+			return ContextMenu.selected_entity:GetValue("Style") or BUTTON_STYLES[1].id
+		end,
+	},
 	{
 		id = "button_switchable",
 		type = "checkbox",
@@ -58,7 +70,7 @@ BaseButton.selected_context_menu_items = {
 			ContextMenu.selected_entity:CallRemoteEvent("SetDeactivateLabel", Reliability.Reliable, text)
 
 			if (ContextMenu.selected_entity.is_active) then
-				ContextMenu.selected_entity:SetInteractionToolTipText(text)
+				ContextMenu.selected_entity:SetToolTip(text)
 			end
 		end,
 		value = function()
@@ -74,39 +86,58 @@ BaseButton.selected_context_menu_items = {
 		end,
 	}
 }
--- TODO config sound
+-- The moving part is interacted with as well, so it shows the same tooltip
+function LogicButton:SetToolTip(text)
+	self:SetInteractionToolTipText(text)
 
-
-function BaseButton:OnSpawn()
-	self:SetInteractionToolTipText(self:GetValue("ActivateLabel") or "activate")
+	local part = self:GetValue("Part")
+	if (part and part:IsValid()) then
+		part:SetInteractionToolTipText(text)
+	end
 end
 
-function BaseButton:OnActivated()
+function LogicButton:PlaySound(pitch)
+	local style = GetButtonStyle(self:GetValue("Style")) or BUTTON_STYLES[1]
+	Sound(self:GetLocation(), style.sound, false, true, SoundType.SFX, 1, pitch, nil, nil, AttenuationFunction.NaturalSound)
+end
+
+function LogicButton:OnSpawn()
+	self:OnUpdateLabel()
+end
+
+function LogicButton:OnActivated()
 	if (self:GetValue("Switchable")) then
-		self:SetInteractionToolTipText(self:GetValue("DeactivateLabel") or "deactivate")
 		self.is_active = true
+		self:OnUpdateLabel()
 	end
 
-	local sound = Sound(self:GetLocation(), "nanos-world::A_Switch_Button_01", false, true, SoundType.SFX, 1, 1.1, nil, nil, AttenuationFunction.NaturalSound)
+	self:PlaySound(1.1)
 end
 
-function BaseButton:OnDeactivated()
-	self:SetInteractionToolTipText(self:GetValue("ActivateLabel") or "activate")
-
+function LogicButton:OnDeactivated()
 	self.is_active = false
+	self:OnUpdateLabel()
 
-	local sound = Sound(self:GetLocation(), "nanos-world::A_Switch_Button_01", false, true, SoundType.SFX, 1, 0.9, nil, nil, AttenuationFunction.NaturalSound)
+	self:PlaySound(0.9)
 end
 
-function BaseButton:OnUpdateLabel()
-	if (self.is_active) then
-		self:SetInteractionToolTipText(self:GetValue("DeactivateLabel") or "activate")
+function LogicButton:OnUpdateLabel()
+	if (self:GetValue("Active")) then
+		self:SetToolTip(self:GetValue("DeactivateLabel") or "deactivate")
 	else
-		self:SetInteractionToolTipText(self:GetValue("ActivateLabel") or "deactivate")
+		self:SetToolTip(self:GetValue("ActivateLabel") or "activate")
 	end
 end
 
-BaseButton.Subscribe("Spawn", BaseButton.OnSpawn)
-BaseButton.SubscribeRemote("OnActivated", BaseButton.OnActivated)
-BaseButton.SubscribeRemote("OnDeactivated", BaseButton.OnDeactivated)
-BaseButton.SubscribeRemote("UpdateLabel", BaseButton.OnUpdateLabel)
+-- A new part (the style changed) needs the tooltip too, and so does the state the server keeps
+function LogicButton:OnValueChange(key, value)
+	if (key == "Part" or key == "Active") then
+		self:OnUpdateLabel()
+	end
+end
+
+LogicButton.Subscribe("Spawn", LogicButton.OnSpawn)
+LogicButton.Subscribe("ValueChange", LogicButton.OnValueChange)
+LogicButton.SubscribeRemote("OnActivated", LogicButton.OnActivated)
+LogicButton.SubscribeRemote("OnDeactivated", LogicButton.OnDeactivated)
+LogicButton.SubscribeRemote("UpdateLabel", LogicButton.OnUpdateLabel)
