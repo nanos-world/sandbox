@@ -1,14 +1,14 @@
-RetroCamera = Prop.Inherit("RetroCamera")
+InstantCamera = Prop.Inherit("InstantCamera")
 
-ConfigureSpawnLimits("RetroCamera", "Retro Cameras", RetroCamera.GetCount, "max_retro_cameras")
+ConfigureSpawnLimits("InstantCamera", "Instant Cameras", InstantCamera.GetCount, "max_instant_cameras")
 
-function RetroCamera:Constructor(location, rotation)
-	self.Super:Constructor(location or Vector(), (rotation or Rotator()) + Rotator(0, 90, 0), "nanos-world::SM_RetroCamera", CollisionType.Auto, true, GrabMode.Auto, CCDMode.Auto, SpawnMode.AfterConstructor)
+function InstantCamera:Constructor(location, rotation)
+	self.Super:Constructor(location or Vector(), (rotation or Rotator()) + Rotator(0, 90, 0), "nanos-world::SM_InstantCamera", CollisionType.Auto, true, GrabMode.Auto, CCDMode.Auto, SpawnMode.AfterConstructor)
 	self:SetScale(Vector(1.25))
 end
 
-function RetroCamera:OnTakePhoto(player, base64)
-	if (not ValidateSpawnLimits(player, "RetroCamera")) then
+function InstantCamera:OnTakePhoto(player, base64)
+	if (not ValidateSpawnLimits(player, "InstantCamera")) then
 		return
 	end
 
@@ -20,13 +20,13 @@ function RetroCamera:OnTakePhoto(player, base64)
 		local rotation = self:GetRotation()
 		local right_vector = rotation:GetRightVector()
 		local up_vector = rotation:GetUpVector()
-		local retro_camera_scale = self:GetScale().X
+		local instant_camera_scale = self:GetScale().X
 
 		-- Scales photograph by the camera scale
-		local location = self:GetLocation() + up_vector * 2 * retro_camera_scale + right_vector * 25 * retro_camera_scale
+		local location = self:GetLocation() + up_vector * 2 * instant_camera_scale + right_vector * 25 * instant_camera_scale
 		local impulse = right_vector * 100 + self:GetVelocity()
 
-		local photograph = Photograph(location, rotation, base64, retro_camera_scale)
+		local photograph = Photograph(location, rotation, base64, instant_camera_scale)
 		photograph:AddImpulse(impulse, true)
 
 		-- Adds to player's history
@@ -36,11 +36,11 @@ function RetroCamera:OnTakePhoto(player, base64)
 	end, 300)
 end
 
-function RetroCamera:Activate(player_instigator, causer)
+function InstantCamera:Activate(player_instigator, causer)
 	self:CallRemoteEvent("ForceTakePhoto", player_instigator)
 end
 
-RetroCamera.SubscribeRemote("TakePhoto", RetroCamera.OnTakePhoto)
+InstantCamera.SubscribeRemote("TakePhoto", InstantCamera.OnTakePhoto)
 
 
 

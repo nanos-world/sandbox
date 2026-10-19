@@ -1,18 +1,20 @@
-RetroCamera = Prop.Inherit("RetroCamera")
+InstantCamera = Prop.Inherit("InstantCamera")
 
-RetroCamera.name = "Retro Camera"
-RetroCamera.category = "devices"
-RetroCamera.image = "package://sandbox/Client/Media/Entities/RetroCamera.webp"
+InstantCamera.name = "Instant Camera"
+InstantCamera.category = "devices"
+InstantCamera.image = "package://sandbox/Client/Media/Entities/InstantCamera.webp"
 
-RetroCamera.currently_grabbed = nil
-RetroCamera.resolution = 256
-RetroCamera.is_aiming = false
-RetroCamera.aiming_old_viewmode = nil
+InstantCamera.currently_grabbed = nil
+InstantCamera.resolution = 256
+-- Material slot of SM_InstantCamera's back screen, it shows the live capture while held
+InstantCamera.screen_index = 1
+InstantCamera.is_aiming = false
+InstantCamera.aiming_old_viewmode = nil
 
 -- Context Menu Items when selecting this Entity
-RetroCamera.selected_context_menu_items = {
+InstantCamera.selected_context_menu_items = {
 	{
-		id = "retrocamera_takephoto",
+		id = "instantcamera_takephoto",
 		type = "button",
 		label = "take photo",
 		callback = function()
@@ -22,7 +24,7 @@ RetroCamera.selected_context_menu_items = {
 }
 
 -- Input Bindings for this Entity
-RetroCamera.input_bindings = {
+InstantCamera.input_bindings = {
 	{
 		label = "activate",
 		callback_pressed = function(entity)
@@ -32,17 +34,20 @@ RetroCamera.input_bindings = {
 }
 
 
-function RetroCamera:OnSpawn()
+function InstantCamera:OnSpawn()
 	local location = self:GetLocation()
 
-	self.scene_capture = SceneCapture(location, Rotator(), RetroCamera.resolution, RetroCamera.resolution, -1, 5000, 50, false)
+	self.scene_capture = SceneCapture(location, Rotator(), InstantCamera.resolution, InstantCamera.resolution, -1, 5000, 50, false)
 	self.scene_capture:AttachTo(self, AttachmentRule.SnapToTarget, "", 0)
-	self.scene_capture:SetRelativeLocation(Vector(0, 10, 10))
+
+	-- Just in front of the lens
+	self.scene_capture:SetRelativeLocation(Vector(0, 8.5, 6.6))
 	self.scene_capture:SetRelativeRotation(Rotator(0, 90, 0))
 
+	-- On the flash window
 	self.light = Light(location, Rotator(), Color.WHITE, LightType.Spot, 50, 1000, 50, 0, 5000, true, false, false)
 	self.light:AttachTo(self, AttachmentRule.SnapToTarget, "", 0)
-	self.light:SetRelativeLocation(Vector(0, 10, 10))
+	self.light:SetRelativeLocation(Vector(-3.6, 4, 12.6))
 	self.light:SetRelativeRotation(Rotator(0, 90, 0))
 
 	self.sound = Sound(self:GetLocation(), "package://sandbox/Client/Media/Entities/CameraClick.ogg", false, false, SoundType.SFX, 1, 1, 400, 3600, AttenuationFunction.Logarithmic, false, SoundLoopMode.Never, false)
@@ -51,7 +56,7 @@ function RetroCamera:OnSpawn()
 	self.last_photo_time = 0
 end
 
-function RetroCamera:OnTakePhoto()
+function InstantCamera:OnTakePhoto()
 	self.sound:Play()
 
 	self.light:SetVisibility(true)
@@ -60,7 +65,7 @@ function RetroCamera:OnTakePhoto()
 	end, 100), self)
 end
 
-function RetroCamera:TakePhoto()
+function InstantCamera:TakePhoto()
 	-- Cooldown check (1 second cooldown)
 	local curr_time = Client.GetTime()
 	if (os.difftime(curr_time, self.last_photo_time) < 1000) then
@@ -77,36 +82,33 @@ function RetroCamera:TakePhoto()
 	end)
 end
 
-function RetroCamera.OnLeftClickPressed()
-	if (not RetroCamera.currently_grabbed) then return end
+function InstantCamera.OnLeftClickPressed()
+	if (not InstantCamera.currently_grabbed) then return end
 	if (Input.IsMouseEnabled()) then return end
 
-	RetroCamera.currently_grabbed:TakePhoto()
+	InstantCamera.currently_grabbed:TakePhoto()
 	return false
 end
 
-function RetroCamera:OnGrab(character)
+function InstantCamera:OnGrab(character)
 	local local_player = Client.GetLocalPlayer()
 	if (not local_player or local_player:GetControlledCharacter() ~= character) then return end
 
-	RetroCamera.currently_grabbed = self
+	InstantCamera.currently_grabbed = self
 
-	Input.Bind("LeftClick", InputEvent.Pressed, RetroCamera.OnLeftClickPressed)
-
-	self.screen = StaticMesh(self:GetLocation(), Rotator(), "nanos-world::SM_Plane", CollisionType.NoCollision)
-	self.screen:AttachTo(self, AttachmentRule.SnapToTarget, "", 0)
-	self.screen:SetRelativeLocation(Vector(7.5, -11, 12.5))
-	self.screen:SetRelativeRotation(Rotator(0, 180, 90))
-	self.screen:SetScale(Vector(0.075))
+	Input.Bind("LeftClick", InputEvent.Pressed, InstantCamera.OnLeftClickPressed)
 
 	-- Enables render rate at 30 captures per second
 	self.scene_capture:SetRenderRate(0.033)
 
-	self.screen:SetMaterialFromSceneCapture(self.scene_capture, 0)
+	-- Shows the live preview on the camera's own back screen, lit like an LCD
+	self:SetMaterialFromSceneCapture(self.scene_capture, InstantCamera.screen_index)
+	self:SetMaterialColorParameter("Emissive", Color(1.5, 1.5, 1.5), InstantCamera.screen_index)
+	self:SetMaterialScalarParameter("Roughness", 0.2, InstantCamera.screen_index)
 
 	-- TODO generic on Grab?
 	-- Adds tutorial on screen
-	Tutorials.Show("Retro Camera", "Takes photographs and have it printed immediately", {
+	Tutorials.Show("Instant Camera", "Takes photographs and have it printed immediately", {
 		{ key = "LeftMouseButton",	text = "takes a photo" },
 		{ key = "Undo",				text = "undo last photo" },
 		{ key = "MouseScrollUp",	text = "rotate camera" },
@@ -114,33 +116,33 @@ function RetroCamera:OnGrab(character)
 	})
 end
 
-function RetroCamera:OnUnGrab(character)
+function InstantCamera:OnUnGrab(character)
 	local local_player = Client.GetLocalPlayer()
 	if (not local_player or local_player:GetControlledCharacter() ~= character) then return end
 
-	RetroCamera.currently_grabbed = nil
+	InstantCamera.currently_grabbed = nil
 
-	if (RetroCamera.is_aiming) then
-		RetroCamera:OnRightClickReleased()
+	if (InstantCamera.is_aiming) then
+		InstantCamera:OnRightClickReleased()
 	end
 
 	-- Disables render rate
 	self.scene_capture:SetRenderRate(-1)
-	self.screen:Destroy()
+	self:ResetMaterial(InstantCamera.screen_index)
 
-	Input.Unbind("LeftClick", InputEvent.Pressed, RetroCamera.OnLeftClickPressed)
-	Input.Unbind("Aim", InputEvent.Pressed, RetroCamera.OnRightClickPressed)
-	Input.Unbind("Aim", InputEvent.Released, RetroCamera.OnRightClickReleased)
+	Input.Unbind("LeftClick", InputEvent.Pressed, InstantCamera.OnLeftClickPressed)
+	Input.Unbind("Aim", InputEvent.Pressed, InstantCamera.OnRightClickPressed)
+	Input.Unbind("Aim", InputEvent.Released, InstantCamera.OnRightClickReleased)
 
 	Tutorials.Hide()
 
 end
 
-RetroCamera.Subscribe("Spawn", RetroCamera.OnSpawn)
-RetroCamera.Subscribe("Grab", RetroCamera.OnGrab)
-RetroCamera.Subscribe("UnGrab", RetroCamera.OnUnGrab)
-RetroCamera.SubscribeRemote("OnTakePhoto", RetroCamera.OnTakePhoto)
-RetroCamera.SubscribeRemote("ForceTakePhoto", RetroCamera.TakePhoto)
+InstantCamera.Subscribe("Spawn", InstantCamera.OnSpawn)
+InstantCamera.Subscribe("Grab", InstantCamera.OnGrab)
+InstantCamera.Subscribe("UnGrab", InstantCamera.OnUnGrab)
+InstantCamera.SubscribeRemote("OnTakePhoto", InstantCamera.OnTakePhoto)
+InstantCamera.SubscribeRemote("ForceTakePhoto", InstantCamera.TakePhoto)
 
 
 Photograph = Prop.Inherit("Photograph")
