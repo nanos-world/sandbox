@@ -71,8 +71,6 @@ PukeGun.options.veggies = function(spawn_location)
 	prop:SetValue("DebrisLifeSpan", 2)
 	prop:SetLifeSpan(5)
 
-	SetupBreakableProp(prop)
-
 	return prop
 end
 
@@ -90,8 +88,6 @@ PukeGun.options.watermelons = function(spawn_location)
 	prop:SetValue("DebrisLifeSpan", 2)
 	prop:SetLifeSpan(5)
 
-	SetupBreakableProp(prop)
-
 	return prop
 end
 
@@ -102,8 +98,6 @@ PukeGun.options.trash_bags = function(spawn_location)
 	prop:SetScale(Vector(1.5, 1.5, 1.5))
 	prop:SetValue("DebrisLifeSpan", 2)
 	prop:SetLifeSpan(5)
-
-	SetupBreakableProp(prop)
 
 	return prop
 end
@@ -120,7 +114,6 @@ PukeGun.options.propane_tanks = function(spawn_location, spawn_rotation)
 	local rotation = (spawn_rotation:Quaternion() * Rotator(-90, 0, 0):Quaternion()):Rotator()
 	local prop = Prop(spawn_location, rotation, mesh, CollisionType.Auto, true, GrabMode.Disabled, CCDMode.Disabled)
 
-	SetupBreakableProp(prop)
 	InflameProp(prop)
 
 	return prop

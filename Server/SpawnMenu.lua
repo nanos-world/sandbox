@@ -44,11 +44,6 @@ SpawnMenu.SpawnItem = function(player, tab, id, spawn_location, spawn_rotation)
 		spawn_rotation:Normalize()
 
 		item = Prop(spawn_location + Vector(0, 0, 50), Rotator(0, spawn_rotation.Yaw, 0), id)
-
-		-- If this Prop is a Breakable Prop, setup it (we only configure Props from Spawn Menu to break*)
-		if (BreakableProps[id]) then
-			SetupBreakableProp(item)
-		end
 	else
 		if (not SpawnMenu.items[tab] or not SpawnMenu.items[tab][id]) then
 			Console.Error("Failed to find item to spawn: Tab '%s'. ID '%s'.", tab, id)
