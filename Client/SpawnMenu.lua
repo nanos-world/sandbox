@@ -250,6 +250,7 @@ SpawnMenu.AddCategory("props",		"street",			"Street",			"modules/spawn-menu/imag
 SpawnMenu.AddCategory("props",		"nature",			"Nature",			"modules/spawn-menu/images/categories/tree.webp")
 SpawnMenu.AddCategory("props",		"logic",			"Logic",			"modules/spawn-menu/images/categories/wire.webp")
 SpawnMenu.AddCategory("props",		"treasure",			"Treasure",			"modules/spawn-menu/images/categories/chest.webp")
+SpawnMenu.AddCategory("props",		"halloween",			"Halloween",			"modules/spawn-menu/images/categories/pumpkin.webp")
 
 SpawnMenu.AddCategory("entities",	"devices",			"Devices",			"modules/spawn-menu/images/categories/tv.webp")
 SpawnMenu.AddCategory("entities",	"display",			"Display",			"modules/spawn-menu/images/categories/size.webp")

@@ -61,7 +61,7 @@ function Target:Animate(frames, done, index)
 		return
 	end
 
-	self.plate:RotateTo(Rotator(0, 0, frame[1]), frame[2])
+	self.plate:RotateRelativeTo(Rotator(0, 0, frame[1]), frame[2])
 	Timer.Bind(Timer.SetTimeout(function() self:Animate(frames, done, index + 1) end, math.floor(frame[2] * 1000)), self)
 end
 

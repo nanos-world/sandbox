@@ -62,10 +62,10 @@ function LogicButton:Animate(is_on, time)
 
 	if (style.push) then
 		local location = style.offset - Vector(0, 0, is_on and style.push or 0)
-		if (time > 0) then self.part:TranslateTo(location, time) else self.part:SetRelativeLocation(location) end
+		if (time > 0) then self.part:TranslateRelativeTo(location, time) else self.part:SetRelativeLocation(location) end
 	else
 		local rotation = Rotator(0, 0, is_on and style.on or style.off)
-		if (time > 0) then self.part:RotateTo(rotation, time) else self.part:SetRelativeRotation(rotation) end
+		if (time > 0) then self.part:RotateRelativeTo(rotation, time) else self.part:SetRelativeRotation(rotation) end
 	end
 end
 
@@ -97,6 +97,9 @@ function LogicButton:SetStyle(player, style_id)
 			self.part:Subscribe("Interact", function(_, character)
 				self:Press(character:GetPlayer(), character)
 				return false
+			end)
+			self.part:Subscribe("TakeDamage", function(_, damage, bone, type, from_direction, instigator, causer)
+				return self:OnTakeDamage(damage, bone, type, from_direction, instigator, causer)
 			end)
 			self.part:AttachTo(self, AttachmentRule.SnapToTarget, "", 0)
 		end
@@ -162,6 +165,14 @@ end
 
 function LogicButton:OnInteract(character)
 	self:Press(character:GetPlayer(), character)
+	return false
+end
+
+-- Shooting it presses it too (only shots: an explosion or a punch nearby does not)
+function LogicButton:OnTakeDamage(damage, bone, type, from_direction, instigator, causer)
+	if (type == DamageType.Shot) then
+		self:Press(instigator, causer)
+	end
 	return false
 end
 
@@ -354,6 +365,7 @@ function LogicButton:OnDestroy()
 end
 
 LogicButton.Subscribe("Interact", LogicButton.OnInteract)
+LogicButton.Subscribe("TakeDamage", LogicButton.OnTakeDamage)
 LogicButton.Subscribe("Destroy", LogicButton.OnDestroy)
 LogicButton.SubscribeRemote("Press", LogicButton.Press)
 LogicButton.SubscribeRemote("SetStyle", LogicButton.SetStyle)
