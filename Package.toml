@@ -41,6 +41,7 @@
     enable_noclip = { label = "noclip", type = "boolean", description = "enable players to noclip", default = true }
     enable_pvp = { label = "pvp", type = "boolean", description = "enable players to shoot themselves", default = true }
     max_balloons = { label = "max balloons", type = "integer", description = "maximum number of balloons allowed to spawn", default = 100 }
+    max_balls = { label = "max balls", type = "integer", description = "maximum number of balls allowed to spawn", default = 50 }
     max_bouncy_balls = { label = "max bouncy balls", type = "integer", description = "maximum number of bouncy balls allowed to spawn", default = 100 }
     max_buttons = { label = "max buttons", type = "integer", description = "maximum number of buttons allowed to spawn", default = 50 }
     max_cables = { label = "max cables", type = "integer", description = "maximum number of cables allowed to spawn", default = 200 }
