@@ -2,7 +2,8 @@ Flashlight = Prop.Inherit("Flashlight")
 
 ConfigureSpawnLimits("Flashlight", "Flashlights", Flashlight.GetCount, "max_flashlights")
 
-function Flashlight:Constructor(location, rotation)
+-- The Spawn Menu calls it with (location, rotation, tab, id, player); is_off spawns it switched off
+function Flashlight:Constructor(location, rotation, tab, id, player, is_off)
 	self.Super:Constructor(location, rotation, "nanos-world::SM_Flashlight")
 
 	-- Spawns a Point Light, with the color
@@ -13,7 +14,7 @@ function Flashlight:Constructor(location, rotation)
 	self:SetValue("Light", self.light, true)
 
 	-- Turns on by default
-	self:SetLightEnabled(true)
+	self:SetLightEnabled(not is_off)
 
 	self.light:FinishSpawn()
 

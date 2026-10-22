@@ -22,9 +22,9 @@ function InstantCamera:OnTakePhoto(player, base64)
 		local up_vector = rotation:GetUpVector()
 		local instant_camera_scale = self:GetScale().X
 
-		-- Scales photograph by the camera scale
-		local location = self:GetLocation() + up_vector * 2 * instant_camera_scale + right_vector * 25 * instant_camera_scale
-		local impulse = right_vector * 100 + self:GetVelocity()
+		-- Out under the lens (its right vector) and well ahead of it, below the view of whoever holds it, scaled with the camera
+		local location = self:GetLocation() - up_vector * 8 * instant_camera_scale + right_vector * 40 * instant_camera_scale
+		local impulse = right_vector * 150 - up_vector * 30 + self:GetVelocity()
 
 		local photograph = Photograph(location, rotation, base64, instant_camera_scale)
 		photograph:AddImpulse(impulse, true)

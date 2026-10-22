@@ -4,6 +4,42 @@ TV.name = "TV"
 TV.image = "package://sandbox/Client/Media/Entities/TV.webp"
 TV.category = "devices"
 
+-- Context Menu Items when selecting this Entity
+TV.selected_context_menu_items = {
+	{
+		id = "tv_model",
+		type = "select",
+		label = "model",
+		options = TV_MODELS,
+		callback = function(value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetModel", Reliability.Reliable, value)
+		end,
+		value = function()
+			return ContextMenu.selected_entity:GetMesh()
+		end,
+	},
+	{
+		id = "tv_url",
+		type = "text",
+		label = "video",
+		placeholder = "enter a YouTube URL...",
+		callback = function(value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetWebsite", Reliability.Reliable, value)
+		end,
+		value = function()
+			return ""
+		end,
+	},
+	{
+		id = "tv_off",
+		type = "button",
+		label = "turn off",
+		callback = function()
+			ContextMenu.selected_entity:CallRemoteEvent("SetWebsite", Reliability.Reliable, "")
+		end,
+	},
+}
+
 
 -- When TV is spawned, check if it has a URL playing already
 function TV:OnSpawn()
@@ -28,6 +64,14 @@ end
 function TV:OnValueChange(key, value)
 	if (key == "Website") then
 		self:SetWebsite(value)
+	elseif (key == "Model") then
+		-- A new mesh comes without the screen's material: puts back what it was showing
+		local webui = self:GetValue("MaterialWebUI")
+		if (webui and webui:IsValid()) then
+			self:SetWebUIMaterial(webui)
+		elseif (self:GetValue("Website") == false) then
+			self:SetNoSignal()
+		end
 	end
 end
 

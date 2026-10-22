@@ -6,8 +6,10 @@ function CCTV:Constructor(location, rotation)
 	-- Spawns a TV prop
 	self.Super:Constructor(location, rotation + Rotator(0, 90, 0), "nanos-world::SM_TV", nil, nil, nil, nil, SpawnMode.Manual)
 
-	-- Spawns the Camera Prop
+	-- Spawns the Camera Prop, floating where it is put so it can go on a wall or a ceiling
 	self.camera = Prop(location + rotation:RotateVector(Vector(150, 0, 0)), rotation, "nanos-world::SM_Camera")
+	-- self.camera = Prop(location + rotation:RotateVector(Vector(150, 0, 60)), rotation + Rotator(0, 180, 0), "nanos-world::SM_PG_CCTVCamera")
+	self.camera:SetGravityEnabled(false)
 
 	-- Sets this so we can access through Client
 	self:SetValue("Camera", self.camera, true)
@@ -22,6 +24,7 @@ function CCTV:Constructor(location, rotation)
 	self.cable:SetRenderingSettings(5, 4, 1)
 	self.cable:FinishSpawn()
 
+	-- From the camera's wall plate (its pivot)
 	self.cable:AttachStartTo(self.camera, Vector(-85, 0, 0))
 	self.cable:AttachEndTo(self, Vector(0, 0, 10))
 end
@@ -35,3 +38,4 @@ function CCTV:OnDestroy()
 end
 
 CCTV.Subscribe("Destroy", CCTV.OnDestroy)
+CCTV.SubscribeRemote("SetModel", function(self, player, mesh) SetTVModel(self, player, mesh) end)

@@ -19,6 +19,8 @@ function ButtonGun:OnSpawnButton(player, hit_location, relative_location, relati
 		Button:AttachTo(entity, AttachmentRule.SnapToTarget, "", 0)
 		Button:SetRelativeLocation(relative_location)
 		Button:SetRelativeRotation((relative_rotation:Quaternion() * Rotator(-90, 0, 0):Quaternion()):Rotator())
+	else
+		Button:SetGravityEnabled(false)
 	end
 
 	-- Updates the client's spawn history

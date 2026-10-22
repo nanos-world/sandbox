@@ -8,8 +8,12 @@ for _, frame in ipairs(PHOTO_FRAME_STYLES) do
 	PhotoFrame.styles[frame.style] = frame.id
 end
 
-function PhotoFrame:Constructor(location, rotation, tab, id, player, style)
+function PhotoFrame:Constructor(location, rotation, tab, id, player, style, image)
 	self.Super:Constructor(location or Vector(), (rotation or Rotator()) + Rotator(0, 90, 0), PhotoFrame.styles[style] or PhotoFrame.styles.default)
+
+	if (image ~= nil and image ~= "") then
+		self:SetPhoto(image)
+	end
 
 	if (player) then
 		Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Info, "PHOTO_FRAME_TUTORIAL", "you can change the Photo Frame image by selecting it in the Context Menu", 10, 5)

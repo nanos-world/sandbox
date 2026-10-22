@@ -82,9 +82,27 @@ function TV:OnInteract(character)
 	return false
 end
 
+-- Swaps a TV (or a CCTV's monitor) for another of TV_MODELS; its clients put the picture back when "Model" changes
+function SetTVModel(prop, player, mesh)
+	local model = GetTVModel(mesh)
+	if (not model or mesh == prop:GetMesh()) then return end
+
+	prop:SetMesh(mesh)
+	prop:SetGravityEnabled(not model.hanging)
+	prop:SetValue("Model", mesh, true)
+
+	-- Overrides the last owner
+	if (player) then SpawnHistory.UpdateItemOwnership(player, prop) end
+end
+
+function TV:SetModel(player, mesh)
+	SetTVModel(self, player, mesh)
+end
+
 TV.Subscribe("Destroy", TV.OnDestroy)
 TV.Subscribe("Interact", TV.OnInteract)
 TV.SubscribeRemote("SetWebsite", TV.SetWebsite)
+TV.SubscribeRemote("SetModel", TV.SetModel)
 
 
 -- Extracts Video ID from YouTube URL

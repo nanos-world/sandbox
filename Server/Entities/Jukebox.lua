@@ -71,7 +71,16 @@ function Jukebox:OnInteract(character)
 	return false
 end
 
+-- Shooting it turns it off
+function Jukebox:OnTakeDamage(damage, bone, type, from_direction, instigator, causer)
+	local is_playing = self:GetValue("Playing")
+	if (not is_playing) then return end
+
+	self:SetPlaying(instigator, false)
+end
+
 Jukebox.Subscribe("Interact", Jukebox.OnInteract)
+Jukebox.Subscribe("TakeDamage", Jukebox.OnTakeDamage)
 Jukebox.SubscribeRemote("SetSong", Jukebox.SetSong)
 Jukebox.SubscribeRemote("SetPlaying", Jukebox.SetPlaying)
 Jukebox.SubscribeRemote("SetVolume", Jukebox.SetVolume)

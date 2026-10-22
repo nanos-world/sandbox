@@ -2,7 +2,8 @@ RopeLight = Prop.Inherit("RopeLight")
 
 ConfigureSpawnLimits("RopeLight", "Rope Lights", RopeLight.GetCount, "max_rope_lights")
 
-function RopeLight:Constructor(spawn_location, relative_location, relative_rotation, direction, attach_to_entity)
+-- cable_length defaults to 100
+function RopeLight:Constructor(spawn_location, relative_location, relative_rotation, direction, attach_to_entity, cable_length)
 	local rotation = direction:ToOrientationRotator() + Rotator(90, 0, 0)
 
 	self.Super:Constructor(spawn_location, rotation, "nanos-world::SM_Lamp", CollisionType.StaticOnly, true, GrabMode.Disabled)
@@ -28,7 +29,7 @@ function RopeLight:Constructor(spawn_location, relative_location, relative_rotat
 	local cable = Cable(spawn_location)
 
 	-- Configures the cable
-	local cable_length = 100
+	cable_length = cable_length or 100
 	cable:SetLinearLimits(ConstraintMotion.Limited, ConstraintMotion.Limited, ConstraintMotion.Limited, cable_length, 0, true, 10000, 100)
 	cable:SetRenderingSettings(3, 4, 1)
 	cable:SetCableSettings(cable_length / 4, 10, 2)

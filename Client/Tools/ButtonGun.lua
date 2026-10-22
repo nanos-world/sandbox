@@ -2,7 +2,7 @@ ButtonGun = ToolGunSingleTarget.Inherit("ButtonGun")
 
 -- Tool Info
 ButtonGun.name = "Button Gun"
-ButtonGun.image = "assets://nanos-world/Thumbnails/SM_PushButton.jpg"
+ButtonGun.image = "package://sandbox/Client/Media/Entities/ButtonPushButton.webp"
 ButtonGun.category = "spawners"
 ButtonGun.description = "Spawns a Button attached to objects"
 
