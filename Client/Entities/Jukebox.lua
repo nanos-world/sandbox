@@ -7,6 +7,18 @@ Jukebox.category = "devices"
 -- Context Menu Items when selecting this Entity
 Jukebox.selected_context_menu_items = {
 	{
+		id = "jukebox_playlist",
+		type = "select",
+		label = "playlist",
+		options = JUKEBOX_PLAYLISTS,
+		callback = function(value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetPlaylist", Reliability.Reliable, value)
+		end,
+		value = function()
+			return ContextMenu.selected_entity:GetValue("Playlist")
+		end,
+	},
+	{
 		id = "jukebox_song",
 		type = "select",
 		label = "song",
@@ -27,6 +39,17 @@ Jukebox.selected_context_menu_items = {
 		end,
 		value = function()
 			return ContextMenu.selected_entity:GetValue("Playing")
+		end,
+	},
+	{
+		id = "jukebox_shuffle",
+		type = "checkbox",
+		label = "shuffle",
+		callback = function(value)
+			ContextMenu.selected_entity:CallRemoteEvent("SetShuffle", Reliability.Reliable, value)
+		end,
+		value = function()
+			return ContextMenu.selected_entity:GetValue("Shuffle")
 		end,
 	},
 	{
@@ -57,8 +80,11 @@ Jukebox.selected_context_menu_items = {
 	},
 }
 
--- (Re)creates the looping Sound for the current song, attached to the jukebox, or removes it when stopped; a volume or distance change keeps the song where it is
-function Jukebox:UpdateSound()
+-- (Re)creates the Sound for the current song, attached to the jukebox and seeked to how long ago the server started it, or removes it when stopped
+-- Without restart, a playing Sound keeps going and only takes the new volume and distance
+-- It loops on its own unless shuffling, then the server picks the next song when it ends
+-- It keeps playing silently out of range, otherwise Unreal would restart it from the beginning (or drop it, when not looping) on coming back
+function Jukebox:UpdateSound(restart)
 	local song = self:GetValue("Song")
 	local is_playing = self:GetValue("Playing")
 	local volume = self:GetValue("Volume") or JUKEBOX_VOLUME
@@ -67,7 +93,7 @@ function Jukebox:UpdateSound()
 	self:SetInteractionToolTipText(is_playing and "stop" or "play")
 
 	if (self.sound and self.sound:IsValid()) then
-		if (is_playing and self.sound_song == song) then
+		if (is_playing and not restart) then
 			self.sound:SetVolume(volume)
 			self.sound:SetFalloffDistance(distance)
 			return
@@ -76,22 +102,39 @@ function Jukebox:UpdateSound()
 		self.sound:Destroy()
 	end
 
-	self.sound, self.sound_song = nil, nil
+	self.sound = nil
 
 	if (not is_playing or not song) then return end
 
-	self.sound = Sound(self:GetLocation(), song, false, false, SoundType.Music, volume, 1, JUKEBOX_INNER_RADIUS, distance, AttenuationFunction.NaturalSound, false, SoundLoopMode.Forever)
+	local loop_mode = self:GetValue("Shuffle") and SoundLoopMode.Never or SoundLoopMode.Forever
+	self.sound = Sound(self:GetLocation(), song, false, false, SoundType.Music, volume, 1, JUKEBOX_INNER_RADIUS, distance, AttenuationFunction.NaturalSound, true, loop_mode, false)
 	self.sound:AttachTo(self, AttachmentRule.SnapToTarget, "", 0)
-	self.sound_song = song
+
+	-- Late joiners and shuffle toggles land where everyone else is; past the end it wraps, as it would have looped
+	local elapsed = math.max(0, (Client.GetTime() - (self:GetValue("SongStartedAt") or Client.GetTime())) / 1000)
+	local duration = self.sound:GetDuration()
+	self.sound:Play(duration > 0 and elapsed % duration or 0)
 end
 
 function Jukebox:OnSpawn()
-	self:UpdateSound()
+	self:UpdateSound(true)
 end
 
-function Jukebox:OnValueChange(key)
-	if (key == "Song" or key == "Playing" or key == "Volume" or key == "Distance") then
+-- Song and Playing (true) are always followed by SongStartedAt, which is what restarts the Sound, so it never plays twice in a row
+function Jukebox:OnValueChange(key, value)
+	if (key == "SongStartedAt" or key == "Shuffle") then
+		self:UpdateSound(true)
+	elseif ((key == "Playing" and not value) or key == "Volume" or key == "Distance") then
 		self:UpdateSound()
+	end
+
+	-- Keeps an open Context Menu in sync (shuffle moving to the next song, someone else changing it), through the item's own value so it shows as the menu does
+	if (ContextMenu.selected_entity == self) then
+		for _, item in ipairs(Jukebox.selected_context_menu_items) do
+			if (item.id == "jukebox_" .. key:lower()) then
+				ContextMenu.SetItemValue(item.id, item.value())
+			end
+		end
 	end
 end
 
