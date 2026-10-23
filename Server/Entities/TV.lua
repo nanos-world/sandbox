@@ -59,11 +59,12 @@ function TV:SetWebsite(player, url)
 
 	local embed_url = BuildYouTubeEmbedURL(parsed_url)
 
-	-- Send to everyone
+	-- Send to everyone ("WebsiteStartedAt" last: clients load the URL when it changes, by then "Website" is already up to date)
 	self:SetValue("Website", embed_url, true)
+	self:SetValue("WebsiteStartedAt", Server.GetTime(), true)
 
 	-- Overrides the last owner
-	SpawnHistory.UpdateItemOwnership(player, self)
+	if (player) then SpawnHistory.UpdateItemOwnership(player, self) end
 end
 
 function TV:OnDestroy()

@@ -61,8 +61,11 @@ function TV:OnDestroy()
 	end
 end
 
+-- A valid "Website" is always followed by "WebsiteStartedAt", which is what loads it, so it never loads twice in a row
 function TV:OnValueChange(key, value)
-	if (key == "Website") then
+	if (key == "WebsiteStartedAt") then
+		self:SetWebsite(self:GetValue("Website"))
+	elseif (key == "Website" and (not value or value == "")) then
 		self:SetWebsite(value)
 	elseif (key == "Model") then
 		-- A new mesh comes without the screen's material: puts back what it was showing
@@ -77,6 +80,14 @@ end
 
 -- Event from server to set a website in a TV
 function TV:SetWebsite(url)
+	if (url and url ~= "") then
+		-- Late joiners land where everyone else is
+		local elapsed = math.floor((Client.GetTime() - (self:GetValue("WebsiteStartedAt") or Client.GetTime())) / 1000)
+		if (elapsed > 0) then
+			url = url .. "&start=" .. elapsed
+		end
+	end
+
 	-- Checks if the WebUI already exists
 	local website_webui_value = self:GetValue("MaterialWebUI")
 
