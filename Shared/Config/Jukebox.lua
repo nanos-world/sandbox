@@ -2,10 +2,10 @@
 -- duration (seconds) is when shuffle moves to the next song, a song without it just loops
 JUKEBOX_SONGS = {
 	-- Playground
-	{ id = "nanos-world::A_Velvet_Highway",			name = "Velvet Highway",		duration = 177 },
-	{ id = "nanos-world::A_Midnight_Tides",			name = "Midnight Tides",		duration = 177 },
-	{ id = "nanos-world::A_Stillness_at_Twilight",	name = "Stillness at Twilight",	duration = 174 },
-	{ id = "nanos-world::A_The_Open_Latitude",		name = "The Open Latitude",		duration = 177 },
+	{ id = "nanos-world::A_Playground_01",			name = "Playground 01",		duration = 177 },
+	{ id = "nanos-world::A_Playground_02",			name = "Playground 02",		duration = 174 },
+	{ id = "nanos-world::A_Playground_03",			name = "Playground 03",		duration = 177 },
+	{ id = "nanos-world::A_Playground_04",			name = "Playground 04",		duration = 177 },
 
 	-- Lounge (the main menu's)
 	{ id = "nanos-world::A_AirportLounge",			name = "Airport Lounge",		duration = 308 },
@@ -49,10 +49,10 @@ JUKEBOX_SONGS = {
 -- Playlists a Jukebox shuffles within, by song id; a song can be in more than one, the first playlist is the default
 JUKEBOX_PLAYLISTS = {
 	{ id = "playground", name = "playground", songs = {
-		"nanos-world::A_Velvet_Highway",
-		"nanos-world::A_Midnight_Tides",
-		"nanos-world::A_Stillness_at_Twilight",
-		"nanos-world::A_The_Open_Latitude"
+		"nanos-world::A_Playground_01",
+		"nanos-world::A_Playground_02",
+		"nanos-world::A_Playground_03",
+		"nanos-world::A_Playground_04"
 	} },
 	{ id = "lounge", name = "lounge", songs = {
 		"nanos-world::A_AirportLounge",
