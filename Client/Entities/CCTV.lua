@@ -52,6 +52,10 @@ CCTV.selected_context_menu_items = {
 
 function CCTV:OnSpawn()
 	local camera = self:GetValue("Camera")
+
+	-- On a package reload the camera can already be gone while the monitor still spawns here
+	if (not camera or not camera:IsValid()) then return end
+
 	-- 30 captures per second, at the monitor's 16:9
 	self.scene_capture = SceneCapture(camera:GetLocation(), Rotator(), 640, 360, 0.033)
 	self.scene_capture:AttachTo(camera, AttachmentRule.SnapToTarget, "", 0)

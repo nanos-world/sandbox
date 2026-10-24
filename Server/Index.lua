@@ -239,7 +239,7 @@ Events.SubscribeRemote("ChangeCharacter", function(player, class_name)
 	SetupPlayerCharacter(player, new_character)
 
 	-- Restore picked up item
-	if (picked_item) then
+	if (picked_item and picked_item:IsValid() and new_character.PickUp) then
 		new_character:PickUp(picked_item)
 	end
 end)

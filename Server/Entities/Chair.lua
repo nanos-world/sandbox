@@ -79,6 +79,7 @@ function Chair:Sit(character)
 	character:SetCollision(CollisionType.NoCollision)
 	character:SetCameraMode(CameraMode.TPSOnly)
 	if (view_mode == ViewMode.FPS) then character:SetViewMode(ViewMode.TPS1) end
+	if (character.SetWeaponAimMode) then character:SetWeaponAimMode(AimMode.None) end
 
 	character:AttachTo(self, AttachmentRule.SnapToTarget, "", 0)
 	character:SetRelativeLocation(seat.offset)

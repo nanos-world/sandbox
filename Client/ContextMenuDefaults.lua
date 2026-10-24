@@ -6,6 +6,9 @@ function ContextMenu.AddSelectedCustomItems(entity)
 	local class = entity:GetClass()
 	local category_name = "selected\n" .. class:GetName() .. "#" .. entity:GetID()
 
+	-- A character a player possesses gets no entries (an NPC class's own ones would drive it)
+	if ((entity:IsA(Character) or entity:IsA(CharacterSimple)) and entity:GetPlayer() ~= nil) then return end
+
 	-- If the class has custom context menu items when selected through context menu, adds them
 	local entity_context_menu_items = class.selected_context_menu_items
 	if (entity_context_menu_items) then
@@ -78,20 +81,16 @@ function ContextMenu.AddSelectedCustomItems(entity)
 		})
 	end
 
-	local is_player = (entity:IsA(Character) or entity:IsA(CharacterSimple)) and entity:GetPlayer() ~= nil
-
-	if (not is_player) then
-		-- All entities
-		table.insert(items, {
-			id = "destroy_button",
-			type = "button",
-			label = "destroy",
-			callback = function()
-				Events.CallRemote("DestroyItem", Reliability.Reliable, ContextMenu.selected_entity)
-				ContextMenu.SelectEntity(nil)
-			end
-		})
-	end
+	-- All entities
+	table.insert(items, {
+		id = "destroy_button",
+		type = "button",
+		label = "destroy",
+		callback = function()
+			Events.CallRemote("DestroyItem", Reliability.Reliable, ContextMenu.selected_entity)
+			ContextMenu.SelectEntity(nil)
+		end
+	})
 
 	-- Inserts all items
 	ContextMenu.AddItems("selected_item", category_name, items, ContextMenu.selected_color)
