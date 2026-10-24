@@ -13,7 +13,7 @@ Input.Register("Scoreboard", "Tab", "Toggles the Scoreboard")
 Input.Register("Ragdoll", "J", "Enters Ragdoll Mode")
 Input.Register("SpawnMenu", "Q", "Toggles the Spawn Menu")
 Input.Register("ContextMenu", "C", "Toggles the Context Menu")
-Input.Register("Undo", "X", "Destroy last spawned Item")
+Input.Register("Undo", "Z", "Destroy last spawned Item")
 
 -- Loads Package Files
 Package.Require("EntityInputSystem.lua")
