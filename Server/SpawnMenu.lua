@@ -44,6 +44,9 @@ SpawnMenu.SpawnItem = function(player, tab, id, spawn_location, spawn_rotation)
 		spawn_rotation:Normalize()
 
 		item = Prop(spawn_location + Vector(0, 0, 50), Rotator(0, spawn_rotation.Yaw, 0), id)
+
+		-- Sets the same dimension as the player so it is visible for them
+		item:SetDimension(player:GetDimension())
 	else
 		if (not SpawnMenu.items[tab] or not SpawnMenu.items[tab][id]) then
 			Console.Error("Failed to find item to spawn: Tab '%s'. ID '%s'.", tab, id)
@@ -52,6 +55,9 @@ SpawnMenu.SpawnItem = function(player, tab, id, spawn_location, spawn_rotation)
 
 		-- Calls the spawn function
 		item = SpawnMenu.items[tab][id].spawn_function(spawn_location, spawn_rotation, tab, id, player)
+
+		-- Sets the same dimension as the player so it is visible for them
+		item:SetDimension(player:GetDimension())
 
 		-- Forces the Network Authority to the player who spawned it
 		item:SetNetworkAuthority(player)

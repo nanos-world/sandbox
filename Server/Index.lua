@@ -135,6 +135,8 @@ function SetupPlayerCharacter(player, character)
 		character:SetTeam(1)
 	end
 
+	character:SetDimension(player:GetDimension())
+
 	-- Possess the Character
 	player:Possess(character)
 
