@@ -54,7 +54,7 @@ function Balloon:Constructor(location, rotation, tab, id, player, relative_locat
 		local end_relative_location = Vector()
 
 		-- Emojis have their pivot point at wrong, so hacky fix it
-		if (asset:find("Emoji")) then
+		if (asset and asset:find("Emoji")) then
 			end_relative_location = Vector(0, -5, -35)
 		end
 
