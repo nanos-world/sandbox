@@ -1,9 +1,25 @@
 -- Plates a Target can have (its "nanos-world::SM_PG_<id>_Plate" mesh), listed in its Context Menu, with how high the plate's top is above the stand's pivot (cm)
 TARGET_STYLES = {
-	{ id = "Target",		name = "Paper",		top = 182 },
-	{ id = "TargetSteel",	name = "Steel",		top = 171 },
-	{ id = "TargetRound",	name = "Gong",		top = 176.5 },
-	{ id = "TargetPopper",	name = "Popper",	top = 161 },
+	{
+		id = "Target",
+		name = "Paper",
+		top = 182
+	},
+	{
+		id = "TargetSteel",
+		name = "Steel",
+		top = 171
+	},
+	{
+		id = "TargetRound",
+		name = "Gong",
+		top = 176.5
+	},
+	{
+		id = "TargetPopper",
+		name = "Popper",
+		top = 161
+	},
 }
 
 -- How long a knocked down plate stays down before swinging up again (ms), changeable per target between the min and max

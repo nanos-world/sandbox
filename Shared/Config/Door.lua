@@ -1,9 +1,33 @@
 -- Door styles, listed in its Context Menu: a frame (the Door entity itself) and a leaf hinged in it, both made for a 100 x 210 opening
 -- The sounds play as it starts opening and as it shuts, at that pitch
 DOOR_STYLES = {
-	{ id = "Wood",	name = "Wooden",	image = "package://sandbox/Client/Media/Entities/DoorWood.webp",	frame = "nanos-world::SM_PG_DoorFrame_Wood",	leaf = "nanos-world::SM_PG_Door_Wood",	sound = "nanos-world::A_Vehicle_Door",	pitch = 0.75 },
-	{ id = "Glass",	name = "Glass",		image = "package://sandbox/Client/Media/Entities/DoorGlass.webp",	frame = "nanos-world::SM_PG_DoorFrame_Glass",	leaf = "nanos-world::SM_PG_Door_Glass",	sound = "nanos-world::A_Vehicle_Door",	pitch = 1.1 },
-	{ id = "Metal",	name = "Metal",		image = "package://sandbox/Client/Media/Entities/DoorMetal.webp",	frame = "nanos-world::SM_PG_DoorFrame_Metal",	leaf = "nanos-world::SM_PG_Door_Metal",	sound = "nanos-world::A_Vehicle_Door",	pitch = 0.9 },
+	{
+		id = "Wood",
+		name = "Wooden",
+		image = "package://sandbox/Client/Media/Entities/DoorWood.webp",
+		frame = "nanos-world::SM_PG_DoorFrame_Wood",
+		leaf = "nanos-world::SM_PG_Door_Wood",
+		sound = "nanos-world::A_Vehicle_Door",
+		pitch = 0.75
+	},
+	{
+		id = "Glass",
+		name = "Glass",
+		image = "package://sandbox/Client/Media/Entities/DoorGlass.webp",
+		frame = "nanos-world::SM_PG_DoorFrame_Glass",
+		leaf = "nanos-world::SM_PG_Door_Glass",
+		sound = "nanos-world::A_Vehicle_Door",
+		pitch = 1.1
+	},
+	{
+		id = "Metal",
+		name = "Metal",
+		image = "package://sandbox/Client/Media/Entities/DoorMetal.webp",
+		frame = "nanos-world::SM_PG_DoorFrame_Metal",
+		leaf = "nanos-world::SM_PG_Door_Metal",
+		sound = "nanos-world::A_Vehicle_Door",
+		pitch = 0.9
+	},
 }
 
 -- Where the leaf's pivot (its hinge, at the bottom) sits in the frame, which is centred on the opening with its pivot on the floor

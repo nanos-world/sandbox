@@ -4,12 +4,100 @@
 -- then moves forward until the back rests on the backrest in game (an upright one like SM_PG_Chair's needs about 20 cm more)
 -- The Playground ones are also what the Playground map spawns on its chair and bench stand-ins (its Server/Zones/Seats.lua)
 CHAIR_STYLES = {
-	{ id = "Wooden",			name = "Wooden Chair",		image = "assets://nanos-world/Thumbnails/SM_WoodenChair.jpg",				mesh = "nanos-world::SM_WoodenChair",	front = 90,	seats = { { offset = Vector(0, 22, 102), yaw = 90 } } },
-	{ id = "Rocking",			name = "Rocking Chair",		image = "assets://nanos-world/Thumbnails/SM_RockingChair.jpg",			mesh = "nanos-world::SM_RockingChair",	front = 90,	seats = { { offset = Vector(0, 33, 88), yaw = 90 } } },
-	{ id = "Stool",				name = "Stool",				image = "assets://nanos-world/Thumbnails/SM_Stool.jpg",				mesh = "nanos-world::SM_Stool",			front = 90,	seats = { { offset = Vector(-20, -4, 112), yaw = 90 } } },
-	{ id = "Bench",				name = "Bench",				image = "assets://nanos-world/Thumbnails/SM_Bench.jpg",				mesh = "nanos-world::SM_Bench",			front = 90,	seats = { { offset = Vector(-165, 70, 98), yaw = 90 }, { offset = Vector(-100, 70, 98), yaw = 90 }, { offset = Vector(-35, 70, 98), yaw = 90 } } },
-	{ id = "PlaygroundChair",	name = "Playground Chair",	image = "assets://nanos-world/Thumbnails/SM_PG_Chair.jpg",			mesh = "nanos-world::SM_PG_Chair",		front = 90,	seats = { { offset = Vector(0, 44.5, 93), yaw = 90 } } },
-	{ id = "PlaygroundBench",	name = "Playground Bench",	image = "assets://nanos-world/Thumbnails/SM_PG_Bench.jpg",	mesh = "nanos-world::SM_PG_Bench",		front = 90,	seats = { { offset = Vector(-64, 38.5, 93), yaw = 90 }, { offset = Vector(0, 38.5, 93), yaw = 90 }, { offset = Vector(64, 38.5, 93), yaw = 90 } } },
+	{
+		id = "Wooden",
+		name = "Wooden Chair",
+		image = "assets://nanos-world/Thumbnails/SM_WoodenChair.jpg",
+		mesh = "nanos-world::SM_WoodenChair",
+		front = 90,
+		seats = {
+			{
+				offset = Vector(0, 22, 102),
+				yaw = 90
+			}
+		}
+	},
+	{
+		id = "Rocking",
+		name = "Rocking Chair",
+		image = "assets://nanos-world/Thumbnails/SM_RockingChair.jpg",
+		mesh = "nanos-world::SM_RockingChair",
+		front = 90,
+		seats = {
+			{
+				offset = Vector(0, 33, 88),
+				yaw = 90
+			}
+		}
+	},
+	{
+		id = "Stool",
+		name = "Stool",
+		image = "assets://nanos-world/Thumbnails/SM_Stool.jpg",
+		mesh = "nanos-world::SM_Stool",
+		front = 90,
+		seats = {
+			{
+				offset = Vector(-20, -4, 112),
+				yaw = 90
+			}
+		}
+	},
+	{
+		id = "Bench",
+		name = "Bench",
+		image = "assets://nanos-world/Thumbnails/SM_Bench.jpg",
+		mesh = "nanos-world::SM_Bench",
+		front = 90,
+		seats = {
+			{
+				offset = Vector(-165, 70, 98),
+				yaw = 90
+			},
+			{
+				offset = Vector(-100, 70, 98),
+				yaw = 90
+			},
+			{
+				offset = Vector(-35, 70, 98),
+				yaw = 90
+			}
+		}
+	},
+	{
+		id = "PlaygroundChair",
+		name = "Playground Chair",
+		image = "assets://nanos-world/Thumbnails/SM_PG_Chair.jpg",
+		mesh = "nanos-world::SM_PG_Chair",
+		front = 90,
+		seats = {
+			{
+				offset = Vector(0, 44.5, 93),
+				yaw = 90
+			}
+		}
+	},
+	{
+		id = "PlaygroundBench",
+		name = "Playground Bench",
+		image = "assets://nanos-world/Thumbnails/SM_PG_Bench.jpg",
+		mesh = "nanos-world::SM_PG_Bench",
+		front = 90,
+		seats = {
+			{
+				offset = Vector(-64, 38.5, 93),
+				yaw = 90
+			},
+			{
+				offset = Vector(0, 38.5, 93),
+				yaw = 90
+			},
+			{
+				offset = Vector(64, 38.5, 93),
+				yaw = 90
+			}
+		}
+	},
 }
 
 -- The looping animation a seated character plays (every client plays it from the character's synced "SittingAnimation" value)

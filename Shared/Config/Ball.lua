@@ -1,11 +1,56 @@
 -- Ball styles, listed in its Context Menu: the material on SM_PG_Ball (a football sized sphere, BALL_RADIUS at scale 1), the scale it takes, its physical
 -- material (how it bounces), its weight (kg) and how hard a run kicks it (multiplies the runner's speed)
 BALL_STYLES = {
-	{ id = "Soccer",		name = "Soccer",		image = "package://sandbox/Client/Media/Entities/BallSoccer.webp",		material = "nanos-world::MI_PG_Ball_Soccer",		scale = 1,		physical_material = "nanos-world::PM_Rubber",			mass = 0.45,	kick = 2.4 },
-	{ id = "Basketball",	name = "Basketball",	image = "package://sandbox/Client/Media/Entities/BallBasketball.webp",	material = "nanos-world::MI_PG_Ball_Basketball",	scale = 1.1,	physical_material = "nanos-world::PM_Rubber",	mass = 0.6,		kick = 1.3 },
-	{ id = "Volleyball",	name = "Volleyball",	image = "package://sandbox/Client/Media/Entities/BallVolleyball.webp",	material = "nanos-world::MI_PG_Ball_Volleyball",	scale = 0.95,	physical_material = "nanos-world::PM_Rubber",			mass = 0.27,	kick = 1.7 },
-	{ id = "Beach",			name = "Beach Ball",	image = "package://sandbox/Client/Media/Entities/BallBeach.webp",		material = "nanos-world::MI_PG_Ball_Beach",			scale = 2.2,	physical_material = "nanos-world::PM_RubberBouncy",	mass = 0.1,		kick = 1.2 },
-	{ id = "Tennis",		name = "Tennis Ball",	image = "package://sandbox/Client/Media/Entities/BallTennis.webp",		material = "nanos-world::MI_PG_Ball_Tennis",		scale = 0.3,	physical_material = "nanos-world::PM_RubberBouncy",	mass = 0.06,	kick = 1.8 },
+	{
+		id = "Soccer",
+		name = "Soccer",
+		image = "package://sandbox/Client/Media/Entities/BallSoccer.webp",
+		material = "nanos-world::MI_PG_Ball_Soccer",
+		scale = 1,
+		physical_material = "nanos-world::PM_Rubber",
+		mass = 0.45,
+		kick = 2.4
+	},
+	{
+		id = "Basketball",
+		name = "Basketball",
+		image = "package://sandbox/Client/Media/Entities/BallBasketball.webp",
+		material = "nanos-world::MI_PG_Ball_Basketball",
+		scale = 1.1,
+		physical_material = "nanos-world::PM_Rubber",
+		mass = 0.6,
+		kick = 1.3
+	},
+	{
+		id = "Volleyball",
+		name = "Volleyball",
+		image = "package://sandbox/Client/Media/Entities/BallVolleyball.webp",
+		material = "nanos-world::MI_PG_Ball_Volleyball",
+		scale = 0.95,
+		physical_material = "nanos-world::PM_Rubber",
+		mass = 0.27,
+		kick = 1.7
+	},
+	{
+		id = "Beach",
+		name = "Beach Ball",
+		image = "package://sandbox/Client/Media/Entities/BallBeach.webp",
+		material = "nanos-world::MI_PG_Ball_Beach",
+		scale = 2.2,
+		physical_material = "nanos-world::PM_RubberBouncy",
+		mass = 0.1,
+		kick = 1.2
+	},
+	{
+		id = "Tennis",
+		name = "Tennis Ball",
+		image = "package://sandbox/Client/Media/Entities/BallTennis.webp",
+		material = "nanos-world::MI_PG_Ball_Tennis",
+		scale = 0.3,
+		physical_material = "nanos-world::PM_RubberBouncy",
+		mass = 0.06,
+		kick = 1.8
+	},
 }
 
 -- SM_PG_Ball's radius at scale 1 (cm)
