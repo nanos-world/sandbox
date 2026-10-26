@@ -64,6 +64,10 @@ BALL_KICK_RADIUS = 100
 BALL_KICK_MIN_SPEED = 120
 BALL_NUDGE = 150
 
+-- Cooldowns (ms) between kicks: any kicker, and the same kicker again (with lag the ball can pass through someone and re-enter their reach)
+BALL_KICK_COOLDOWN = 150
+BALL_KICK_SAME_KICKER_COOLDOWN = 600
+
 -- How high a kick lifts the ball, in parts of its forward speed: a sprint lobs it
 BALL_KICK_LIFT = 0.2
 

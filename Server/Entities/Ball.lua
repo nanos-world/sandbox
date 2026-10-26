@@ -51,8 +51,10 @@ function Ball:Kick(kicker)
 	if (not self.kick_enabled or self:GetHandler() or self:GetAttachedTo()) then return end
 
 	local now = Server.GetTime()
-	if (now - self.last_kick < 150) then return end
+	if (now - self.last_kick < BALL_KICK_COOLDOWN) then return end
+	if (self.last_kicker == kicker and now - self.last_kick < BALL_KICK_SAME_KICKER_COOLDOWN) then return end
 	self.last_kick = now
+	self.last_kicker = kicker
 
 	local ball_location = self:GetLocation()
 	local away = ball_location - kicker:GetLocation()
