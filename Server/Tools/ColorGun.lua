@@ -5,7 +5,7 @@ function ColorGun:Constructor(location, rotation)
 	ToolGun.Constructor(self, location, rotation, Color.GREEN)
 end
 
-Events.SubscribeRemote("ColorObject", function(player, entity, hit_location, direction, color)
+Events.SubscribeRemote("ColorObject", function(player, entity, hit_location, direction, color, index)
 	-- Make sure that entity is valid
 	if (not NanosUtils.IsEntityValid(entity)) then return end
 
@@ -14,6 +14,6 @@ Events.SubscribeRemote("ColorObject", function(player, entity, hit_location, dir
 		return
 	end
 
-	entity:SetMaterialColorParameter("Tint", color)
+	entity:SetMaterialColorParameter("Tint", color, SanitizeMaterialIndex(index))
 	Particle(hit_location, direction:ToOrientationRotator(), "nanos-world::P_DirectionalBurst"):SetParameterColor("Color", color)
 end)

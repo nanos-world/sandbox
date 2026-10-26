@@ -4,6 +4,7 @@ UselessGun = ToolGunSingleTarget.Inherit("UselessGun")
 UselessGun.name = "Useless Gun"
 UselessGun.image = "package://sandbox/Client/Media/Tools/UselessGun.webp"
 UselessGun.description = "Transforms objects into useless web browsers"
+UselessGun.category = "hidden"
 
 -- Tool Tutorials
 UselessGun.tutorials = {

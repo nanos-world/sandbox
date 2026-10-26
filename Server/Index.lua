@@ -123,6 +123,19 @@ function SpawnPlayerCharacter(player)
 
 	-- Spawns the Character
 	local new_character = character_to_spawn(location, rotation, false)
+	-- new_character:SetWeaponShooterMode(true)
+	-- local new_character = Character(location, rotation, "nanos-world::SK_Male")
+	-- new_character:SetMeshSettings(Vector(0, 0, 100), Rotator(0, -90, 0), true)
+	-- local new_character = CharacterGASP(location, rotation, "/Game/NanosWorld/Characters/UE5/Meshes/SKM_Manny")
+	-- local new_character = CharacterGASP(location, rotation, "/Game/NanosWorld/GASP/Characters/UEFN_Mannequin/Meshes/SKM_UEFN_Mannequin")
+	-- local new_character = CharacterGASP(location, rotation, "/Game/NanosWorld/Characters/UE5/Meshes/SKM_Quinn")
+	-- local new_character = CharacterGASP(location, rotation, "/Game/MetaHumans/Common/Common/Mocap/m_med_nrw_body_mocap")
+
+	-- UE4 to UE5 quebrou o aiming
+	-- new_character:SetMeshSettings(nil, nil, false)
+	-- new_character:AddSkeletalMeshAttached("retarget", "/Game/NanosWorld/Characters/UE5/Meshes/SKM_Manny", nil, nil, nil, nil, false, "nanos-world::ABP_GenericRetarget_UE4_to_UE5")
+	-- new_character:AddSkeletalMeshAttached("retarget", "nanos-world::SK_Mannequin", nil, nil, nil, nil, false, "nanos-world::ABP_GenericRetarget_UE5_to_UE4")
+	-- new_character:AddSkeletalMeshAttached("retarget", "/Game/MetaHumans/Common/Common/Mocap/m_med_nrw_body_mocap", nil, nil, nil, nil, false, "/Game/NanosWorld/Characters/Common/ABP_WorldGenericRetarget.ABP_WorldGenericRetarget_C")
 
 	-- This will possess, configure Player configs and subscribe to events
 	SetupPlayerCharacter(player, new_character)

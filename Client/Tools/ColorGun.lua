@@ -13,7 +13,8 @@ ColorGun.tutorials = {
 
 -- Color Gun Configuration
 ColorGun.configs = {
-	color = Color.RandomPalette()
+	color = Color.RandomPalette(),
+	index = MATERIAL_INDEX_OPTIONS[1].id,
 }
 
 -- Tool Trace Debug Settings
@@ -35,11 +36,27 @@ ColorGun.picked_context_menu_items = {
 			return ColorGun.configs.color:ToHex(false)
 		end
 	},
+	{
+		id = "color_gun_index",
+		type = "select",
+		label = "index",
+		options = MATERIAL_INDEX_OPTIONS,
+		callback = function(value)
+			ColorGun.configs.index = value
+		end,
+		value = function()
+			return ColorGun.configs.index
+		end
+	},
 }
 
 
 -- Overrides ToolGunSingleTarget method
 function ColorGun:OnLocalPlayerTarget(location, relative_location, relative_rotation, normal, entity)
-	-- Calls remote to spawn the Lamp
-	Events.CallRemote("ColorObject", Reliability.Reliable, entity, location, normal, ColorGun.configs.color)
+	if (not entity) then
+		SoundInvalidAction:Play()
+		return
+	end
+
+	Events.CallRemote("ColorObject", Reliability.Reliable, entity, location, normal, ColorGun.configs.color, GetMaterialIndexFromOption(ColorGun.configs.index))
 end
