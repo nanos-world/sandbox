@@ -43,12 +43,16 @@ function LogicButton:SetTint(color)
 	end
 end
 
--- Interacting is disabled while cooling down, on the base and on the part
+-- Interacting is disabled while cooling down; with a moving part only the part is interactable, never the base
 function LogicButton:SetPressable(pressable)
-	local grab_mode = pressable and GrabMode.Enabled or GrabMode.Disabled
-	self:SetGrabMode(grab_mode)
+	self.pressable = pressable
 
-	if (self.part and self.part:IsValid()) then
+	local grab_mode = pressable and GrabMode.Enabled or GrabMode.Disabled
+	local has_part = self.part and self.part:IsValid()
+
+	self:SetGrabMode(has_part and GrabMode.Disabled or grab_mode)
+
+	if (has_part) then
 		self.part:SetGrabMode(grab_mode)
 	end
 end
@@ -113,6 +117,9 @@ function LogicButton:SetStyle(player, style_id)
 	end
 
 	self:SetValue("Part", self.part, true)
+
+	-- The part may have just appeared or gone, so the base's interactability follows it
+	self:SetPressable(self.pressable ~= false)
 
 	if (self.tint) then
 		self:SetTint(self.tint)

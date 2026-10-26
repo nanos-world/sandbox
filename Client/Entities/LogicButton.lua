@@ -121,12 +121,17 @@ function LogicButton:OnDeactivated()
 	self:PlaySound(0.9)
 end
 
-function LogicButton:OnUpdateLabel()
+-- The label of what the next press does
+function LogicButton:GetLabel()
 	if (self:GetValue("Active")) then
-		self:SetToolTip(self:GetValue("DeactivateLabel") or "deactivate")
-	else
-		self:SetToolTip(self:GetValue("ActivateLabel") or "activate")
+		return self:GetValue("DeactivateLabel") or "deactivate"
 	end
+
+	return self:GetValue("ActivateLabel") or "activate"
+end
+
+function LogicButton:OnUpdateLabel()
+	self:SetToolTip(self:GetLabel())
 end
 
 -- A new part (the style changed) needs the tooltip too, and so does the state the server keeps
@@ -135,6 +140,19 @@ function LogicButton:OnValueChange(key, value)
 		self:OnUpdateLabel()
 	end
 end
+
+-- A late joiner may get the base before its part, so the base's "Part" value resolves to nil and the part shows the default "grab": the part asks its owner once it exists
+local function UpdatePartLabel(part)
+	local owner = part:GetValue("OwnerEntity")
+	if (owner and owner:IsValid() and owner:IsA(LogicButton)) then
+		part:SetInteractionToolTipText(owner:GetLabel())
+	end
+end
+
+Prop.Subscribe("Spawn", UpdatePartLabel)
+Prop.Subscribe("ValueChange", function(part, key)
+	if (key == "OwnerEntity") then UpdatePartLabel(part) end
+end)
 
 LogicButton.Subscribe("Spawn", LogicButton.OnSpawn)
 LogicButton.Subscribe("ValueChange", LogicButton.OnValueChange)
