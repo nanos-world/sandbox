@@ -7,6 +7,15 @@ Sandbox.HUD = Sandbox.HUD or WebUI("Sandbox HUD", "file:///UI/index.html")
 -- Exposes Sandbox to other packages, this will contain all subsystems as well
 Package.Export("Sandbox", Sandbox)
 
+-- Returns where the local player is aiming (camera location, aim direction, aim rotation), using the control rotation
+function Sandbox.GetCameraAim()
+	local local_player = Client.GetLocalPlayer()
+	if (not local_player) then return nil end
+
+	local camera_rotation = local_player:GetCameraRotation()
+	return local_player:GetCameraLocation(), camera_rotation:GetForwardVector(), camera_rotation
+end
+
 -- Configures Keybindings Inputs
 Input.Register("NoClip", "B", "Toggles the No Clip mode")
 Input.Register("Scoreboard", "Tab", "Toggles the Scoreboard")

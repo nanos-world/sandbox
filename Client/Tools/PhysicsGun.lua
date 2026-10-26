@@ -176,14 +176,15 @@ end
 
 -- Function to try to pickup an object
 function TryPickUpObject()
-	-- Get the camera location in 3D World Space
-	local viewport_2D_center = Viewport.GetViewportSize() / 2
-	local viewport_3D = Viewport.DeprojectScreenToWorld(viewport_2D_center)
-	local start_location = viewport_3D.Position + viewport_3D.Direction * 100
+	-- Gets where the camera is aiming
+	local camera_location, direction = Sandbox.GetCameraAim()
+	if (not camera_location) then return end
 
-	-- Gets the end location of the trace (5000 units ahead)
+	local start_location = camera_location + direction * 100
+
+	-- Gets the end location of the trace (20000 units ahead)
 	local trace_max_distance = 20000
-	local end_location = viewport_3D.Position + viewport_3D.Direction * trace_max_distance
+	local end_location = camera_location + direction * trace_max_distance
 
 	-- Determine at which object we will be tracing for (WorldStatic - StaticMeshes - PhysicsBody - Props)
 	local collision_trace = CollisionChannel.WorldStatic | CollisionChannel.WorldDynamic | CollisionChannel.PhysicsBody | CollisionChannel.Vehicle | CollisionChannel.Mesh
@@ -216,7 +217,7 @@ function TryPickUpObject()
 		PhysicsGun.picking_object_relative_location = PhysicsGun.picking_object:GetRotation():UnrotateVector(PhysicsGun.picking_object:GetLocation() - trace_result.Location)
 
 		-- Calculates the distance of the object and the camera, adds ArmLength to normalize Camera Views
-		PhysicsGun.picking_object_distance = trace_result.Location:Distance(viewport_3D.Position) - Client.GetLocalPlayer():GetCameraArmLength()
+		PhysicsGun.picking_object_distance = trace_result.Location:Distance(camera_location) - Client.GetLocalPlayer():GetCameraArmLength()
 
 		PhysicsGun.picking_object_initial_rotation = PhysicsGun.picking_object:GetRotation() - Client.GetLocalPlayer():GetControlledCharacter():GetRotation()
 
@@ -370,10 +371,7 @@ Client.Subscribe("Tick", function(delta_time)
 
 				-- If I'm the local handler, make more precise calculations
 				if (PhysicsGun.weapon == physics_gun) then
-					local local_player = Client.GetLocalPlayer()
-					local camera_rotation = local_player:GetCameraRotation()
-					direction =  camera_rotation:GetForwardVector()
-					start_location = local_player:GetCameraLocation()
+					start_location, direction = Sandbox.GetCameraAim()
 				else
 					direction = beam_particle:GetRotation():GetForwardVector()
 					start_location = beam_particle:GetLocation()
@@ -435,9 +433,7 @@ function PhysicsGunTick()
 		-- Otherwise, if I'm grabbing something, update it's location
 		-- Get the camera location in 3D World Space
 		local local_player = Client.GetLocalPlayer()
-		local camera_location = local_player:GetCameraLocation()
-		local camera_rotation = local_player:GetCameraRotation()
-		local camera_direction = camera_rotation:GetForwardVector()
+		local camera_location, camera_direction, camera_rotation = Sandbox.GetCameraAim()
 
 		-- Gets the new object location using some Math, first gets the overall location: start_location + camera_direction * the distance
 		-- Then adds the offset of the object when it was grabbed, rotating it with the object rotation

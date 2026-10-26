@@ -132,12 +132,11 @@ Sandbox.HUD:Subscribe("ClickSound", PlayClickSound)
 -- Handle for selecting an Item from the SpawnMenu
 Sandbox.HUD:Subscribe("SpawnItem", function(category, asset_id)
 	-- Gets the world spawn location to spawn the Item
-	local viewport_2D_center = Viewport.GetViewportSize() / 2
-	local viewport_3D = Viewport.DeprojectScreenToWorld(viewport_2D_center)
-	local trace_max_distance = 5000
+	local start_location, direction = Sandbox.GetCameraAim()
+	if (not start_location) then return end
 
-	local start_location = viewport_3D.Position
-	local end_location = viewport_3D.Position + viewport_3D.Direction * trace_max_distance
+	local trace_max_distance = 5000
+	local end_location = start_location + direction * trace_max_distance
 
 	-- Traces for world things
     local trace_result = Trace.LineSingle(start_location, end_location, CollisionChannel.WorldStatic | CollisionChannel.WorldDynamic | CollisionChannel.Water, TraceMode.TraceOnlyVisibility)
@@ -145,7 +144,7 @@ Sandbox.HUD:Subscribe("SpawnItem", function(category, asset_id)
 	local spawn_location = end_location
 
 	-- Gets the rotation looking at the player, only rotated by Yaw
-	local spawn_rotation = Rotator(0, viewport_3D.Direction:ToOrientationRotator().Yaw, 0)
+	local spawn_rotation = Rotator(0, direction:ToOrientationRotator().Yaw, 0)
 
 	-- Pushed out of the hit surface so items fall into place
 	if (trace_result.Success) then

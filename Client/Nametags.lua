@@ -9,12 +9,8 @@ Timer.SetInterval(function()
 
 	local local_character = local_player:GetControlledCharacter()
 
-	-- Gets the camera rotation and location
-	local camera_rotation = local_player:GetCameraRotation()
-	local start_location = local_player:GetCameraLocation()
-
-	-- Calculates the direction vector based on the camera rotation
-	local direction =  camera_rotation:GetForwardVector()
+	-- Gets where the camera is aiming
+	local start_location, direction = Sandbox.GetCameraAim()
 
 	-- Calculates the end location of the trace
 	-- (start location + 1000 units in the direction of the camera)

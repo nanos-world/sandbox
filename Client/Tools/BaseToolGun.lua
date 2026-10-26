@@ -78,11 +78,12 @@ end
 
 -- Aux for Tracing for world object
 function TraceFor(trace_max_distance, collision_channel)
-	local viewport_2D_center = Viewport.GetViewportSize() / 2
-	local viewport_3D = Viewport.DeprojectScreenToWorld(viewport_2D_center)
+	-- Gets where the camera is aiming
+	local camera_location, direction = Sandbox.GetCameraAim()
+	if (not camera_location) then return nil end
 
-	local start_location = viewport_3D.Position + viewport_3D.Direction * 50
-	local end_location = viewport_3D.Position + viewport_3D.Direction * trace_max_distance
+	local start_location = camera_location + direction * 50
+	local end_location = camera_location + direction * trace_max_distance
 
 	local trace_mode = TraceMode.ReturnEntity | TraceMode.TraceOnlyVisibility
 
