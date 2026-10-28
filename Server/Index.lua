@@ -299,11 +299,11 @@ Events.SubscribeRemote("ClientCommand", function(player, command)
 		Console.Log("The Player '%s' has requested to reset the package.", player:GetName())
 
 		if (Player.GetCount() > 1) then
-			Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Error, "CANT_RESET", "you cannot reset the package while other players are connected", 3, 0, true)
+			Events.CallRemote("AddNotification", player, Reliability.Reliable, NotificationType.Error, "CANT_RESET", "you cannot reset the server while other players are connected", 3, 0, true)
 			return
 		end
 
-		Sandbox.Reset()
+		Sandbox.Reset(player)
 
 		return
 	end
