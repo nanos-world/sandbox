@@ -53,7 +53,7 @@ All settings can be changed in the New Game menu, in `Config.toml` or through th
 | Setting | Default | Description |
 |---|---|---|
 | `auto_reset_minutes` | `0` | Reloads all packages after the last player leaves and the server stays empty for this many minutes; `0` disables it |
-| `enable_auto_weather` | `true` | Weather changes automatically |
+| `enable_auto_weather` | `true` | Weather changes automatically while players are connected |
 | `enable_default_sky` | `true` | Overrides the map lights with Ultra Dynamic Sky |
 | `enable_noclip` | `true` | Players can noclip |
 | `enable_pvp` | `true` | Players can damage each other |

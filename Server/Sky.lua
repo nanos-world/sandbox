@@ -35,6 +35,8 @@ Package.Subscribe("Load", function()
 
 		if (SANDBOX_CUSTOM_SETTINGS.enable_auto_weather) then
 			Timer.SetInterval(function()
+				if (Player.GetCount() == 0) then return end
+
 				-- At each 'weather_change_interval' seconds, we have 'probability_change_weather' of chance of changing the weather
 				if (math.random(0, 100) / 100 >= SandboxSky.probability_change_weather) then return end
 
