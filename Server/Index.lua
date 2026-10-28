@@ -303,10 +303,7 @@ Events.SubscribeRemote("ClientCommand", function(player, command)
 			return
 		end
 
-		-- Reload all packages
-		for k, v in pairs(Server.GetPackages(true)) do
-			Server.ReloadPackage(v.name)
-		end
+		Sandbox.Reset()
 
 		return
 	end
@@ -330,6 +327,7 @@ Package.Subscribe("Load", function()
 	Chat.BroadcastMessage("The package <cyan>Sandbox</> has been reloaded!")
 end)
 
+Package.Require("Reset.lua")
 Package.Require("SpawnMenu.lua")
 Package.Require("SpawnHistory.lua")
 Package.Require("Sky.lua")

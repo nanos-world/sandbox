@@ -1,3 +1,5 @@
+Package.Require("Lamp.lua")
+
 -- A Bulb Lamp hanging on a cable, with a random color: kept with its old arguments for the packages that spawn it (the Playground map)
 RopeLight = Lamp.Inherit("RopeLight")
 

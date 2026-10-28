@@ -52,6 +52,7 @@ All settings can be changed in the New Game menu, in `Config.toml` or through th
 
 | Setting | Default | Description |
 |---|---|---|
+| `auto_reset_minutes` | `0` | Reloads all packages after the last player leaves and the server stays empty for this many minutes; `0` disables it |
 | `enable_auto_weather` | `true` | Weather changes automatically |
 | `enable_default_sky` | `true` | Overrides the map lights with Ultra Dynamic Sky |
 | `enable_noclip` | `true` | Players can noclip |
@@ -63,10 +64,13 @@ All settings can be changed in the New Game menu, in `Config.toml` or through th
 | `max_tools` | `50` | Max tool guns per player |
 | `max_*` | | There is a limit for every entity (balloons, cables, thrusters, tvs, etc.), see `Package.toml` |
 
+The automatic reset is canceled if a player joins during the countdown. It runs once after the server becomes empty, and starts a new countdown only after players return and leave again. Every loaded package is reloaded, including the map, so it can recreate its original objects. Packages need `auto_cleanup = true` to remove their previous entities, and their startup scripts must recreate the world instead of restoring a saved session.
+
 Example:
 
 ```toml
 [custom_settings]
+    auto_reset_minutes = 5
     enable_pvp = false
     max_props =  200
 ```
