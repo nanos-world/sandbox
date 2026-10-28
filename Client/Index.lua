@@ -205,16 +205,23 @@ end
 
 -- Function to update the Speedometer's UI
 function UpdateSpeedometer(enable_ui, vehicle)
-	local speed, gear, rpm = nil, nil, nil
+	local speed, gear, rpm, unit = nil, nil, nil, "km/h"
 
 	if (enable_ui) then
 		-- TODO: not yet
 		-- gear = vehicle:GetGear()
 		-- rpm = math.floor(vehicle:GetRPM())
-		speed = math.floor(vehicle:GetVelocity():Size() * 0.036) -- Converts cm/s to km/h
+		local speed_kmh = vehicle:GetVelocity():Size() * 0.036
+
+		if (vehicle:IsA(VehicleWater)) then
+			unit = "kn"
+			speed = math.floor(speed_kmh / 1.852)
+		else
+			speed = math.floor(speed_kmh)
+		end
 	end
 
-	Sandbox.HUD:CallEvent("UpdateSpeedometer", enable_ui, speed, gear, rpm)
+	Sandbox.HUD:CallEvent("UpdateSpeedometer", enable_ui, speed, gear, rpm, unit)
 end
 
 -- Function to update the Ammo's UI

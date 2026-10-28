@@ -23,7 +23,7 @@
 	font-size: 36px;
 }
 
-.speedometer_label {
+#speedometer_unit {
 	font-size: 16px;
 	margin-top: 12px;
 }

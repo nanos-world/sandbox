@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			<img src="modules/speedometer/speedometer.png">
 			<!-- Speed value -->
 			<span id="speedometer_speed">30</span>
-			<span class="speedometer_label">km/h</span>
+			<span id="speedometer_unit">km/h</span>
 			<!-- Gear value -->
 			<!-- <span id="speedometer_gear">1</span> -->
 			<!-- RPM value -->
@@ -25,9 +25,11 @@ const Speedometer = {
 }
 
 // Register for UpdateSpeedometer custom event (from Lua)
-function UpdateSpeedometer(enable, speed, gear, rpm) {
-	if (enable)
-	{
+function UpdateSpeedometer(enable, speed, gear, rpm, unit = "km/h") {
+	if (enable) {
+		// Update unit
+		document.getElementById("speedometer_unit").textContent = unit;
+
 		document.getElementById("speedometer_container").style.display = "flex";
 
 		Speedometer.target_speed = speed;
@@ -44,8 +46,7 @@ function UpdateSpeedometer(enable, speed, gear, rpm) {
 
 		// document.getElementById("speedometer_rpm").textContent = rpm;
 
-		if (Speedometer.timer == null)
-		{
+		if (Speedometer.timer == null) {
 			// Smoothly updates the speedometer towards the target
 			Speedometer.timer = setInterval(function() {
 				Speedometer.current_speed = Speedometer.current_speed * 0.7 + Speedometer.target_speed * 0.3;
@@ -53,13 +54,10 @@ function UpdateSpeedometer(enable, speed, gear, rpm) {
 			}, 33)
 		}
 
-	}
-	else
-	{
+	} else {
 		document.getElementById("speedometer_container").style.display = "none";
 
-		if (Speedometer.timer)
-		{
+		if (Speedometer.timer) {
 			clearInterval(Speedometer.timer);
 			Speedometer.timer = null;
 		}
