@@ -5,11 +5,11 @@ function MaterialGun:Constructor(location, rotation)
 	ToolGun.Constructor(self, location, rotation, Color.GREEN)
 end
 
--- Players' characters are left alone, like the Color Gun does
+-- NPCs (Character and CharacterSimple) can be painted, players' characters are left alone like the Color Gun does
 function MaterialGun.CanTarget(entity)
 	if (not NanosUtils.IsEntityValid(entity)) then return false end
 
-	return not (entity:IsA(Character) and entity:GetPlayer())
+	return not ((entity:IsA(Character) or entity:IsA(CharacterSimple)) and entity:GetPlayer())
 end
 
 function MaterialGun:OnApplyMaterial(player, entity, hit_location, direction, preset_id, index)

@@ -164,6 +164,24 @@ function Jukebox:OnTakeDamage(damage, bone, type, from_direction, instigator, ca
 	self:SetPlaying(instigator, false)
 end
 
+-- From a button wired to it (LogicButton passes itself as the causer): a switchable button plays and stops it with its state, a plain one toggles it
+-- Only changes it when needed, since playing again starts the song over
+function Jukebox:Activate(player_instigator, causer)
+	local is_playing = self:GetValue("Playing")
+
+	if (causer and causer.switchable == false) then
+		self:SetPlaying(player_instigator, not is_playing)
+	elseif (not is_playing) then
+		self:SetPlaying(player_instigator, true)
+	end
+end
+
+function Jukebox:Deactivate(player_instigator, causer)
+	if (self:GetValue("Playing")) then
+		self:SetPlaying(player_instigator, false)
+	end
+end
+
 Jukebox.Subscribe("Interact", Jukebox.OnInteract)
 Jukebox.Subscribe("TakeDamage", Jukebox.OnTakeDamage)
 Jukebox.SubscribeRemote("SetSong", Jukebox.SetSong)

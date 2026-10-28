@@ -31,6 +31,9 @@ TARGET_MAX_RESET_TIME = 30000
 TARGET_CLANG = "nanos-world::A_Metal_Clang"
 TARGET_CLANG_RANGE = 12000
 
+-- Played 2D only for the shooter when a hit knocks the plate down, like hitting a character
+TARGET_HIT_SOUND = "nanos-world::A_Hit_Feedback"
+
 -- Finds a style by id, nil when unknown
 function GetTargetStyle(id)
 	for _, style in ipairs(TARGET_STYLES) do

@@ -35,10 +35,9 @@ Target.selected_context_menu_items = {
 
 local SCORE_COLOR = Color(1, 0.8, 0.1)
 
--- A hit clangs from the plate's middle (each client plays it so it carries the whole range) and pops a "+1" over the plate that rises and fades
-function Target:OnValueChange(key, value)
-	if (key ~= "Down" or not value) then return end
-
+-- A hit that knocks it down clangs from the plate's middle (each client plays it so it carries the whole range) and pops a "+1" over the plate that rises and fades
+-- A game lowering it ("Down" without a hit) stays silent
+function Target:OnKnockDown()
 	local style = GetTargetStyle(self:GetValue("Style")) or TARGET_STYLES[1]
 	local up = self:GetRotation():GetUpVector()
 
@@ -50,4 +49,4 @@ function Target:OnValueChange(key, value)
 	score:SetLifeSpan(1)
 end
 
-Target.Subscribe("ValueChange", Target.OnValueChange)
+Target.SubscribeRemote("KnockDown", Target.OnKnockDown)

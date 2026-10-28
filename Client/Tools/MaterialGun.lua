@@ -21,7 +21,7 @@ MaterialGun.configs = {
 
 -- Tool Trace Debug Settings
 MaterialGun.debug_trace = {
-	collision_channel = CollisionChannel.WorldStatic | CollisionChannel.WorldDynamic | CollisionChannel.PhysicsBody | CollisionChannel.Vehicle,
+	collision_channel = CollisionChannel.WorldStatic | CollisionChannel.WorldDynamic | CollisionChannel.PhysicsBody | CollisionChannel.Vehicle | CollisionChannel.Pawn,
 	show_crosshair = true,
 }
 
