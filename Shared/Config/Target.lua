@@ -27,9 +27,10 @@ TARGET_RESET_TIME = 7000
 TARGET_MIN_RESET_TIME = 1000
 TARGET_MAX_RESET_TIME = 30000
 
--- The clang of a hit, heard up to this far (cm): ranges put targets up to 100 m from the firing line
+-- The hit clang stays near the plate; the shooter also gets the separate 2D hit feedback
 TARGET_CLANG = "nanos-world::A_Metal_Clang"
-TARGET_CLANG_RANGE = 12000
+TARGET_CLANG_VOLUME = 0.35
+TARGET_CLANG_RANGE = 2500
 
 -- Played 2D only for the shooter when a hit knocks the plate down, like hitting a character
 TARGET_HIT_SOUND = "nanos-world::A_Hit_Feedback"

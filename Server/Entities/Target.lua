@@ -92,6 +92,7 @@ end
 function Target:KnockDown(instigator)
 	if (self:GetValue("Down")) then return end
 
+	self.rising = false
 	self:SetValue("Down", true, true)
 	self:Animate(FALL)
 	self:BroadcastRemoteEvent("KnockDown")
@@ -112,15 +113,15 @@ function Target:KnockDown(instigator)
 	if (self.OnKnockedDown) then self:OnKnockedDown(instigator) end
 end
 
--- Stands the plate up again, "Down" turns false (and hits count) once it is up
+-- Stands the plate up again, "Down" turns false immediately so hits count while it rises
 function Target:Raise()
 	self:CancelRise()
 	if (not self:GetValue("Down") or self.rising) then return end
 
 	self.rising = true
+	self:SetValue("Down", false, true)
 	self:Animate(RISE, function()
 		self.rising = false
-		self:SetValue("Down", false, true)
 	end)
 end
 

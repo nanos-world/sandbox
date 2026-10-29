@@ -35,13 +35,13 @@ Target.selected_context_menu_items = {
 
 local SCORE_COLOR = Color(1, 0.8, 0.1)
 
--- A hit that knocks it down clangs from the plate's middle (each client plays it so it carries the whole range) and pops a "+1" over the plate that rises and fades
+-- A hit that knocks it down clangs from the plate's middle (played locally by each client) and pops a "+1" over the plate that rises and fades
 -- A game lowering it ("Down" without a hit) stays silent
 function Target:OnKnockDown()
 	local style = GetTargetStyle(self:GetValue("Style")) or TARGET_STYLES[1]
 	local up = self:GetRotation():GetUpVector()
 
-	Sound(self:GetLocation() + up * style.top * 0.8, TARGET_CLANG, false, true, SoundType.SFX, 1, 2, 400, TARGET_CLANG_RANGE)
+	Sound(self:GetLocation() + up * style.top * 0.8, TARGET_CLANG, false, true, SoundType.SFX, TARGET_CLANG_VOLUME, 2, 100, TARGET_CLANG_RANGE)
 
 	local score_location = self:GetLocation() + up * (style.top + 20)
 	local score = TextRender(score_location, Rotator(), "+1", 50, SCORE_COLOR, TextRenderRenderingType.UnlitCameraAligned)
