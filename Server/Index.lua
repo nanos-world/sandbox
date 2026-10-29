@@ -288,6 +288,7 @@ Console.RegisterCommand("tp", function(player1, player2)
 	if (not char1) then Console.Error("Player 1 does not have a controlled Character!") return end
 	if (not char2) then Console.Error("Player 2 does not have a controlled Character!") return end
 
+	char1:StopMovement(true)
 	char1:SetLocation(char2:GetLocation())
 
 	Console.Log("Teleporting '%s (Player#%d)' to '%s (Player#%d)'.", p1:GetName(), p1:GetID(), p2:GetName(), p2:GetID())
