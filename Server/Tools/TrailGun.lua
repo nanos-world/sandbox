@@ -11,7 +11,7 @@ function TrailGun:OnSpawnTrail(player, hit_location, relative_location, relative
 		return
 	end
 
-	if (not ValidateSpawnLimits(player, "Trail")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "Trail")) then
 		return
 	end
 

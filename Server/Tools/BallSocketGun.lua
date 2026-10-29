@@ -15,7 +15,7 @@ function BallSocketGun:OnBallSocketAttach(player, targeting_first_to, targeting_
 		return
 	end
 
-	if (not ValidateSpawnLimits(player, "Cable")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "Cable")) then
 		return
 	end
 

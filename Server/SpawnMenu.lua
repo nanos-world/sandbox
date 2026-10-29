@@ -23,7 +23,7 @@ SpawnMenu.SpawnItem = function(player, tab, id, spawn_location, spawn_rotation)
 
 	-- Checks for limits (each entity has it own limit)
 	local id_to_validate_limits = tab == "entities" and id or tab
-	if (not ValidateSpawnLimits(player, id_to_validate_limits)) then return end
+	if (not Sandbox.ValidateSpawnLimits(player, id_to_validate_limits)) then return end
 
 	local character = player:GetControlledCharacter()
 

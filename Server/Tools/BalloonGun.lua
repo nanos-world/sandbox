@@ -11,7 +11,7 @@ function BalloonGun:OnSpawnBalloon(player, spawn_location, relative_location, re
 		return
 	end
 
-	if (not ValidateSpawnLimits(player, "Balloon")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "Balloon")) then
 		return
 	end
 

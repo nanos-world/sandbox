@@ -6,7 +6,7 @@ function ButtonGun:Constructor(location, rotation)
 end
 
 function ButtonGun:OnSpawnButton(player, hit_location, relative_location, relative_rotation, direction, entity, style)
-	if (not ValidateSpawnLimits(player, "Button")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "Button")) then
 		return
 	end
 

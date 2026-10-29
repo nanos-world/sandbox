@@ -8,7 +8,7 @@ function InstantCamera:Constructor(location, rotation)
 end
 
 function InstantCamera:OnTakePhoto(player, base64)
-	if (not ValidateSpawnLimits(player, "InstantCamera")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "InstantCamera")) then
 		return
 	end
 

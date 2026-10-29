@@ -11,7 +11,7 @@ function LightGun:OnSpawnLight(player, spawn_location, relative_location, relati
 		return
 	end
 
-	if (not ValidateSpawnLimits(player, "Lamp")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "Lamp")) then
 		return
 	end
 

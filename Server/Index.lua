@@ -44,7 +44,7 @@ function Sandbox.IsUnderSpawnLimit(ID)
 end
 
 -- Validates if a player can spawn an item
-function ValidateSpawnLimits(player, ID)
+function Sandbox.ValidateSpawnLimits(player, ID)
 	if (Sandbox.IsUnderSpawnLimit(ID)) then
 		return true
 	end

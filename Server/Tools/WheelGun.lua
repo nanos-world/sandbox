@@ -14,7 +14,7 @@ function WheelGun:OnSpawnWheel(player, hit_location, relative_location, relative
 		return
 	end
 
-	if (not ValidateSpawnLimits(player, "Wheel")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "Wheel")) then
 		return
 	end
 

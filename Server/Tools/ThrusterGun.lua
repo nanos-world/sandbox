@@ -14,7 +14,7 @@ function ThrusterGun:OnSpawnThruster(player, hit_location, relative_location, re
 		return
 	end
 
-	if (not ValidateSpawnLimits(player, "Thruster")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "Thruster")) then
 		return
 	end
 

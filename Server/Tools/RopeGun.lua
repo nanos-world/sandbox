@@ -17,7 +17,7 @@ function RopeGun:OnRopeAttach(player, targeting_first_to, targeting_first_relati
 		return
 	end
 
-	if (not ValidateSpawnLimits(player, "Cable")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "Cable")) then
 		return
 	end
 

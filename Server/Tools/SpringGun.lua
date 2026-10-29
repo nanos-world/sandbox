@@ -15,7 +15,7 @@ function SpringGun:OnSpringAttach(player, targeting_first_to, targeting_first_re
 		return
 	end
 
-	if (not ValidateSpawnLimits(player, "Cable")) then
+	if (not Sandbox.ValidateSpawnLimits(player, "Cable")) then
 		return
 	end
 
