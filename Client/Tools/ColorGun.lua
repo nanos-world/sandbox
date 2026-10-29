@@ -19,7 +19,7 @@ ColorGun.configs = {
 
 -- Tool Trace Debug Settings
 ColorGun.debug_trace = {
-	collision_channel = CollisionChannel.WorldStatic | CollisionChannel.WorldDynamic | CollisionChannel.PhysicsBody | CollisionChannel.Vehicle,
+	collision_channel = CollisionChannel.WorldStatic | CollisionChannel.WorldDynamic | CollisionChannel.PhysicsBody | CollisionChannel.Vehicle | CollisionChannel.Mesh,
 	show_crosshair = true,
 }
 
