@@ -8,7 +8,7 @@ function CCTV:Constructor(location, rotation)
 
 	-- Spawns the Camera Prop, floating where it is put so it can go on a wall or a ceiling
 	local camera_type = CCTV_CAMERAS[1]
-	self.camera = Prop(location + rotation:RotateVector(Vector(150, 0, 0)), rotation, camera_type.id)
+	self.camera = Prop(location + rotation:RotateVector(Vector(50, 0, 75)), rotation + Rotator(0, 180, 0), camera_type.id)
 	self.camera:SetGravityEnabled(false)
 
 	-- Sets this so we can access through Client ("CameraModel" tells it where the lens is)
@@ -16,6 +16,10 @@ function CCTV:Constructor(location, rotation)
 	self:SetValue("CameraModel", camera_type.id, true)
 
 	self:FinishSpawn()
+
+	-- Publish the reverse link after the monitor exists so the client can initialize from either entity
+	-- TODO Camera entity?
+	self.camera:SetValue("Monitor", self, true)
 
 	-- Spawns a Cable
 	self.cable = Cable(location, true, SpawnMode.Manual)

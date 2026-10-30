@@ -51,9 +51,11 @@ CCTV.selected_context_menu_items = {
 }
 
 function CCTV:OnSpawn()
-	local camera = self:GetValue("Camera")
+	self:InitializeCapture(self:GetValue("Camera"))
+end
 
-	-- On a package reload the camera can already be gone while the monitor still spawns here
+function CCTV:InitializeCapture(camera)
+	if (self.scene_capture and self.scene_capture:IsValid()) then return end
 	if (not camera or not camera:IsValid()) then return end
 
 	-- 30 captures per second, at the monitor's 16:9
@@ -79,6 +81,8 @@ end
 
 -- A new monitor mesh comes without the screen's material; a new camera has its lens somewhere else
 function CCTV:OnValueChange(key)
+	if (key == "Camera") then self:OnSpawn() end
+
 	if (not self.scene_capture or not self.scene_capture:IsValid()) then return end
 	if (key == "Model") then
 		self:ShowCapture()
@@ -89,3 +93,16 @@ end
 
 CCTV.Subscribe("Spawn", CCTV.OnSpawn)
 CCTV.Subscribe("ValueChange", CCTV.OnValueChange)
+
+-- The camera's owner arrives after the monitor was spawned; initialize directly with that camera
+local function InitializeCameraMonitor(camera)
+	local monitor = camera:GetValue("Monitor")
+	if (monitor and monitor:IsValid() and monitor:IsA(CCTV)) then
+		monitor:InitializeCapture(camera)
+	end
+end
+
+Prop.Subscribe("Spawn", InitializeCameraMonitor)
+Prop.Subscribe("ValueChange", function(camera, key)
+	if (key == "Monitor") then InitializeCameraMonitor(camera) end
+end)

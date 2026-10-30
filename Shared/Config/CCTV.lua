@@ -3,22 +3,22 @@
 -- mount: the point that goes on the wall or ceiling, where the cable to the monitor also leaves (the pivot of all but the classic one)
 CCTV_CAMERAS = {
 	{
-		id = "nanos-world::SM_Camera_Security",
-		name = "Security",
-		image = "assets://nanos-world/Thumbnails/SM_Camera_Security.jpg",
-		capture = {
-			offset = Vector(36, 0, 4),
-			rotation = Rotator(-15, 0, 0)
-		},
-		mount = Vector(0, 0, 0)
-	},
-	{
 		id = "nanos-world::SM_Camera_Surveillance",
 		name = "Surveillance",
 		image = "assets://nanos-world/Thumbnails/SM_Camera_Surveillance.jpg",
 		capture = {
 			offset = Vector(48.5, 0, 20),
 			rotation = Rotator(0, 0, 0)
+		},
+		mount = Vector(0, 0, 0)
+	},
+	{
+		id = "nanos-world::SM_Camera_Security",
+		name = "Security",
+		image = "assets://nanos-world/Thumbnails/SM_Camera_Security.jpg",
+		capture = {
+			offset = Vector(36, 0, 4),
+			rotation = Rotator(-15, 0, 0)
 		},
 		mount = Vector(0, 0, 0)
 	},
