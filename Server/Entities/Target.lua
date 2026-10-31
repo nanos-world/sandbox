@@ -44,8 +44,11 @@ function Target:Constructor(location, rotation, style, reset_time)
 	self.plate:SetImpulseOnDamage(false)
 	-- Nearly weightless, so lying down it does not shift the welded body's balance and tip the stand over
 	self.plate:SetMassOverride(1)
+	-- Only shots knock it down
 	self.plate:Subscribe("TakeDamage", function(_, damage, bone, type, from_direction, instigator)
-		self:KnockDown(instigator)
+		if (type == DamageType.Shot) then
+			self:KnockDown(instigator)
+		end
 		return false
 	end)
 	self.plate:AttachTo(self, AttachmentRule.SnapToTarget, "", 0)

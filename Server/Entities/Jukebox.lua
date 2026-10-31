@@ -158,6 +158,8 @@ end
 
 -- Shooting it turns it off
 function Jukebox:OnTakeDamage(damage, bone, type, from_direction, instigator, causer)
+	if (type ~= DamageType.Shot) then return end
+
 	local is_playing = self:GetValue("Playing")
 	if (not is_playing) then return end
 
