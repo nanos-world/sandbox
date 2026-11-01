@@ -12,7 +12,7 @@ RemoverGun.tutorials = {
 
 -- Tool Crosshair Trace Debug Settings
 RemoverGun.debug_trace = {
-	collision_channel = CollisionChannel.WorldStatic | CollisionChannel.WorldDynamic | CollisionChannel.PhysicsBody | CollisionChannel.Vehicle,
+	collision_channel = CollisionChannel.WorldStatic | CollisionChannel.WorldDynamic | CollisionChannel.PhysicsBody | CollisionChannel.Vehicle | CollisionChannel.Pawn,
 	show_crosshair = true,
 }
 
@@ -22,9 +22,11 @@ function RemoverGun:OnLocalPlayerFire(shooter)
 	-- Makes a trace 10000 units ahead
 	local trace_result = TraceFor(10000, RemoverGun.debug_trace.collision_channel)
 
-	-- If hit an object, calls the server to destroy it
-	if (trace_result.Success and trace_result.Entity and not trace_result.Entity:HasAuthority()) then
-		Events.CallRemote("DestroyItem", Reliability.Reliable, trace_result.Entity)
+	local entity = trace_result.Entity
+
+	-- If hit an object (or an NPC, never a player character), calls the server to destroy it
+	if (trace_result.Success and entity and not entity:HasAuthority() and not ((entity:IsA(Character) or entity:IsA(CharacterSimple)) and entity:GetPlayer() ~= nil)) then
+		Events.CallRemote("DestroyItem", Reliability.Reliable, entity)
 	else
 		-- If didn't hit anything, plays a negative sound
 		SoundInvalidAction:Play()

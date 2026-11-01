@@ -96,7 +96,7 @@ end
 ---@param item any					The item to be destroyed
 SpawnMenu.DestroyItem = function(player, item)
 	-- Prevent destroying a player character
-	if (not item or (item:IsA(Character) and item:GetPlayer())) then
+	if (not item or ((item:IsA(Character) or item:IsA(CharacterSimple)) and item:GetPlayer())) then
 		return
 	end
 
