@@ -59,7 +59,7 @@ Package.Subscribe("Load", function()
 				"props",
 				asset_pack.Path .. "::" .. prop.key,
 				prop.key:gsub("SM_", ""):gsub("_", " "), -- Parses it to remove dirty names
-				"assets://" .. asset_pack.Path .. "/" .. (prop.thumbnail or ("Thumbnails/" .. prop.key .. ".jpg")), -- Gets the Thumbnail path from conventional path "my-asset-pack/Thumbnails/"
+				"assets://" .. asset_pack.Path .. "/" .. (prop.thumbnail or ("Thumbnails/" .. prop.key)), -- Gets the Thumbnail path from conventional path "my-asset-pack/Thumbnails/"
 				prop.category or "uncategorized",
 				true
 			)

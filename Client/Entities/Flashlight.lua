@@ -1,7 +1,7 @@
 Flashlight = Prop.Inherit("Flashlight")
 
 Flashlight.name = "Flashlight"
-Flashlight.image = "assets://nanos-world/Thumbnails/SM_Flashlight.jpg"
+Flashlight.image = "assets://nanos-world/Thumbnails/SM_Flashlight.png"
 Flashlight.category = "objects"
 
 Flashlight.currently_grabbed = nil

@@ -1,7 +1,7 @@
 Chair = Prop.Inherit("Chair")
 
 Chair.name = "Chair"
-Chair.image = "assets://nanos-world/Thumbnails/SM_WoodenChair.jpg"
+Chair.image = "assets://nanos-world/Thumbnails/SM_WoodenChair.png"
 Chair.category = "objects"
 
 -- Context Menu Items when selecting this Entity

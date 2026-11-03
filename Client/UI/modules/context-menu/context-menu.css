@@ -217,6 +217,7 @@
 #context_menu .context_menu_item_select_image img {
 	width: auto;
 	margin: 3px;
+	background-color: #4d4d4dc9;
 }
 
 #context_menu .divider {

@@ -7,7 +7,7 @@ CHAIR_STYLES = {
 	{
 		id = "Wooden",
 		name = "Wooden Chair",
-		image = "assets://nanos-world/Thumbnails/SM_WoodenChair.jpg",
+		image = "assets://nanos-world/Thumbnails/SM_WoodenChair.png",
 		mesh = "nanos-world::SM_WoodenChair",
 		front = 90,
 		seats = {
@@ -20,7 +20,7 @@ CHAIR_STYLES = {
 	{
 		id = "Rocking",
 		name = "Rocking Chair",
-		image = "assets://nanos-world/Thumbnails/SM_RockingChair.jpg",
+		image = "assets://nanos-world/Thumbnails/SM_RockingChair.png",
 		mesh = "nanos-world::SM_RockingChair",
 		front = 90,
 		seats = {
@@ -33,7 +33,7 @@ CHAIR_STYLES = {
 	{
 		id = "Stool",
 		name = "Stool",
-		image = "assets://nanos-world/Thumbnails/SM_Stool.jpg",
+		image = "assets://nanos-world/Thumbnails/SM_Stool.png",
 		mesh = "nanos-world::SM_Stool",
 		front = 90,
 		seats = {
@@ -46,7 +46,7 @@ CHAIR_STYLES = {
 	{
 		id = "Bench",
 		name = "Bench",
-		image = "assets://nanos-world/Thumbnails/SM_Bench.jpg",
+		image = "assets://nanos-world/Thumbnails/SM_Bench.png",
 		mesh = "nanos-world::SM_Bench",
 		front = 90,
 		seats = {
@@ -67,7 +67,7 @@ CHAIR_STYLES = {
 	{
 		id = "PlaygroundChair",
 		name = "Playground Chair",
-		image = "assets://nanos-world/Thumbnails/SM_PG_Chair.jpg",
+		image = "assets://nanos-world/Thumbnails/SM_PG_Chair.png",
 		mesh = "nanos-world::SM_PG_Chair",
 		front = 90,
 		seats = {
@@ -80,7 +80,7 @@ CHAIR_STYLES = {
 	{
 		id = "PlaygroundBench",
 		name = "Playground Bench",
-		image = "assets://nanos-world/Thumbnails/SM_PG_Bench.jpg",
+		image = "assets://nanos-world/Thumbnails/SM_PG_Bench.png",
 		mesh = "nanos-world::SM_PG_Bench",
 		front = 90,
 		seats = {

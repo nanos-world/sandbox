@@ -1,7 +1,7 @@
 Balloon = Prop.Inherit("Balloon")
 
 Balloon.name = "Balloon"
-Balloon.image = "assets://nanos-world/Thumbnails/SM_Balloon_01.jpg"
+Balloon.image = "assets://nanos-world/Thumbnails/SM_Balloon_01.png"
 Balloon.category = "objects"
 
 -- Context Menu Items when selecting this Entity

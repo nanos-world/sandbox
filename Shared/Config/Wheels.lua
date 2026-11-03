@@ -3,37 +3,37 @@ WHEELS_ASSETS = {
 	{
 		id = "nanos-world::SM_Offroad_Tire",
 		name = "Offroad Tire",
-		image = "assets://nanos-world/Thumbnails/SM_Offroad_Tire.jpg"
+		image = "assets://nanos-world/Thumbnails/SM_Offroad_Tire.png"
 	},
 	{
 		id = "nanos-world::SM_WheelBarrel_Wheel",
 		name = "Wheel Barrel",
-		image = "assets://nanos-world/Thumbnails/SM_WheelBarrel_Wheel.jpg"
+		image = "assets://nanos-world/Thumbnails/SM_WheelBarrel_Wheel.png"
 	},
 	{
 		id = "nanos-world::SM_RollerMachine_Wheel",
 		name = "Roller Machine",
-		image = "assets://nanos-world/Thumbnails/SM_RollerMachine_Wheel.jpg"
+		image = "assets://nanos-world/Thumbnails/SM_RollerMachine_Wheel.png"
 	},
 	{
 		id = "nanos-world::SM_FidgetSpinner",
 		name = "Fidget Spinner",
-		image = "assets://nanos-world/Thumbnails/SM_FidgetSpinner.jpg"
+		image = "assets://nanos-world/Thumbnails/SM_FidgetSpinner.png"
 	},
 	{
 		id = "nanos-world::SM_PlasticBarrel_01",
 		name = "Plastic Barrel",
-		image = "assets://nanos-world/Thumbnails/SM_PlasticBarrel_01.jpg"
+		image = "assets://nanos-world/Thumbnails/SM_PlasticBarrel_01.png"
 	},
 	{
 		id = "nanos-world::SM_Steering_Wheel_01",
 		name = "Steering Wheel",
-		image = "assets://nanos-world/Thumbnails/SM_Steering_Wheel_01.jpg"
+		image = "assets://nanos-world/Thumbnails/SM_Steering_Wheel_01.png"
 	},
 	{
 		id = "nanos-world::SM_Valve",
 		name = "Valve",
-		image = "assets://nanos-world/Thumbnails/SM_Valve.jpg"
+		image = "assets://nanos-world/Thumbnails/SM_Valve.png"
 	},
 }
 

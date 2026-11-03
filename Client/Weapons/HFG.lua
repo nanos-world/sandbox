@@ -4,7 +4,7 @@ HFG = Weapon.Inherit("HFG")
 HFG.name = "HFG"
 
 -- Tool Image
-HFG.image = "assets://nanos-world/Thumbnails/SK_DC15S.jpg"
+HFG.image = "assets://nanos-world/Thumbnails/HFG.png"
 
 -- Spawn Menu Category
 HFG.category = "special"

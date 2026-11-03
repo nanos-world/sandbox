@@ -12,20 +12,22 @@ Prop.Subscribe("Hit", function(prop, intensity)
 	end
 end)
 
-Prop.Subscribe("TakeDamage", function(prop, damage)
+-- Whoever damaged it owns the explosion, so it respects Teams (PVP off) like a shot does
+Prop.Subscribe("TakeDamage", function(prop, damage, bone, type, from_direction, instigator)
 	local breakable_data = GetBreakableData(prop)
 	if (not breakable_data) then return end
 
 	-- An inflammable one first ignites, then explodes
 	if (breakable_data.explosive and breakable_data.explosive.inflammable) then
-		InflameProp(prop)
+		InflameProp(prop, instigator)
 	else
-		BreakProp(prop, damage * 50)
+		BreakProp(prop, damage * 50, instigator)
 	end
 end)
 
 -- This will trigger "Inflame" in a inflammable Prop - I.e. make it fire for some seconds then explode
-function InflameProp(prop)
+-- instigator (optional) is the Player who owns the explosion
+function InflameProp(prop, instigator)
 	local breakable_data = BREAKABLE_PROPS[prop:GetMesh()]
 
 	if (not breakable_data) then
@@ -38,7 +40,7 @@ function InflameProp(prop)
 		local scale = prop:GetScale()
 		prop:Destroy()
 
-		ExplodeProp(location, breakable_data.explosive, scale.X)
+		ExplodeProp(location, breakable_data.explosive, scale.X, instigator)
 		return
 	end
 
@@ -64,12 +66,13 @@ function InflameProp(prop)
 		local scale = explosible:GetScale()
 		explosible:Destroy()
 
-		ExplodeProp(location, breakable_data.explosive, scale.X)
+		ExplodeProp(location, breakable_data.explosive, scale.X, instigator)
 	end, (breakable_data.explosive.inflammable.duration or 5000) * math.random(75, 125) / 100, prop), prop)
 end
 
 -- This will "Break" a breakable prop into several Debris
-function BreakProp(prop, intensity)
+-- instigator (optional) is the Player who owns the explosion, for explosive ones
+function BreakProp(prop, intensity, instigator)
 	local breakable_data = BREAKABLE_PROPS[prop:GetMesh()]
 
 	if (not breakable_data) then
@@ -106,12 +109,13 @@ function BreakProp(prop, intensity)
 	prop:Destroy()
 
 	if (breakable_data.explosive) then
-		ExplodeProp(parent_location, breakable_data.explosive, parent_scale.X)
+		ExplodeProp(parent_location, breakable_data.explosive, parent_scale.X, instigator)
 	end
 end
 
 -- This will "explode" a Explodable Prop
-function ExplodeProp(location, explosive_data, scale)
+-- instigator (optional) is the Player who owns the explosion, without one it damages everyone
+function ExplodeProp(location, explosive_data, scale, instigator)
 	-- Spawns a Grenade to explode it immediately
 	local grenade = Grenade(location, Rotator(), "nanos-world::SM_None", "nanos-world::P_Grenade_Special", "nanos-world::A_Explosion_Large", CollisionType.StaticOnly, false)
 
@@ -124,8 +128,8 @@ function ExplodeProp(location, explosive_data, scale)
 		explosive_data.damage_falloff or 1
 	)
 
-	-- Explodes it!
-	grenade:Explode()
+	-- Explodes it! (an inflammable one burns for seconds first, so the instigator may have left by now)
+	grenade:Explode((instigator and instigator:IsValid()) and instigator or nil)
 end
 
 -- Makes every Prop of mesh break (or blow up), see Shared/Config/Breakable.lua for the fields
