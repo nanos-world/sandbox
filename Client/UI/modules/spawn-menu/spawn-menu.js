@@ -281,11 +281,15 @@ SpawnMenu.AddItem = function(tab_id, category_id, item) {
 	spawn_item_image.loading = "lazy";
 	spawn_item_image.src = image;
 
+	const spawn_item_image_container = document.createElement("span");
+	spawn_item_image_container.classList.add("spawn_item_image_container");
+	spawn_item_image_container.appendChild(spawn_item_image);
+
 	const spawn_item_name = document.createElement("span");
 	spawn_item_name.classList.add("spawn_item_name");
 	spawn_item_name.textContent = item.name;
 
-	spawn_item.appendChild(spawn_item_image);
+	spawn_item.appendChild(spawn_item_image_container);
 	spawn_item.appendChild(spawn_item_name);
 
 	const spawn_menu_content_category = document.getElementById(`spawn_menu_content_category_${tab_id}_${category_id}`);

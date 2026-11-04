@@ -60,17 +60,41 @@
 	background-color: #c1c1c147;
 }
 
-.spawn_item_image {
+.spawn_item_image_container {
 	display: inline-block;
+	position: relative;
 	width: calc(var(--spawn_menu_item_width) - 10px);
 	height: calc(var(--spawn_menu_item_width) - 10px);
-	background-size: 100% auto;
-	background-position: 50%;
 	pointer-events: none;
-	background-repeat: no-repeat;
-	background-color: #4d4d4dc9;
+	overflow: hidden;
+	background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 55%, rgba(0, 0, 0, 0.2) 100%), rgba(40, 43, 48, 0.92);
 	border-radius: 5px;
 	margin: 5px 0;
+	transition: background 0.15s;
+}
+
+.spawn_item_image_container::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.spawn_item_image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	transition: transform 0.1s;
+}
+
+.spawn_item:hover .spawn_item_image_container {
+	background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 55%, rgba(0, 0, 0, 0.15) 100%), rgba(50, 54, 60, 0.95);
+}
+
+.spawn_item:hover .spawn_item_image {
+	transform: scale(1.1);
 }
 
 .spawn_item_name {

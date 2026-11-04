@@ -461,15 +461,22 @@ ContextMenu.ToggleContextMenuSelectorVisibility = function(is_visible, item) {
 			context_menu_selector_item.addEventListener("click", ContextMenu.ContextMenuSelectorItemClick);
 			context_menu_selector_item.addEventListener("mouseenter", e => Events.Call("HoverSound", 1));
 
-			const context_menu_selector_item_image = document.createElement("span");
+			const context_menu_selector_item_image = document.createElement("img");
 			context_menu_selector_item_image.classList.add("spawn_item_image");
-			context_menu_selector_item_image.style["background-image"] = `url('${option.image}'), url('./modules/context-menu/images/nanosworld_empty.webp')`;
+			context_menu_selector_item_image.loading = "lazy";
+
+			context_menu_selector_item_image.onerror = () => { context_menu_selector_item_image.onerror = null; context_menu_selector_item_image.src = "modules/spawn-menu/images/nanosworld_empty.webp"; };
+			context_menu_selector_item_image.src = option.image || "modules/spawn-menu/images/nanosworld_empty.webp";
 
 			const context_menu_selector_item_name = document.createElement("span");
 			context_menu_selector_item_name.classList.add("spawn_item_name");
 			context_menu_selector_item_name.innerText = option.name;
 
-			context_menu_selector_item.append(context_menu_selector_item_image);
+			const context_menu_selector_item_image_container = document.createElement("span");
+			context_menu_selector_item_image_container.classList.add("spawn_item_image_container");
+			context_menu_selector_item_image_container.append(context_menu_selector_item_image);
+
+			context_menu_selector_item.append(context_menu_selector_item_image_container);
 			context_menu_selector_item.append(context_menu_selector_item_name);
 			context_menu_selector_list.append(context_menu_selector_item);
 		});
