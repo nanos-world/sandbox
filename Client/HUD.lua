@@ -1,0 +1,212 @@
+-- Local Player HUD: health, ammo, speedometer, voice and the local Character events that drive them
+
+-- When LocalPlayer spawns, sets an event on it to trigger when we possesses a new character, to store the local controlled character locally.
+-- This event is only called once, see Package.Subscribe("Load") to load it when reloading a package
+Client.Subscribe("SpawnLocalPlayer", function(local_player)
+	SetupLocalPlayer(local_player)
+end)
+
+-- Function to set all needed events on local character (to update the UI when it takes damage or dies)
+---@param character Character
+function UpdateLocalCharacter(character)
+	-- Verifies if character is not nil (eg. when GetControllerCharacter() doesn't return a character)
+	if (character == nil) then return end
+
+	-- Sets on character an event to update the health's UI after it takes damage
+	character:Subscribe("HealthChange", OnCharacterHealthChange)
+
+	if (character:IsA(Character)) then
+		-- Subscribes to local character common events
+		character:Subscribe("PickUp", OnCharacterPickup)
+		character:Subscribe("Drop", OnCharacterDrop)
+		character:Subscribe("EnterVehicle", OnCharacterEnterVehicle)
+		character:Subscribe("LeaveVehicle", OnCharacterLeaveVehicle)
+
+		-- Try to get if the character is holding any weapon
+		local current_picked_item = character:GetPicked()
+
+		-- If so, update the UI
+		if (current_picked_item and current_picked_item:IsA(Weapon) and not current_picked_item:IsA(ToolGun)) then
+			UpdateAmmo(true, current_picked_item:GetAmmoClip(), current_picked_item:GetAmmoBag())
+		end
+	end
+
+	-- Updates the UI with the current character's health
+	UpdateHealth(character:GetHealth())
+
+	-- Adds possessed character customization to Context Menu
+	ContextMenu.AddPossessedCharacterItems(character)
+end
+
+-- Setups the Local Player events
+---@param local_player Player
+function SetupLocalPlayer(local_player)
+	local_player:Subscribe("Possess", function(player, character)
+		UpdateLocalCharacter(character)
+	end)
+
+	local_player:Subscribe("UnPossess", function(player, character)
+		-- Unsubscribe from all old Character events
+		character:Unsubscribe("HealthChange", OnCharacterHealthChange)
+		character:Unsubscribe("PickUp", OnCharacterPickup)
+		character:Unsubscribe("Drop", OnCharacterDrop)
+		character:Unsubscribe("EnterVehicle", OnCharacterEnterVehicle)
+		character:Unsubscribe("LeaveVehicle", OnCharacterLeaveVehicle)
+
+		-- Removes Possessed Characters Item entries from Context Menu
+		ContextMenu.RemoveItems("possessed_character")
+	end)
+end
+
+-- Handles Character picking up an object (weapon, melee)
+function OnCharacterPickup(character, object)
+	if (object:IsA(Weapon) and not object:IsA(ToolGun)) then
+		-- Immediately Updates the Ammo UI
+		UpdateAmmo(true, object:GetAmmoClip(), object:GetAmmoBag())
+
+		-- Trigger Weapon Hints
+		Notifications.Add(NotificationType.Info, "AIM_DOWN_SIGHT", "you can use mouse wheel to aim down sight with your Weapon when you are in First Person Mode", 10, 15)
+		Notifications.Add(NotificationType.Info, "HEADSHOTS", "headshots can cause more damage", 10, 45)
+
+		-- Subscribes on the weapon when the Ammo changes
+		object:Subscribe("AmmoClipChange", OnAmmoClipChanged)
+		object:Subscribe("AmmoBagChange", OnAmmoBagChanged)
+	end
+
+	local class = object:GetClass()
+
+	-- Sets the notification tips when grabbing the object, if any defined
+	local tips = class.tips
+	if (tips) then
+		for index, tip in ipairs(tips) do
+			local delay = (index - 1) * 60 + 5
+			Notifications.Add(NotificationType.Info, class.name .. "_TIP_" .. tostring(index), tip, 10, delay)
+		end
+	end
+
+	-- Shows the tutorials on screen
+	local tutorials = class.tutorials
+	local description = class.description
+	if (description or tutorials) then
+		Tutorials.Show(class.name, description or "", tutorials or {})
+	end
+
+	-- Adds custom items for the class, defined in ContextMenuDefaults.lua
+	ContextMenu.AddPickedCustomItems(object)
+end
+
+-- Handles Character taking damage (health change)
+function OnCharacterHealthChange(character, old_health, new_health)
+	-- Plays a Hit Taken sound effect if took damage
+	if (new_health < old_health) then
+		SoundHitTakenFeedback:Play()
+	end
+
+	-- Immediately Updates the Health UI
+	UpdateHealth(new_health)
+end
+
+-- Handles Character Dropping an object (weapon, melee)
+function OnCharacterDrop(character, object)
+	-- Unsubscribes from events
+	if (object:IsA(Weapon) and not object:IsA(ToolGun)) then
+		UpdateAmmo(false)
+
+		object:Unsubscribe("AmmoClipChange", OnAmmoClipChanged)
+		object:Unsubscribe("AmmoBagChange", OnAmmoBagChanged)
+	end
+
+	-- Hides the tutorials
+	Tutorials.Hide()
+
+	-- Removes Custom Picked Item entries from Context Menu
+	ContextMenu.RemoveItems("picked_item")
+end
+
+-- Handles Character Entering a vehicle
+function OnCharacterEnterVehicle(character, vehicle, seat)
+	if (seat == 0) then
+		if (Sandbox.timer_speedometer and Timer.IsValid(Sandbox.timer_speedometer)) then
+			Timer.ClearInterval(Sandbox.timer_speedometer)
+		end
+
+		Sandbox.timer_speedometer = Timer.SetInterval(function()
+			if (vehicle and vehicle:IsValid()) then
+				UpdateSpeedometer(true, vehicle)
+			end
+		end, 100)
+
+		UpdateSpeedometer(true, vehicle)
+	end
+end
+
+-- Handles Character Leaving a vehicle
+function OnCharacterLeaveVehicle(character, vehicle)
+	if (Sandbox.timer_speedometer and Timer.IsValid(Sandbox.timer_speedometer)) then
+		Timer.ClearInterval(Sandbox.timer_speedometer)
+		Sandbox.timer_speedometer = nil
+	end
+
+	UpdateSpeedometer(false)
+end
+
+-- Function to update the Speedometer's UI
+function UpdateSpeedometer(enable_ui, vehicle)
+	local speed, gear, rpm, unit = nil, nil, nil, "km/h"
+
+	if (enable_ui) then
+		-- TODO: not yet
+		-- gear = vehicle:GetGear()
+		-- rpm = math.floor(vehicle:GetRPM())
+		local speed_kmh = vehicle:GetVelocity():Size() * 0.036
+
+		if (vehicle:IsA(VehicleWater)) then
+			unit = "kn"
+			speed = math.floor(speed_kmh / 1.852)
+		else
+			speed = math.floor(speed_kmh)
+		end
+	end
+
+	Sandbox.HUD:CallEvent("UpdateSpeedometer", enable_ui, speed, gear, rpm, unit)
+end
+
+-- Function to update the Ammo's UI
+function UpdateAmmo(enable_ui, ammo, ammo_bag)
+	Sandbox.HUD:CallEvent("UpdateWeaponAmmo", enable_ui, ammo, ammo_bag)
+end
+
+-- Function to update the Health's UI
+function UpdateHealth(health)
+	Sandbox.HUD:CallEvent("UpdateHealth", health)
+end
+
+-- Callback when Weapon Ammo Clip changes
+function OnAmmoClipChanged(weapon, old_ammo_clip, new_ammo_clip)
+	UpdateAmmo(true, new_ammo_clip, weapon:GetAmmoBag())
+end
+
+-- Callback when Weapon Ammo Bag changes
+function OnAmmoBagChanged(weapon, old_ammo_bag, new_ammo_bag)
+	UpdateAmmo(true, weapon:GetAmmoClip(), new_ammo_bag)
+end
+
+-- VOIP UI
+Player.Subscribe("VOIP", function(player, is_talking)
+	Sandbox.HUD:CallEvent("ToggleVoice", player:GetID(), is_talking, player:GetName(), player:GetAccountIconURL())
+
+	-- Apply speaking animation
+	local character = player:GetControlledCharacter()
+	if (character and character.speak_animation) then
+		if (is_talking and character:GetLocation():IsNear(Client.GetLocalPlayer():GetCameraLocation(), 1000)) then
+			character:PlayAnimation(character.speak_animation, AnimationSlotType.Head, true)
+		else
+			character:StopAnimation(character.speak_animation)
+		end
+	end
+end)
+
+Player.Subscribe("Destroy", function(player)
+	Sandbox.HUD:CallEvent("ToggleVoice", player:GetID(), false)
+	Sandbox.HUD:CallEvent("UpdatePlayer", player:GetID(), false)
+end)
