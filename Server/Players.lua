@@ -181,11 +181,16 @@ Events.SubscribeRemote("ChangeCharacter", function(player, class_name)
 	local class = GetCharacterClasses()[class_name]
 	if not class then return end
 
-	local location, rotation, picked_item = nil, nil, nil
+	local location, rotation, picked_item, view_mode = nil, nil, nil, nil
 
 	if (character) then
 		if (character.GetPicked) then
 			picked_item = character:GetPicked()
+		end
+
+		-- Read before Destroy, as being unpossessed resets the View Mode to TPS2
+		if (character.GetViewMode) then
+			view_mode = character:GetViewMode()
 		end
 
 		location = character:GetLocation()
@@ -202,6 +207,11 @@ Events.SubscribeRemote("ChangeCharacter", function(player, class_name)
 
 	-- This will possess, configure Player configs and subscribe to events
 	SetupPlayerCharacter(player, new_character)
+
+	-- Restore the View Mode the player was using
+	if (view_mode and new_character.SetViewMode) then
+		new_character:SetViewMode(view_mode)
+	end
 
 	-- Restore picked up item
 	if (picked_item and picked_item:IsValid() and new_character.PickUp) then
