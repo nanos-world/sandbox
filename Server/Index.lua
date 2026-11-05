@@ -85,17 +85,39 @@ function OnPlayerCharacterDeath(character, last_damage_taken, last_bone_damaged,
 			-- If he is not dead anymore after 5 seconds, ignores it
 			if (not character:IsDead()) then return end
 
-			RandomRespawnCharacter(character)
+			Sandbox.RespawnCharacter(character)
 		end, 5000),
 		character
 	)
 end
 
--- Respawn the Character at a random point
-function RandomRespawnCharacter(character)
+-- Respawns a dead player's Character at a random spawn point, after the death delay or when they ask for it
+function Sandbox.RespawnCharacter(character)
 	local spawn_point = GetRandomSpawnPoint()
 	character:Respawn(spawn_point.location, spawn_point.rotation)
 end
+
+-- With the "enable_pvp" setting off every player is on Team 1, which cannot hurt itself; one on Team 0 hurts and is hurt by anyone, so damage between players only lands when both have PvP on (OnPlayerTakeDamage)
+function Sandbox.SetCharacterPvPEnabled(character, enabled)
+	if (SANDBOX_CUSTOM_SETTINGS.enable_pvp) then return end
+
+	character:SetTeam(enabled and 0 or 1)
+end
+
+function Sandbox.IsCharacterPvPEnabled(character)
+	return SANDBOX_CUSTOM_SETTINGS.enable_pvp or character:GetTeam() ~= 1
+end
+
+-- Cancels damage from one player to another unless both have PvP on (the attacker's own damage to itself still lands)
+local function OnPlayerTakeDamage(character, _, _, _, _, instigator)
+	if (SANDBOX_CUSTOM_SETTINGS.enable_pvp or not instigator or not character:GetPlayer() or instigator == character:GetPlayer()) then return end
+
+	local attacker = instigator:GetControlledCharacter()
+	if (attacker and Sandbox.IsCharacterPvPEnabled(character) ~= Sandbox.IsCharacterPvPEnabled(attacker)) then return 0 end
+end
+
+Character.Subscribe("TakeDamage", OnPlayerTakeDamage)
+CharacterSimple.Subscribe("TakeDamage", OnPlayerTakeDamage)
 
 -- Spawns a Character for the Player
 function SpawnPlayerCharacter(player)
@@ -130,10 +152,8 @@ end
 
 -- Possess, configure Player configs and subscribe to events
 function SetupPlayerCharacter(player, character)
-	-- Disables PVP if set
-	if (not SANDBOX_CUSTOM_SETTINGS.enable_pvp) then
-		character:SetTeam(1)
-	end
+	-- Every new Character starts with PvP off, unless the server has it on for everybody
+	Sandbox.SetCharacterPvPEnabled(character, false)
 
 	character:SetDimension(player:GetDimension())
 
@@ -206,7 +226,7 @@ Events.SubscribeRemote("RespawnCharacter", function(player)
 	-- Respawn Character or spawn a new one
 	local character = player:GetControlledCharacter()
 	if (character) then
-		RandomRespawnCharacter(character)
+		Sandbox.RespawnCharacter(character)
 	else
 		SpawnPlayerCharacter(player)
 	end
