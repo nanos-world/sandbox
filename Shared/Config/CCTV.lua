@@ -5,7 +5,7 @@ CCTV_CAMERAS = {
 	{
 		id = "nanos-world::SM_Camera_Surveillance",
 		name = "Surveillance",
-		image = "assets://nanos-world/Thumbnails/SM_Camera_Surveillance.png",
+		image = "assets://nanos-world/Thumbnails/SM_Camera_Surveillance.webp",
 		capture = {
 			offset = Vector(48.5, 0, 20),
 			rotation = Rotator(0, 0, 0)
@@ -15,7 +15,7 @@ CCTV_CAMERAS = {
 	{
 		id = "nanos-world::SM_Camera_Security",
 		name = "Security",
-		image = "assets://nanos-world/Thumbnails/SM_Camera_Security.png",
+		image = "assets://nanos-world/Thumbnails/SM_Camera_Security.webp",
 		capture = {
 			offset = Vector(36, 0, 4),
 			rotation = Rotator(-15, 0, 0)
@@ -25,7 +25,7 @@ CCTV_CAMERAS = {
 	{
 		id = "nanos-world::SM_Camera_Housing",
 		name = "Housing",
-		image = "assets://nanos-world/Thumbnails/SM_Camera_Housing.png",
+		image = "assets://nanos-world/Thumbnails/SM_Camera_Housing.webp",
 		capture = {
 			offset = Vector(40.5, 0, 13.7),
 			rotation = Rotator(0, 0, 0)
@@ -35,7 +35,7 @@ CCTV_CAMERAS = {
 	{
 		id = "nanos-world::SM_Camera_CCTV",
 		name = "Ceiling",
-		image = "assets://nanos-world/Thumbnails/SM_Camera_CCTV.png",
+		image = "assets://nanos-world/Thumbnails/SM_Camera_CCTV.webp",
 		capture = {
 			offset = Vector(39, 0, -27),
 			rotation = Rotator(0, 0, 0)
@@ -45,7 +45,7 @@ CCTV_CAMERAS = {
 	{
 		id = "nanos-world::SM_Camera",
 		name = "Classic",
-		image = "assets://nanos-world/Thumbnails/SM_Camera.png",
+		image = "assets://nanos-world/Thumbnails/SM_Camera.webp",
 		capture = {
 			offset = Vector(6, 0, 0),
 			rotation = Rotator(0, 0, 0)

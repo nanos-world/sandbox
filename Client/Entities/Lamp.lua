@@ -1,7 +1,7 @@
 Lamp = Prop.Inherit("Lamp")
 
 Lamp.name = "Lamp"
-Lamp.image = "assets://nanos-world/Thumbnails/SM_Lamp_Bulb.png"
+Lamp.image = "assets://nanos-world/Thumbnails/SM_Lamp_Bulb.webp"
 Lamp.category = "objects"
 
 -- Context Menu Items when selecting this Entity

@@ -61,13 +61,13 @@ function InflameProp(prop, instigator)
 	particle:SetRelativeRotation(Rotator(90, 0, 0))
 	particle:SetScale(Vector(0.25))
 
-	Timer.Bind(Timer.SetTimeout(function(explosible)
-		local location = explosible:GetLocation()
-		local scale = explosible:GetScale()
-		explosible:Destroy()
+	Timer.Bind(Timer.SetTimeout(function()
+		local location = prop:GetLocation()
+		local scale = prop:GetScale()
+		prop:Destroy()
 
 		ExplodeProp(location, breakable_data.explosive, scale.X, instigator)
-	end, (breakable_data.explosive.inflammable.duration or 5000) * math.random(75, 125) / 100, prop), prop)
+	end, (breakable_data.explosive.inflammable.duration or 5000) * math.random(75, 125) / 100), prop)
 end
 
 -- This will "Break" a breakable prop into several Debris

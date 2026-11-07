@@ -8,7 +8,7 @@ LAMP_TYPES = {
 	{
 		id = "Bulb",
 		name = "Bulb",
-		image = "assets://nanos-world/Thumbnails/SM_Lamp_Bulb.png",
+		image = "assets://nanos-world/Thumbnails/SM_Lamp_Bulb.webp",
 		mesh = "nanos-world::SM_Lamp_Bulb",
 		hang = Vector(0, 0, 0),
 		light = {
@@ -27,7 +27,7 @@ LAMP_TYPES = {
 	{
 		id = "Lantern",
 		name = "Lantern",
-		image = "assets://nanos-world/Thumbnails/SM_Lamp_Lantern.png",
+		image = "assets://nanos-world/Thumbnails/SM_Lamp_Lantern.webp",
 		mesh = "nanos-world::SM_Lamp_Lantern",
 		hang = Vector(0, 0, 0),
 		light = {
@@ -46,7 +46,7 @@ LAMP_TYPES = {
 	{
 		id = "Bulkhead",
 		name = "Bulkhead",
-		image = "assets://nanos-world/Thumbnails/SM_Lamp_Bulkhead.png",
+		image = "assets://nanos-world/Thumbnails/SM_Lamp_Bulkhead.webp",
 		mesh = "nanos-world::SM_Lamp_Bulkhead",
 		hang = Vector(0, 7, 9.9),
 		wall = true,
@@ -71,7 +71,7 @@ LAMP_TYPES = {
 	{
 		id = "LED",
 		name = "LED Panel",
-		image = "assets://nanos-world/Thumbnails/SM_Lamp_LED.png",
+		image = "assets://nanos-world/Thumbnails/SM_Lamp_LED.webp",
 		mesh = "nanos-world::SM_Lamp_LED",
 		hang = Vector(0, 2.35, 7),
 		wall = true,

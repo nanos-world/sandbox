@@ -25,19 +25,19 @@ Sandbox.Notifications = Notifications
 ---@param delay number				Time in seconds to wait until display the notification
 ---@param force? boolean			To force it to be displayed regardless if it was already displayed before
 function Notifications.Add(type, id, message, duration, delay, force)
-	Timer.SetTimeout(function(_id, _message, _duration, _force)
-		if (not _force) then
-			if (Notifications.persistent_data[_id]) then
+	Timer.SetTimeout(function()
+		if (not force) then
+			if (Notifications.persistent_data[id]) then
 				return
 			end
 
 			-- Sets to the settings that the Notification has been shown
-			Notifications.persistent_data[_id] = true
-			Package.SetPersistentData("notifications." .. _id, true)
+			Notifications.persistent_data[id] = true
+			Package.SetPersistentData("notifications." .. id, true)
 		end
 
-		Client.ShowNotification(_message, type, false, _duration)
-	end, delay * 1000, id, message, duration, force)
+		Client.ShowNotification(message, type, false, duration)
+	end, delay * 1000)
 end
 
 Package.Subscribe("Load", function()
