@@ -52,6 +52,6 @@ function Photograph:Constructor(location, rotation, base64, scale)
 	self.Super:Constructor(location or Vector(), rotation or Rotator(), "nanos-world::SM_Plane")
 	self:SetScale(Vector(0.2 * (scale or 1)))
 	self:SetMaterialTextureParameter("Texture", base64)
-	self:SetMaterialScalarParameter("Roughness", 0.25)
-	self:SetMaterialScalarParameter("Specular", 0.25)
+	self:SetMaterialScalarParameter("Roughness", 0.05)
+	self:SetMaterialScalarParameter("Specular", 0.05)
 end
