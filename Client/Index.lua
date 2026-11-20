@@ -26,18 +26,19 @@ Input.Register("Undo", "Z", "Destroy last spawned Item")
 
 -- Text shown in the escape menu
 Client.SetEscapeMenuText([[
-<h1>Sandbox</>
+# Sandbox
 
 The official nanos world Sandbox game-mode. Spawn props, weapons, vehicles and NPCs, build contraptions with physics tools and play freely with your friends.
 
-<h2>Features</>
-- <strong>Spawn Menu</> (`Q`): every Prop, Weapon, Vehicle and Character from every loaded package, searchable and split by tabs and categories
-- <strong>Context Menu</> (`C`): select any entity in the world and tweak it (tint, gravity, custom per-entity options)
-- <strong>Tool Guns</>: Physics Gun, Weld, Rope, Elastic, Spring, Slider, Ball Socket, Thruster, Wheel, Balloon, Light, Lamp, Trail, Button, Wire, Color, Resizer, Remover and more
-- <strong>Entities</>: TVs, CCTVs, Instant Cameras, Targets, Jukebox, Buttons, Photo Frames, Signs, Floating Texts, Rope Lights, Flashlights, Bouncy Balls, Balloons...
-- <strong>Dynamic sky and weather</> powered by Ultra Dynamic Sky
-- <strong>Undo</> (`Z`) and a spawn history
-- <strong>Noclip</> (`B`), <strong>Ragdoll</> (`J`) and a <strong>Scoreboard</> (`Tab`)
+## Features
+
+- **Spawn Menu** (`Q`): every Prop, Weapon, Vehicle and Character from every loaded package, searchable and split by tabs and categories
+- **Context Menu** (`C`): select any entity in the world and tweak it (tint, gravity, custom per-entity options)
+- **Tool Guns**: Physics Gun, Weld, Rope, Elastic, Spring, Slider, Ball Socket, Thruster, Wheel, Balloon, Light, Lamp, Trail, Button, Wire, Color, Resizer, Remover and more
+- **Entities**: TVs, CCTVs, Instant Cameras, Targets, Jukebox, Buttons, Photo Frames, Signs, Floating Texts, Rope Lights, Flashlights, Bouncy Balls, Balloons...
+- **Dynamic sky and weather** powered by Ultra Dynamic Sky
+- **Undo** (`Z`) and a spawn history
+- **Noclip** (`B`), **Ragdoll** (`J`) and a **Scoreboard** (`Tab`)
 - Per-server spawn limits for every entity type
 - Extensible: other packages can add items, context menu options and notifications
 ]])
